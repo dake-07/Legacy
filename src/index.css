@@ -1,0 +1,81 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --color-legacy-primary: #000000;
+  --color-legacy-gold: #c5a86a;
+  --color-legacy-secondary: #111111;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  
+  --font-sans: 'Josefin Sans', sans-serif;
+  --font-serif: 'Cinzel', serif;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@layer base {
+  :root {
+    /* Base theme: Liquid Glass - Trust Teal & Professional Blue */
+    --background: 166 67% 96%; /* #F0FDFA - Minty Off-White */
+    --foreground: 175 60% 19%; /* #134E4A - Dark Teal text */
+    
+    --card: 0 0% 100%; /* Pure white */
+    --card-foreground: 175 60% 19%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 175 60% 19%;
+    
+    --primary: 175 77% 26%; /* #0F766E - Teal */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 173 80% 40%; /* #14B8A6 */
+    --secondary-foreground: 175 60% 19%;
+    
+    --muted: 196 29% 93%; /* #E8F0F3 */
+    --muted-foreground: 175 60% 40%;
+    
+    --accent: 201 96% 32%; /* #0369A1 */
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 168 83% 78%; /* #99F6E4 */
+    --input: 168 83% 78%;
+    --ring: 175 77% 26%;
+    --radius: 0.5rem;
+  }
+}
+ 
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    scroll-behavior: smooth;
+  }
+}
+
