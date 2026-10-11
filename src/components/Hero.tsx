@@ -119,9 +119,18 @@ export function Hero() {
             
             <div className="relative z-10 flex items-center gap-4">
               <div className="flex -space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gray-300 border-2 border-white/20 overflow-hidden"><img src="https://i.pravatar.cc/100?img=1" alt="" width={40} height={40} /></div>
-                <div className="w-10 h-10 rounded-full bg-gray-300 border-2 border-white/20 overflow-hidden"><img src="https://i.pravatar.cc/100?img=2" alt="" width={40} height={40} /></div>
-                <div className="w-10 h-10 rounded-full bg-gray-300 border-2 border-white/20 overflow-hidden"><img src="https://i.pravatar.cc/100?img=3" alt="" width={40} height={40} /></div>
+                <div className="w-10 h-10 rounded-full bg-teal-800 border-2 border-white/20 overflow-hidden flex items-center justify-center text-white text-xs font-bold">
+                  <img src="https://i.pravatar.cc/100?img=1" alt="" width={40} height={40} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                  <span aria-hidden="true" className="-ml-10">K</span>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-teal-700 border-2 border-white/20 overflow-hidden flex items-center justify-center text-white text-xs font-bold">
+                  <img src="https://i.pravatar.cc/100?img=2" alt="" width={40} height={40} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                  <span aria-hidden="true" className="-ml-10">A</span>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-teal-900 border-2 border-white/20 overflow-hidden flex items-center justify-center text-white text-xs font-bold">
+                  <img src="https://i.pravatar.cc/100?img=3" alt="" width={40} height={40} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                  <span aria-hidden="true" className="-ml-10">M</span>
+                </div>
               </div>
               <div className="flex flex-col">
                 <span className="text-white text-sm font-bold tracking-wide">500+&nbsp;Families</span>
