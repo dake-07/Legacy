@@ -6,25 +6,25 @@ export function CoreServices() {
   const services = [
     {
       num: "01",
-      icon: <Clock className="h-8 w-8 text-[#0F766E]" />,
+      icon: <Clock className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
       title: "Convenience",
       description: "We handle the legwork, saving you time and stress while you focus on your goals."
     },
     {
       num: "02",
-      icon: <ShieldCheck className="h-8 w-8 text-[#0F766E]" />,
+      icon: <ShieldCheck className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
       title: "Trust",
       description: "Reliable and verified partners ensuring your investments are secure."
     },
     {
       num: "03",
-      icon: <Search className="h-8 w-8 text-[#0F766E]" />,
+      icon: <Search className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
       title: "Transparency",
       description: "Clear communication, honest pricing, and regular updates at every step."
     },
     {
       num: "04",
-      icon: <TrendingUp className="h-8 w-8 text-[#0F766E]" />,
+      icon: <TrendingUp className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
       title: "Scalable Support",
       description: "From a single visit to complex development projects, our services scale with your needs."
     }
@@ -44,7 +44,7 @@ export function CoreServices() {
   }
 
   return (
-    <section id="services" className="py-20 lg:py-40 bg-white relative overflow-hidden border-t border-gray-100">
+    <section id="services" className="py-20 lg:py-40 bg-white relative overflow-hidden border-t border-gray-100 scroll-mt-24">
       {/* Liquid Glass Background Glows */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[10%] right-[-10%] w-[600px] h-[600px] bg-[#0F766E]/10 rounded-full blur-[120px]"></div>
@@ -76,10 +76,10 @@ export function CoreServices() {
         >
           {services.map((service, index) => (
             <motion.div key={index} variants={itemVariants} className="h-full">
-              <Card className="h-full bg-[#F0FDFA] border border-gray-100 rounded-[2.5rem] p-10 md:p-12 hover:-translate-y-2 transition-all duration-500 hover:shadow-xl group relative overflow-hidden">
+              <Card className="h-full bg-[#F0FDFA] border border-gray-100 rounded-[2.5rem] p-10 md:p-12 hover:-translate-y-2 transition-[transform,box-shadow] duration-500 hover:shadow-xl group relative overflow-hidden">
                 
                 {/* Hover Glow Effect */}
-                <div className="absolute inset-0 bg-white border border-gray-100 rounded-3xl opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:border-[#0F766E]/30"></div>
+                <div className="absolute inset-0 bg-white border border-gray-100 rounded-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 group-hover:border-[#0F766E]/30"></div>
                 
                 {/* Background Watermark Number */}
                 <div className="absolute -bottom-2 right-4 text-[140px] font-serif font-bold text-black/[0.03] select-none pointer-events-none group-hover:text-[#0F766E]/10 transition-colors duration-700">
@@ -87,7 +87,7 @@ export function CoreServices() {
                 </div>
 
                 <CardContent className="p-0 relative z-10 flex flex-col h-full">
-                  <div className="w-14 h-14 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-10 group-hover:border-[#0F766E]/50 transition-all duration-500">
+                  <div className="w-14 h-14 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-10 group-hover:border-[#0F766E]/50 transition-colors duration-500">
                     {service.icon}
                   </div>
                   <h3 className="text-2xl font-serif font-bold text-gray-900 mb-5 group-hover:text-[#0F766E] transition-colors duration-500">{service.title}</h3>

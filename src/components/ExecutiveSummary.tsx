@@ -16,7 +16,7 @@ export function ExecutiveSummary() {
   }
 
   return (
-    <section id="about" className="py-20 lg:py-40 bg-white relative overflow-hidden border-t border-gray-100">
+    <section id="about" className="py-20 lg:py-40 bg-white relative overflow-hidden border-t border-gray-100 scroll-mt-24">
       <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
@@ -31,8 +31,11 @@ export function ExecutiveSummary() {
             <div className="relative w-full aspect-[4/5] max-w-md mx-auto lg:mx-0 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-gray-200 group">
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 z-10"></div>
               <img 
-                src="/about_us.png" 
-                alt="Expert Real Estate Consultation in Ghana" 
+                src={`${import.meta.env.BASE_URL}about_us.webp`} 
+                alt="Consultant showing a client around a modern home interior" 
+                width={1024}
+                height={1024}
+                loading="lazy"
                 className="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none opacity-60"></div>
@@ -46,8 +49,8 @@ export function ExecutiveSummary() {
                 className="absolute bottom-8 right-4 sm:-right-8 md:-right-12 bg-white/90 backdrop-blur-xl border border-gray-100 rounded-3xl p-8 shadow-xl max-w-[220px] z-20"
               >
                 <div className="flex items-center gap-4 mb-3">
-                  <ShieldCheck className="h-10 w-10 text-[#0F766E]" />
-                  <span className="text-4xl font-serif font-bold text-gray-900">100%</span>
+                  <ShieldCheck className="h-10 w-10 text-[#0F766E]" aria-hidden="true" />
+                  <span className="text-4xl font-serif font-bold text-gray-900 tabular-nums">100%</span>
                 </div>
                 <p className="text-sm font-sans text-gray-600 leading-relaxed uppercase tracking-widest font-bold">Verified & Secure</p>
               </motion.div>
@@ -80,18 +83,18 @@ export function ExecutiveSummary() {
             
             {/* What We Solve Grid */}
             <motion.div variants={itemVariants} className="mb-14">
-              <h3 className="text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest border-b border-gray-200 pb-4">The Challenges We Solve</h3>
+              <h3 className="text-sm font-bold text-gray-500 mb-6 uppercase tracking-widest border-b border-gray-200 pb-4">The Challenges We Solve</h3>
               <ul className="space-y-6">
                 <li className="flex items-start">
-                  <XCircle className="h-5 w-5 text-gray-300 shrink-0 mr-4 mt-1" />
+                  <XCircle className="h-5 w-5 text-gray-300 shrink-0 mr-4 mt-1" aria-hidden="true" />
                   <span className="text-gray-500 font-sans text-lg line-through">No more land fraud, construction mismanagement, or documentation difficulties.</span>
                 </li>
                 <li className="flex items-start">
-                  <XCircle className="h-5 w-5 text-gray-300 shrink-0 mr-4 mt-1" />
+                  <XCircle className="h-5 w-5 text-gray-300 shrink-0 mr-4 mt-1" aria-hidden="true" />
                   <span className="text-gray-500 font-sans text-lg line-through">No more relocation stress or poor communication from unreliable local agents.</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle2 className="h-6 w-6 text-[#0F766E] shrink-0 mr-4 mt-1" />
+                  <CheckCircle2 className="h-6 w-6 text-[#0F766E] shrink-0 mr-4 mt-1" aria-hidden="true" />
                   <span className="text-gray-900 font-sans text-lg font-medium">We provide complete transparency, verified land acquisition, and end-to-end concierge support.</span>
                 </li>
               </ul>
@@ -99,18 +102,18 @@ export function ExecutiveSummary() {
             
             {/* Who We Serve Pills */}
             <motion.div variants={itemVariants}>
-              <h3 className="text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest">Who We Serve</h3>
+              <h3 className="text-sm font-bold text-gray-500 mb-6 uppercase tracking-widest">Who We Serve</h3>
               <div className="flex flex-wrap gap-4">
                 <span className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white border border-gray-200 text-sm font-bold tracking-wider text-gray-700 uppercase shadow-sm">
-                  <Globe className="h-4 w-4 text-[#0F766E]" />
+                  <Globe className="h-4 w-4 text-[#0F766E]" aria-hidden="true" />
                   USA, UK, Canada, EU
                 </span>
                 <span className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white border border-gray-200 text-sm font-bold tracking-wider text-gray-700 uppercase shadow-sm">
-                  <Globe className="h-4 w-4 text-[#0F766E]" />
+                  <Globe className="h-4 w-4 text-[#0F766E]" aria-hidden="true" />
                   Diaspora
                 </span>
                 <span className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white border border-gray-200 text-sm font-bold tracking-wider text-gray-700 uppercase shadow-sm">
-                  <Globe className="h-4 w-4 text-[#0F766E]" />
+                  <Globe className="h-4 w-4 text-[#0F766E]" aria-hidden="true" />
                   Retirees
                 </span>
               </div>

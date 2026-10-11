@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
 
 @theme {
   --color-legacy-primary: #000000;
@@ -72,10 +71,40 @@
   * {
     border-color: hsl(var(--border));
   }
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchors and focused elements clear of the fixed navbar */
+    scroll-padding-top: 6rem;
+    -webkit-tap-highlight-color: rgba(15, 118, 110, 0.15);
+  }
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    scroll-behavior: smooth;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  a, button, input, label {
+    touch-action: manipulation;
+  }
+  :focus-visible {
+    outline: 3px solid #0F766E;
+    outline-offset: 2px;
+  }
+  /* Dark sections (hero photo, footer) need a light focus ring */
+  .focus-light :focus-visible {
+    outline-color: #ffffff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

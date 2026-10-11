@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dake-07.github.io/Legacy/sitemap.xml

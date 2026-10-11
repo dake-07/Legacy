@@ -7,25 +7,25 @@ export function ManagementTeam() {
     {
       name: "Peter Asare",
       role: "CEO / Business Development",
-      icon: <Briefcase className="w-10 h-10 text-[#0F766E]" />,
+      icon: <Briefcase className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
       description: "Leading the strategic vision and growth of Legacy Hub, ensuring premium service delivery for all diaspora clients."
     },
     {
       name: "Kelvin",
       role: "IT Officer",
-      icon: <Monitor className="w-10 h-10 text-[#0F766E]" />,
+      icon: <Monitor className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
       description: "Managing our digital infrastructure and ensuring seamless, secure communication channels for international investors."
     },
     {
       name: "Valerie Brown",
       role: "Partner - USA",
-      icon: <Globe className="w-10 h-10 text-[#0F766E]" />,
+      icon: <Globe className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
       description: "Our direct liaison in the United States, providing localized support and trust for North American diaspora clients."
     },
     {
       name: "Nana Abore Atta 11",
       role: "Chief of Gomoa Fetteh",
-      icon: <Landmark className="w-10 h-10 text-[#0F766E]" />,
+      icon: <Landmark className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
       description: "Providing unparalleled local authority, land verification, and traditional governance support to ensure secure acquisitions."
     }
   ]
@@ -44,7 +44,7 @@ export function ManagementTeam() {
   }
 
   return (
-    <section id="team" className="py-40 bg-transparent relative overflow-hidden border-t border-black/5">
+    <section id="team" className="py-40 bg-transparent relative overflow-hidden border-t border-black/5 scroll-mt-24">
       {/* Decorative Background Element */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-[#0F766E]/10 rounded-l-[150px] pointer-events-none -z-0 blur-[80px]"></div>
 
@@ -76,14 +76,14 @@ export function ManagementTeam() {
         >
           {team.map((member, index) => (
             <motion.div key={index} variants={itemVariants} className="h-full">
-              <Card className="h-full border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-700 bg-white group hover:-translate-y-3 rounded-[2.5rem] overflow-hidden">
+              <Card className="h-full border border-gray-200 shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-500 bg-white group hover:-translate-y-3 rounded-[2.5rem] overflow-hidden">
                 <CardContent className="p-10 text-center flex flex-col items-center h-full relative">
                   
                   {/* Subtle Background Glow on Hover */}
                   <div className="absolute inset-0 bg-gradient-to-b from-[#0F766E]/0 to-[#0F766E]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
                   {/* Icon Container */}
-                  <div className="w-24 h-24 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-10 group-hover:border-[#0F766E]/30 group-hover:bg-[#0F766E]/5 transition-all duration-700 relative z-10">
+                  <div className="w-24 h-24 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-10 group-hover:border-[#0F766E]/30 group-hover:bg-[#0F766E]/5 transition-[border-color,background-color] duration-500 relative z-10">
                     {member.icon}
                   </div>
                   

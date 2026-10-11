@@ -23,13 +23,13 @@ export function VisionMission() {
           >
             <div className="flex items-center gap-4 mb-12">
               <div className="w-12 h-12 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center">
-                <Eye className="h-5 w-5 text-gray-500" />
+                <Eye className="h-5 w-5 text-gray-500" aria-hidden="true" />
               </div>
               <span className="text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">Our Vision</span>
             </div>
             
-            <h2 className="text-5xl md:text-6xl font-serif font-bold text-gray-900 leading-tight relative tracking-tight">
-              <span className="absolute -top-12 -left-8 text-9xl text-gray-100 font-serif leading-none select-none">"</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 leading-tight relative tracking-tight">
+              <span aria-hidden="true" className="absolute -top-12 -left-8 text-9xl text-gray-100 font-serif leading-none select-none">“</span>
               To become the leading diaspora relocation and property development support company in Ghana and Africa.
             </h2>
           </motion.div>
@@ -48,7 +48,7 @@ export function VisionMission() {
               
               <div className="flex items-center gap-4 mb-10 relative z-10">
                 <div className="w-12 h-12 rounded-full bg-[#0F766E]/10 flex items-center justify-center border border-[#0F766E]/30 group-hover:bg-[#0F766E]/20 transition-colors duration-500">
-                  <Target className="h-5 w-5 text-[#0F766E]" />
+                  <Target className="h-5 w-5 text-[#0F766E]" aria-hidden="true" />
                 </div>
                 <span className="text-xs font-bold tracking-[0.3em] text-[#0F766E] uppercase">Our Mission</span>
               </div>

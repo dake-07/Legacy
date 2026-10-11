@@ -10,6 +10,7 @@ export function AboutPage() {
         <meta name="description" content="Learn about our vision, mission, and the leadership team driving Legacy." />
       </Helmet>
       <div className="pt-24 bg-[#F0FDFA]">
+        <h1 className="sr-only">About Legacy Growth &amp; Development Hub</h1>
         <VisionMission />
         <ManagementTeam />
       </div>
