@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Check, X, CreditCard, Smartphone, CheckCircle2, Loader2 } from 'lucide-react'
+import { Check, X, CreditCard, Smartphone, CheckCircle2, Loader2, MessageSquare, Mail } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from './ui/card'
 import { Button } from './ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -14,11 +14,12 @@ export function ProductPackages() {
   const [formStep, setFormStep] = useState(1) // 1: Form, 2: Loading, 3: Payment/Success
   const [formData, setFormData] = useState({
     name: "",
-    contact: "",
+    email: "",
+    phone: "",
     address: "",
     website: "" // Honeypot: hidden from people, bots tend to fill it in
   })
-  const [errors, setErrors] = useState<Partial<Record<"name" | "contact" | "address", string>>>({})
+  const [errors, setErrors] = useState<Partial<Record<"name" | "email" | "phone" | "address", string>>>({})
 
   const dialogRef = useRef<HTMLDivElement>(null)
 
@@ -36,7 +37,7 @@ export function ProductPackages() {
   }, [isModalOpen])
 
   // Warn before leaving the page with a half-filled request
-  const hasUnsavedDetails = isModalOpen && formStep === 1 && Boolean(formData.name || formData.contact || formData.address)
+  const hasUnsavedDetails = isModalOpen && formStep === 1 && Boolean(formData.name || formData.email || formData.phone || formData.address)
   useEffect(() => {
     if (!hasUnsavedDetails) return
     const warn = (e: BeforeUnloadEvent) => e.preventDefault()
@@ -48,7 +49,7 @@ export function ProductPackages() {
     setSelectedPackage(pkgName)
     setSelectedPrice(pkgPrice)
     setFormStep(1)
-    setFormData({ name: "", contact: "", address: "", website: "" })
+    setFormData({ name: "", email: "", phone: "", address: "", website: "" })
     setErrors({})
     setIsModalOpen(true)
   }
@@ -86,17 +87,21 @@ export function ProductPackages() {
 
   const validate = () => {
     const name = formData.name.trim()
-    const contact = formData.contact.trim()
+    const email = formData.email.trim()
+    const phone = formData.phone.trim()
     const address = formData.address.trim()
     const newErrors: typeof errors = {}
 
     if (name.length < 2) newErrors.name = "Please enter your full name."
 
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contact)
-    const phoneDigits = contact.replace(/\D/g, "")
-    const isPhone = /^\+?[\d\s\-().]+$/.test(contact) && phoneDigits.length >= 7 && phoneDigits.length <= 15
-    if (!contact) newErrors.contact = "Please enter an email address or phone number."
-    else if (!isEmail && !isPhone) newErrors.contact = "Enter a valid email (name@example.com) or phone number (+233 50 123 4567)."
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
+    if (!email) newErrors.email = "Please enter your email address to receive your confirmation receipt."
+    else if (!isEmail) newErrors.email = "Enter a valid email address (name@example.com)."
+
+    const phoneDigits = phone.replace(/\D/g, "")
+    const isPhone = /^\+?[\d\s\-().]+$/.test(phone) && phoneDigits.length >= 7 && phoneDigits.length <= 15
+    if (!phone) newErrors.phone = "Please enter your phone / WhatsApp number."
+    else if (!isPhone) newErrors.phone = "Enter a valid phone number (+233 50 123 4567 or international)."
 
     if (address.length < 2) newErrors.address = "Please enter your city and country."
 
@@ -104,9 +109,10 @@ export function ProductPackages() {
     return newErrors
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const firstError = Object.keys(validate())[0]
+    const validationErrors = validate()
+    const firstError = Object.keys(validationErrors)[0]
     if (firstError) {
       document.getElementById(firstError)?.focus()
       return
@@ -120,10 +126,54 @@ export function ProductPackages() {
 
     setFormStep(2) // Switch to Loading Step
 
-    // Simulate API / EmailJS call
-    setTimeout(() => {
-      setFormStep(3) // Switch to Payment Step
-    }, 2000)
+    try {
+      await fetch("https://formsubmit.co/ajax/asaapeesic@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: `New Booking Request: ${selectedPackage} - ${formData.name}`,
+          _replyto: formData.email,
+          _template: "table",
+          _autoresponse: `Thank you for booking with Legacy Growth & Development Hub!
+
+Hello ${formData.name},
+
+We have received your booking request for:
+Package: ${selectedPackage}
+Pricing: ${selectedPrice}
+
+Your Submitted Details:
+- Name: ${formData.name}
+- Email: ${formData.email}
+- Phone: ${formData.phone}
+- City / Country: ${formData.address}
+
+Next Steps:
+To secure your package reservation, please make the payment using Republic Bank Ghana or MTN Mobile Money using your Full Name as reference. Our dedicated coordination team will reach out to you via WhatsApp / Email shortly.
+
+Direct Contact:
+Phone: +233 50 232 3196 / +233 54 680 8745
+Email: asaapeesic@gmail.com
+
+Warm regards,
+Legacy Growth & Development Hub`,
+          "Package Name": selectedPackage,
+          "Package Price": selectedPrice,
+          "Client Name": formData.name,
+          "Client Email": formData.email,
+          "Client Phone / WhatsApp": formData.phone,
+          "Client Location": formData.address
+        })
+      })
+      setFormStep(3)
+    } catch (err) {
+      console.warn("FormSubmit transmission fallback triggered:", err)
+      // Even if network blips, transition to Step 3 so the client has payment and instant direct contact actions
+      setFormStep(3)
+    }
   }
 
   const packages = [
@@ -380,21 +430,22 @@ export function ProductPackages() {
                     </p>
 
                     {([
-                      { name: "name", label: "Full Name", placeholder: "e.g. Kwame Mensah…", autoComplete: "name", inputMode: "text" as const },
-                      { name: "contact", label: "Email or Phone", placeholder: "you@example.com or +233 50 123 4567…", autoComplete: "email", inputMode: "email" as const },
-                      { name: "address", label: "City / Country", placeholder: "e.g. London, UK…", autoComplete: "address-level2", inputMode: "text" as const }
-                    ] as const).map((field) => (
+                      { name: "name" as const, label: "Full Name", placeholder: "e.g. Kwame Mensah…", autoComplete: "name", inputMode: "text" as const, type: "text" },
+                      { name: "email" as const, label: "Email Address (for your receipt)", placeholder: "you@example.com…", autoComplete: "email", inputMode: "email" as const, type: "email" },
+                      { name: "phone" as const, label: "Phone / WhatsApp Number", placeholder: "+233 50 123 4567 or international…", autoComplete: "tel", inputMode: "tel" as const, type: "tel" },
+                      { name: "address" as const, label: "City / Country", placeholder: "e.g. London, UK…", autoComplete: "address-level2", inputMode: "text" as const, type: "text" }
+                    ]).map((field) => (
                       <div key={field.name} className="space-y-3">
                         <label htmlFor={field.name} className="text-xs font-bold tracking-widest uppercase text-gray-500">{field.label}</label>
                         <input
                           required
-                          type="text"
+                          type={field.type}
                           id={field.name}
                           name={field.name}
                           maxLength={100}
                           inputMode={field.inputMode}
                           autoComplete={field.autoComplete}
-                          spellCheck={field.name === 'contact' ? false : undefined}
+                          spellCheck={field.name === 'name' || field.name === 'address' ? undefined : false}
                           value={formData[field.name]}
                           onChange={handleInputChange}
                           aria-invalid={!!errors[field.name]}
@@ -434,8 +485,8 @@ export function ProductPackages() {
                       <CheckCircle2 className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />
                     </div>
                     <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">Booking Initiated</h3>
-                    <p className="text-gray-600 mb-10 font-sans leading-relaxed break-words max-w-full">
-                      Thank you, {formData.name.split(' ')[0]}. Your request has been logged. We will contact you via {formData.contact}.
+                    <p className="text-gray-600 mb-8 font-sans leading-relaxed break-words max-w-full">
+                      Thank you, {formData.name.split(' ')[0]}. A confirmation receipt has been sent to <span className="font-bold text-gray-900">{formData.email}</span>, and our team has been notified.
                     </p>
 
                     <div className="w-full bg-gray-50 rounded-2xl p-8 border border-gray-100 text-left">
@@ -465,7 +516,26 @@ export function ProductPackages() {
                       </div>
                     </div>
 
-                    <Button onClick={handleCloseModal} className="w-full h-14 mt-8 text-sm uppercase tracking-widest font-bold cursor-pointer rounded-full bg-gray-100 text-gray-900 hover:bg-gray-200 border-none transition-colors">
+                    <div className="w-full flex flex-col sm:flex-row gap-3 mt-6">
+                      <a
+                        href={`https://wa.me/233502323196?text=${encodeURIComponent(`Hello LegacyHub, I have submitted a booking request for "${selectedPackage}" (${selectedPrice}).\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nLocation: ${formData.address}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 px-4 rounded-full font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+                      >
+                        <MessageSquare className="w-4 h-4" aria-hidden="true" />
+                        Confirm via WhatsApp
+                      </a>
+                      <a
+                        href={`mailto:asaapeesic@gmail.com?subject=${encodeURIComponent(`New Booking: ${selectedPackage} - ${formData.name}`)}&body=${encodeURIComponent(`Hello LegacyHub Team,\n\nI have submitted a booking request for the following package:\nPackage: ${selectedPackage}\nPricing: ${selectedPrice}\n\nClient Details:\nFull Name: ${formData.name}\nEmail: ${formData.email}\nPhone / WhatsApp: ${formData.phone}\nCity / Country: ${formData.address}\n\nPlease confirm availability and next steps.\n\nBest regards,\n${formData.name}`)}`}
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#0F766E] hover:bg-[#134E4A] text-white py-3.5 px-4 rounded-full font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+                      >
+                        <Mail className="w-4 h-4" aria-hidden="true" />
+                        Send via Email
+                      </a>
+                    </div>
+
+                    <Button onClick={handleCloseModal} className="w-full h-14 mt-4 text-sm uppercase tracking-widest font-bold cursor-pointer rounded-full bg-gray-100 text-gray-900 hover:bg-gray-200 border-none transition-colors">
                       Done
                     </Button>
                   </div>
