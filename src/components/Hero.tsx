@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const images = [
   { src: `${import.meta.env.BASE_URL}hero_ghana_home.webp`, alt: "Modern villa with a pool and tropical garden at sunset in Ghana" },
-  { src: `${import.meta.env.BASE_URL}hero_ghana_nature.webp`, alt: "Two hikers on a trail overlooking forested hills in Ghana" }
+  { src: `${import.meta.env.BASE_URL}hero_ghana_beach.webp`, alt: "Pristine oceanfront coastline with luxury beachfront villas in Ghana" }
 ]
 
 export function Hero() {
@@ -156,7 +156,7 @@ export function Hero() {
 
             {/* Smaller Stacked Card */}
             <div className="min-w-[160px] h-[220px] rounded-3xl overflow-hidden relative group shadow-xl border border-white/10">
-              <img src={`${import.meta.env.BASE_URL}hero_ghana_nature.webp`} alt="Hikers on a forest trail in the hills" width={1024} height={1024} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src={`${import.meta.env.BASE_URL}hero_ghana_beach.webp`} alt="Oceanfront coastline with luxury beachfront villas in Ghana" width={1024} height={1024} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
             </div>
           </motion.div>

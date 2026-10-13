@@ -15,33 +15,44 @@ export function HomePage() {
       </Helmet>
       <div>
         <Hero />
-      <ExecutiveSummary />
-      <CoreServices />
+        <ExecutiveSummary />
+        <CoreServices />
       
-      {/* Packages Teaser */}
-      <section className="py-24 bg-[#F0FDFA] relative overflow-hidden border-t border-[#99F6E4]/30">
-        <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#134E4A] mb-6 tracking-tight">Ready to Secure Your Legacy?</h2>
-            <p className="text-lg text-[#134E4A]/70 font-sans max-w-2xl mx-auto mb-10">Explore our comprehensive relocation, land acquisition, and construction monitoring packages tailored to your exact needs.</p>
-            <Link 
-              to="/packages"
-              className="inline-flex items-center gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] transition-[background-color,transform,box-shadow] duration-300 pl-8 pr-3 py-3 rounded-full text-sm font-bold uppercase tracking-widest group mx-auto shadow-xl hover:shadow-2xl hover:-translate-y-1"
+        {/* Packages Teaser */}
+        <section className="py-24 bg-[#F0FDFA] relative overflow-hidden border-t border-[#99F6E4]/30">
+          <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
-              View Our Packages
-              <div className="w-10 h-10 rounded-full bg-white text-[#0F766E] flex items-center justify-center group-hover:bg-[#E8F0F3] transition-colors shrink-0">
-                <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#134E4A] mb-6 tracking-tight">Ready to Secure Your Legacy?</h2>
+              <p className="text-lg text-[#134E4A]/70 font-sans max-w-2xl mx-auto mb-10">Explore our comprehensive relocation, land acquisition, and construction monitoring packages tailored to your exact needs.</p>
+              <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                <Link 
+                  to="/packages"
+                  className="inline-flex items-center gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] transition-[background-color,transform,box-shadow] duration-300 pl-8 pr-3 py-3 rounded-full text-sm font-bold uppercase tracking-widest group shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                >
+                  View Our Packages
+                  <div className="w-10 h-10 rounded-full bg-white text-[#0F766E] flex items-center justify-center group-hover:bg-[#E8F0F3] transition-colors shrink-0">
+                    <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                </Link>
+                <Link
+                  to="/partners"
+                  className="inline-flex items-center gap-3 bg-white text-[#134E4A] border border-[#99F6E4] hover:bg-[#F0FDFA] transition-[background-color,transform,box-shadow] duration-300 pl-8 pr-3 py-3 rounded-full text-sm font-bold uppercase tracking-widest group shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                >
+                  Building Partners
+                  <div className="w-10 h-10 rounded-full bg-[#0F766E]/10 text-[#0F766E] flex items-center justify-center group-hover:bg-[#0F766E] group-hover:text-white transition-colors shrink-0">
+                    <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                </Link>
               </div>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-    </div>
+            </motion.div>
+          </div>
+        </section>
+      </div>
     </>
   )
 }
