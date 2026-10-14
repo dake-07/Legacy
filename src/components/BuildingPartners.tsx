@@ -143,19 +143,19 @@ export const developerPartners: DeveloperPartner[] = [
   {
     id: 'richard-osabutey',
     name: 'Richard Osabutey',
-    tagline: 'Contemporary Architectural Concepts, Luxury Villas & Custom Builds',
-    category: 'Architectural & Villa Design',
+    tagline: 'Architectural Designer & Custom Home Builder',
+    category: 'Architectural Design & Build',
     experience: 'Over 10 Years',
     completed: '25+ Design Projects',
     location: 'Greater Accra & Nationwide',
     image: `${baseUrl}partners/richard-osabutey/photo_20_2026-10-13_22-13-39.jpg`,
     specialties: [
-      'Contemporary Cantilever Villas',
-      'Custom 3D Concept Architecture',
-      'Modern Gated Townhomes',
-      'On-Site Construction Supervision'
+      'Custom Home Design',
+      '3D Plans & Visuals',
+      'Modern Family Homes',
+      'On-Site Supervision'
     ],
-    description: 'Specializes in bold, contemporary architecture and turnkey residential builds tailored for diaspora clients. From initial 3D concept visualizations to rigorous on-the-ground structural execution in Ghana, Richard transforms bespoke homeowner visions into built realities.',
+    description: 'A trusted designer and builder with over 10 years of experience helping diaspora families build quality homes in Ghana. Known for honest communication, dependable timelines, and hands-on supervision from the first drawing to the finished build.',
     designs: richardOsabuteyDesigns
   },
   {
@@ -478,7 +478,7 @@ export function BuildingPartners() {
                     onClick={() => handleOpenConsultation(partner)}
                     className="w-full inline-flex items-center justify-center gap-2.5 sm:gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] active:scale-[0.99] transition-all duration-200 py-3.5 px-6 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider shadow-md hover:shadow-lg cursor-pointer touch-manipulation"
                   >
-                    <span>Consult on {partner.name.split(' ')[0]}</span>
+                    <span>Connect with {partner.name}</span>
                     <ArrowRight className="w-4 h-4 shrink-0" />
                   </button>
                 </div>
