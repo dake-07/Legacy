@@ -1,5 +1,5 @@
 import { motion, type Variants } from 'framer-motion'
-import { CheckCircle2, XCircle, Globe, ShieldCheck } from 'lucide-react'
+import { CheckCircle2, XCircle, Globe } from 'lucide-react'
 
 export function ExecutiveSummary() {
   const containerVariants = {
@@ -39,21 +39,6 @@ export function ExecutiveSummary() {
                 className="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none opacity-60"></div>
-              
-              {/* Floating Glass Badge */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="absolute bottom-8 right-4 sm:-right-8 md:-right-12 bg-white/90 backdrop-blur-xl border border-gray-100 rounded-3xl p-8 shadow-xl max-w-[220px] z-20"
-              >
-                <div className="flex items-center gap-4 mb-3">
-                  <ShieldCheck className="h-10 w-10 text-[#0F766E]" aria-hidden="true" />
-                  <span className="text-4xl font-serif font-bold text-gray-900 tabular-nums">100%</span>
-                </div>
-                <p className="text-sm font-sans text-gray-600 leading-relaxed uppercase tracking-widest font-bold">Verified & Secure</p>
-              </motion.div>
             </div>
             
             {/* Background Blob for Depth */}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUpRight, Pause, Play } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { FreeConsultationDialog } from './FreeConsultationDialog'
 
 const images = [
   { src: `${import.meta.env.BASE_URL}hero_ghana_home.webp`, alt: "Modern villa with a pool and tropical garden at sunset in Ghana" },
@@ -9,6 +10,7 @@ const images = [
 ]
 
 export function Hero() {
+  const [consultation, setConsultation] = useState({ open: false, requestId: 0 })
   const [currentImage, setCurrentImage] = useState(0)
   // The slideshow starts paused for people who ask their device for reduced motion
   const [paused, setPaused] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -83,12 +85,12 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md mx-auto"
           >
-            <Link to="/packages" className="flex items-center justify-between sm:justify-start gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] transition-colors duration-300 pl-6 pr-2 py-2.5 rounded-full text-base font-medium group shadow-xl">
-              Book a Free Consultation
+            <button type="button" onClick={() => setConsultation(previous => ({ open: true, requestId: previous.requestId + 1 }))} aria-haspopup="dialog" className="flex items-center justify-between sm:justify-start gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] transition-colors duration-300 pl-6 pr-2 py-2.5 rounded-full text-base font-medium group shadow-xl cursor-pointer">
+              Request a free consultation
               <div className="w-8 h-8 rounded-full bg-white text-[#0F766E] flex items-center justify-center group-hover:bg-[#E8F0F3] transition-colors shrink-0">
                 <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
               </div>
-            </Link>
+            </button>
             
             <Link to="/packages" className="flex items-center justify-center gap-3 bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-colors duration-300 px-8 py-2.5 rounded-full text-base font-medium shadow-xl">
               View Packages
@@ -96,15 +98,14 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Bottom Overlapping Section */}
-        <div className="flex flex-col lg:flex-row justify-between w-full items-end gap-6 mb-2">
-          
-          {/* Trust Indicator Pill */}
+        {/* Bottom Section */}
+        <div className="flex justify-between w-full items-end mb-2">
+          {/* Slideshow Control */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex items-center gap-3 self-end"
+            className="flex items-center gap-3"
           >
             <button
               type="button"
@@ -114,66 +115,10 @@ export function Hero() {
             >
               {paused ? <Play className="w-4 h-4" aria-hidden="true" /> : <Pause className="w-4 h-4" aria-hidden="true" />}
             </button>
-            <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-full py-4 px-6 shadow-2xl relative overflow-hidden hidden sm:block">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
-            
-            <div className="relative z-10 flex items-center gap-4">
-              <div className="flex -space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-teal-800 to-teal-600 border-2 border-white/30 overflow-hidden flex items-center justify-center text-white text-xs font-bold shadow-sm" title="Diaspora Client">
-                  <span>K</span>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-teal-700 to-emerald-600 border-2 border-white/30 overflow-hidden flex items-center justify-center text-white text-xs font-bold shadow-sm" title="Diaspora Client">
-                  <span>A</span>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-teal-900 to-teal-700 border-2 border-white/30 overflow-hidden flex items-center justify-center text-white text-xs font-bold shadow-sm" title="Diaspora Client">
-                  <span>M</span>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-white text-sm font-bold tracking-wide">500+&nbsp;Families</span>
-                <span className="text-white/70 text-xs uppercase tracking-widest">Successfully Relocated</span>
-              </div>
-            </div>
-            </div>
           </motion.div>
-
-          {/* Right Image Cards Carousel */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex gap-4 overflow-x-auto pb-4 lg:pb-0 hide-scrollbar"
-          >
-            {/* Active/Large Card */}
-            <div className="min-w-[280px] lg:min-w-[320px] h-[220px] rounded-3xl overflow-hidden relative group shadow-2xl border border-white/10">
-              <img src={`${import.meta.env.BASE_URL}hero_ghana_home.webp`} alt="Modern villa with a pool and tropical garden" width={1024} height={1024} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="text-white text-lg font-medium mb-1">Premium Properties</p>
-                <p className="text-white/70 text-xs leading-relaxed">Step into luxurious modern living and experience the comfort of your dream home in Ghana.</p>
-              </div>
-            </div>
-
-            {/* Smaller Stacked Card */}
-            <div className="min-w-[160px] h-[220px] rounded-3xl overflow-hidden relative group shadow-xl border border-white/10">
-              <img src={`${import.meta.env.BASE_URL}hero_ghana_beach.webp`} alt="Oceanfront coastline with luxury beachfront villas in Ghana" width={1024} height={1024} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-            </div>
-          </motion.div>
-
         </div>
       </div>
-      
-      {/* Utility style to hide scrollbar for horizontal scrolling on mobile */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}} />
+      <FreeConsultationDialog key={consultation.requestId} open={consultation.open} onClose={() => setConsultation(previous => ({ ...previous, open: false }))} />
     </section>
   )
 }
