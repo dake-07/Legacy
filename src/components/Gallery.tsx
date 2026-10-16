@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { X, ChevronLeft, ChevronRight, Maximize2, ArrowUpRight } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize2, ArrowUpRight, LayoutGrid, SlidersHorizontal } from 'lucide-react'
 
 type Category = 'All' | 'Construction' | 'Site Inspections' | 'Land & Development'
 
@@ -66,7 +66,7 @@ const galleryPhotos: PhotoItem[] = [
   {
     id: 'project-09',
     src: `${baseUrl}portfolio/project-09.webp`,
-    title: 'Gomoa Fetteh Land Demarcation',
+    title: 'Overview of Gomoa Fetteh',
     category: 'Land & Development'
   },
   {
@@ -130,6 +130,7 @@ const categories: Category[] = ['All', 'Construction', 'Site Inspections', 'Land
 export function Gallery() {
   const [activeCategory, setActiveCategory] = useState<Category>('All')
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [layoutMode, setLayoutMode] = useState<'swipe' | 'grid'>('swipe')
   
   const carouselRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
@@ -207,6 +208,17 @@ export function Gallery() {
     setSelectedIndex(index)
   }
 
+  const handleOpenGomoaLightbox = () => {
+    const idx = filteredPhotos.findIndex(p => p.id === 'project-09')
+    if (idx !== -1) {
+      setSelectedIndex(idx)
+    } else {
+      setActiveCategory('All')
+      const allIdx = galleryPhotos.findIndex(p => p.id === 'project-09')
+      setSelectedIndex(allIdx !== -1 ? allIdx : 0)
+    }
+  }
+
   const handleCloseLightbox = () => {
     setSelectedIndex(null)
   }
@@ -245,48 +257,155 @@ export function Gallery() {
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <span className="w-10 h-[1.5px] bg-[#0F766E]"></span>
-              <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">Visual Portfolio</span>
+        <div className="mb-10 max-w-3xl">
+          <div className="flex items-center gap-4 mb-3">
+            <span className="w-10 h-[1.5px] bg-[#0F766E]"></span>
+            <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">Visual Portfolio</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 tracking-tight mb-3">
+            On-the-Ground Project Gallery
+          </h1>
+          <p className="text-gray-600 font-sans text-base md:text-lg leading-relaxed">
+            Real progress photos, verified demarcation, and active build monitoring across our developments in Ghana.
+          </p>
+        </div>
+
+        {/* Featured Mini-Hero: Overview of Gomoa Fetteh */}
+        <div className="mb-14 rounded-3xl lg:rounded-[2.5rem] overflow-hidden shadow-xl border border-gray-200/90 bg-stone-950 relative group">
+          <div className="relative h-[320px] sm:h-[400px] md:h-[460px] lg:h-[500px] w-full overflow-hidden">
+            <img
+              src={`${baseUrl}portfolio/gomoa-fetteh-overview.webp`}
+              alt="Overview of Gomoa Fetteh"
+              width={1600}
+              height={1067}
+              fetchPriority="high"
+              className="w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105 select-none"
+            />
+
+            {/* Gradient Scrims for contrast & high text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-950/25 to-transparent pointer-events-none" />
+
+            {/* Content Overlay */}
+            <div className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-between z-10">
+              {/* Top Tag Badges */}
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[11px] font-bold tracking-widest uppercase shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-[#2DD4BF] animate-pulse" />
+                  Featured Development
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-stone-900/60 backdrop-blur-md text-white/90 text-[11px] font-semibold tracking-wider uppercase border border-white/15">
+                  Land & Development
+                </span>
+              </div>
+
+              {/* Bottom Details */}
+              <div className="max-w-3xl">
+                <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight drop-shadow-lg mb-2 sm:mb-3">
+                  Overview of Gomoa Fetteh
+                </h2>
+                <p className="text-stone-200 text-sm sm:text-base md:text-lg font-sans font-normal leading-relaxed max-w-2xl drop-shadow mb-5 sm:mb-6">
+                  Aerial coastal masterplan showcasing demarcated residential parcels, coastal access corridors, and planned community infrastructure in Ghana.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleOpenGomoaLightbox}
+                    className="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-stone-100 px-6 py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-lg cursor-pointer"
+                  >
+                    <Maximize2 className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />
+                    View Full Image
+                  </button>
+                  <Link
+                    to="/packages"
+                    className="inline-flex items-center gap-2 bg-stone-900/60 hover:bg-stone-900/80 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-lg"
+                  >
+                    Book Site Inspection
+                    <ArrowUpRight className="w-4 h-4 text-[#2DD4BF]" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
             </div>
-            <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 tracking-tight">
-              On-the-Ground Project Gallery
-            </h1>
+          </div>
+        </div>
+
+        {/* Section Heading & Controls for Other Portfolio Images */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 tracking-tight">
+              On-Site Records & Construction Updates
+            </h3>
+            <p className="text-sm text-gray-500 font-sans mt-1">
+              Browse verified construction stages, boundary checks, and site inspections.
+            </p>
           </div>
 
-          {/* Navigation Controls */}
-          <div className="flex items-center gap-3 self-end md:self-auto shrink-0">
-            <button
-              onClick={() => scroll('left')}
-              disabled={!canScrollLeft}
-              aria-label="Scroll gallery left"
-              className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all ${
-                canScrollLeft
-                  ? 'border-gray-300 text-gray-800 hover:bg-[#0F766E] hover:text-white hover:border-[#0F766E] shadow-sm cursor-pointer'
-                  : 'border-gray-200 text-gray-300 cursor-not-allowed opacity-50'
-              }`}
-            >
-              <ChevronLeft className="w-5 h-5" aria-hidden="true" />
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              disabled={!canScrollRight}
-              aria-label="Scroll gallery right"
-              className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all ${
-                canScrollRight
-                  ? 'border-gray-300 text-gray-800 hover:bg-[#0F766E] hover:text-white hover:border-[#0F766E] shadow-sm cursor-pointer'
-                  : 'border-gray-200 text-gray-300 cursor-not-allowed opacity-50'
-              }`}
-            >
-              <ChevronRight className="w-5 h-5" aria-hidden="true" />
-            </button>
+          <div className="flex items-center justify-between sm:justify-end gap-3 w-full md:w-auto">
+            {/* View Mode Toggle: Hybrid Swipe (2-Row) vs Vertical Grid */}
+            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-full border border-gray-200">
+              <button
+                type="button"
+                onClick={() => setLayoutMode('swipe')}
+                aria-label="Horizontal 2-row swipe view"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  layoutMode === 'swipe'
+                    ? 'bg-[#0F766E] text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Swipe (2-Row)</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setLayoutMode('grid')}
+                aria-label="Hybrid vertical grid view"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  layoutMode === 'grid'
+                    ? 'bg-[#0F766E] text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <LayoutGrid className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Vertical Grid</span>
+              </button>
+            </div>
+
+            {/* Navigation Controls (Visible in swipe mode) */}
+            {layoutMode === 'swipe' && (
+              <div className="hidden sm:flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => scroll('left')}
+                  disabled={!canScrollLeft}
+                  aria-label="Scroll gallery left"
+                  className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${
+                    canScrollLeft
+                      ? 'border-gray-300 text-gray-800 hover:bg-[#0F766E] hover:text-white hover:border-[#0F766E] shadow-sm cursor-pointer'
+                      : 'border-gray-200 text-gray-300 cursor-not-allowed opacity-50'
+                  }`}
+                >
+                  <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                </button>
+                <button
+                  onClick={() => scroll('right')}
+                  disabled={!canScrollRight}
+                  aria-label="Scroll gallery right"
+                  className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${
+                    canScrollRight
+                      ? 'border-gray-300 text-gray-800 hover:bg-[#0F766E] hover:text-white hover:border-[#0F766E] shadow-sm cursor-pointer'
+                      : 'border-gray-200 text-gray-300 cursor-not-allowed opacity-50'
+                  }`}
+                >
+                  <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2.5 mb-10">
+        <div className="flex flex-wrap items-center gap-2 mb-8">
           {categories.map(cat => {
             const isActive = activeCategory === cat
             return (
@@ -294,7 +413,7 @@ export function Gallery() {
                 key={cat}
                 type="button"
                 onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
                   isActive
                     ? 'bg-[#0F766E] text-white shadow-md'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -310,60 +429,124 @@ export function Gallery() {
         </div>
       </div>
 
-      {/* Horizontal Carousel Track (Full-bleed with left margin alignment) */}
-      <div className="w-full relative">
-        <div
-          ref={carouselRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          className="flex gap-6 overflow-x-auto px-4 md:px-8 lg:px-12 pb-8 pt-2 snap-x snap-mandatory scroll-smooth no-scrollbar select-none cursor-grab active:cursor-grabbing"
-          style={{ scrollPaddingLeft: '2rem' }}
-        >
-          {filteredPhotos.map((photo, index) => (
-            <motion.div
-              key={photo.id}
-              layout
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => {
-                if (!hasDragged.current) {
-                  handleOpenLightbox(index)
-                }
-              }}
-              className="snap-start shrink-0 w-[84vw] sm:w-[420px] md:w-[480px] lg:w-[540px] aspect-[16/11] sm:aspect-[4/3] rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1.5 bg-gray-100 border border-gray-200/80"
-            >
-              {/* Image */}
-              <img
-                src={photo.src}
-                alt={photo.title}
-                width={1400}
-                height={1050}
-                loading="lazy"
-                draggable={false}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none"
-              />
+      {layoutMode === 'swipe' ? (
+        /* Hybrid Horizontal Track: 2-Row Grid on Mobile, 1-Row Carousel on Desktop */
+        <div className="w-full relative">
+          <div
+            ref={carouselRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            className="grid grid-rows-2 grid-flow-col auto-cols-[74vw] sm:auto-cols-[340px] md:flex md:flex-row md:overflow-x-auto gap-3.5 md:gap-6 px-4 md:px-8 lg:px-12 pb-8 pt-2 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar select-none cursor-grab active:cursor-grabbing"
+            style={{ scrollPaddingLeft: '1.5rem' }}
+          >
+            {filteredPhotos.map((photo, index) => (
+              <motion.div
+                key={photo.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => {
+                  if (!hasDragged.current) {
+                    handleOpenLightbox(index)
+                  }
+                }}
+                className="snap-start shrink-0 w-[74vw] sm:w-[340px] md:w-[480px] lg:w-[540px] aspect-[16/10] sm:aspect-[4/3] rounded-2xl md:rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1.5 bg-gray-100 border border-gray-200/80"
+              >
+                {/* Image */}
+                <img
+                  src={photo.src}
+                  alt={photo.title}
+                  width={1400}
+                  height={1050}
+                  loading="lazy"
+                  draggable={false}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none"
+                />
 
-              {/* Category Pill Tag */}
-              <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                <span className="inline-block px-3.5 py-1.5 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-[#0F766E] shadow-sm">
-                  {photo.category}
-                </span>
-              </div>
-
-              {/* Hover Quick Zoom Overlay */}
-              <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                <div className="w-12 h-12 rounded-full bg-white/95 text-[#0F766E] flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                  <Maximize2 className="w-5 h-5" aria-hidden="true" />
+                {/* Category Pill Tag */}
+                <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
+                  <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-[#0F766E] shadow-sm">
+                    {photo.category}
+                  </span>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Bottom Title Bar */}
+                <div className="absolute inset-x-0 bottom-0 p-4 pt-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none">
+                  <p className="text-white font-sans text-xs sm:text-base font-semibold tracking-wide drop-shadow-sm truncate">
+                    {photo.title}
+                  </p>
+                </div>
+
+                {/* Hover Quick Zoom Overlay */}
+                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/95 text-[#0F766E] flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <Maximize2 className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Hybrid Vertical Grid: Mixed Horizontal Banners + Vertical Cards on Mobile */
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 pb-6">
+            {filteredPhotos.map((photo, index) => {
+              // Hybrid pattern: every 5th item spans full-width 2-columns (horizontal banner) on mobile
+              const isWide = index % 5 === 0
+              return (
+                <motion.div
+                  key={photo.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => handleOpenLightbox(index)}
+                  className={`${
+                    isWide ? 'col-span-2 aspect-[16/9] md:col-span-1 md:aspect-[4/3]' : 'col-span-1 aspect-[4/5] md:aspect-[4/3]'
+                  } rounded-2xl md:rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1 bg-gray-100 border border-gray-200/80`}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.title}
+                    width={1400}
+                    height={1050}
+                    loading="lazy"
+                    draggable={false}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none"
+                  />
+
+                  {/* Category Pill Tag */}
+                  <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                    <span className="inline-block px-2.5 py-1 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-bold tracking-widest uppercase text-[#0F766E] shadow-sm">
+                      {photo.category}
+                    </span>
+                  </div>
+
+                  {/* Bottom Title Bar */}
+                  <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none">
+                    <p className="text-white font-sans text-xs sm:text-sm font-semibold tracking-wide drop-shadow-sm truncate">
+                      {photo.title}
+                    </p>
+                  </div>
+
+                  {/* Hover Quick Zoom Overlay */}
+                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                    <div className="w-10 h-10 rounded-full bg-white/95 text-[#0F766E] flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                      <Maximize2 className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         {/* Bottom Booking CTA Banner */}
@@ -447,15 +630,20 @@ export function Gallery() {
                 />
               </div>
 
-              {/* Clean Footer Bar (No descriptions) */}
-              <div className="flex items-center justify-between w-full max-w-2xl px-2">
-                <span className="text-xs font-bold tracking-widest text-white/70 uppercase">
-                  {filteredPhotos[selectedIndex].category} &bull; {selectedIndex + 1} of {filteredPhotos.length}
-                </span>
+              {/* Clean Footer Bar */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full max-w-2xl px-2 gap-3">
+                <div>
+                  <h3 className="text-white font-sans font-semibold text-base sm:text-lg leading-snug">
+                    {filteredPhotos[selectedIndex].title}
+                  </h3>
+                  <span className="text-[11px] font-bold tracking-widest text-white/70 uppercase">
+                    {filteredPhotos[selectedIndex].category} &bull; {selectedIndex + 1} of {filteredPhotos.length}
+                  </span>
+                </div>
                 <Link
                   to="/packages"
                   onClick={handleCloseLightbox}
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#2DD4BF] hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#2DD4BF] hover:text-white transition-colors shrink-0"
                 >
                   Book Inspection Package
                   <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
