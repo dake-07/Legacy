@@ -70,7 +70,7 @@ export function TermsPage() {
                   Service packages require initial deposit confirmation prior to field mobilization.
                 </p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li>Deposits can be executed via verified bank transfer (Republic Bank Ghana) or MTN Mobile Money.</li>
+                  <li>Deposits can be executed via verified bank transfer (CBG) or MTN Mobile Money.</li>
                   <li>All invoices and pricing are quoted in USD or equivalent Ghanaian Cedis (GHS) at prevailing commercial exchange rates.</li>
                   <li>Monthly construction monitoring subscriptions are billed at the beginning of each 30-day inspection cycle.</li>
                 </ul>

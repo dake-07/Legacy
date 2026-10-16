@@ -139,7 +139,15 @@ Your Submitted Details:
 - City / Country: ${formData.address}
 
 Next Steps:
-To secure your package reservation, please make the payment using Republic Bank Ghana or MTN Mobile Money using your Full Name as reference. Our dedicated coordination team will reach out to you via WhatsApp / Email shortly.
+To secure your package reservation, please make the payment using CBG or MTN Mobile Money using your Full Name as reference.
+
+Bank Transfer Details:
+- Bank: CBG
+- Account Name: Legacy Growth and Development Hub
+- Account Number: 2537968640001
+- Branch: Manet Tower
+
+Our dedicated coordination team will reach out to you via WhatsApp / Email shortly.
 
 Direct Contact:
 Phone: +233 50 232 3196 / +233 54 680 8745
@@ -281,9 +289,10 @@ Legacy Growth & Development Hub`,
                       <div className="space-y-4 font-sans">
                         <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
                           <div className="text-[10px] tracking-widest text-[#0F766E] uppercase mb-2">Bank Transfer</div>
-                          <div className="text-sm text-gray-600 mb-1">Bank: <span className="text-gray-900 font-bold">Republic Bank Ghana</span></div>
-                          <div className="text-sm text-gray-600 mb-1">Account: <span className="text-gray-900 font-bold">Legacy Growth Hub</span></div>
-                          <div className="text-sm text-gray-600">Number: <span className="text-gray-900 font-bold tabular-nums">00112233445566</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Bank: <span className="text-gray-900 font-bold">CBG</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Account Name: <span className="text-gray-900 font-bold">Legacy Growth and Development Hub</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Account Number: <span className="text-gray-900 font-bold tabular-nums tracking-wide">2537968640001</span></div>
+                          <div className="text-sm text-gray-600">Branch: <span className="text-gray-900 font-bold">Manet Tower</span></div>
                         </div>
                         
                         <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
