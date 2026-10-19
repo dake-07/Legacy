@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect, Suspense, lazy } from 'react'
+import { useEffect, useLayoutEffect, useRef, Suspense, lazy } from 'react'
 import { MotionConfig } from 'framer-motion'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
@@ -14,25 +14,58 @@ const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then(mo
 const TermsPage = lazy(() => import('./pages/TermsPage').then(module => ({ default: module.TermsPage })))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then(module => ({ default: module.NotFoundPage })))
 
-// Utility component to scroll to top on route change, or to the #section in the URL
+// Utility component to handle instant scroll resets across page routes
+// and smooth scrolling for in-page anchors
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
+  const prevPathnameRef = useRef(pathname);
+
+  // Disable browser automatic scroll restoration to prevent jitter across SPA route changes
   useEffect(() => {
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    const isNewPage = prevPathnameRef.current !== pathname;
+    prevPathnameRef.current = pathname;
+
     if (!hash) {
-      window.scrollTo(0, 0);
+      // Instant reset to top on page change before the browser paints
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       return;
     }
-    // Pages are lazy-loaded, so wait for the target section to render
-    let attempts = 0;
-    const timer = setInterval(() => {
-      const target = document.getElementById(hash.slice(1));
-      if (target || ++attempts > 20) {
-        clearInterval(timer);
-        target?.scrollIntoView({ behavior: 'smooth' });
+
+    const targetId = hash.slice(1);
+
+    if (isNewPage) {
+      // When navigating to a new page with a hash (e.g. /about#team from another page):
+      // Immediately reset to top first so it NEVER starts at the bottom of the previous page
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+      // Poll until the lazy-loaded section mounts, then jump directly to it
+      let attempts = 0;
+      const timer = setInterval(() => {
+        const target = document.getElementById(targetId);
+        if (target) {
+          clearInterval(timer);
+          target.scrollIntoView({ behavior: 'instant' });
+        } else if (++attempts > 30) {
+          clearInterval(timer);
+        }
+      }, 30);
+
+      return () => clearInterval(timer);
+    } else {
+      // In-page anchor click (e.g. clicking an anchor while already on the same page)
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100);
-    return () => clearInterval(timer);
+    }
   }, [pathname, hash]);
+
   return null;
 }
 
