@@ -37,6 +37,13 @@ export function ConsultationDialog({ selectedPartner, selectedDesignTitle, onClo
     setErrors(nextErrors)
     const firstError = Object.keys(nextErrors)[0]
     if (firstError) { document.getElementById(`partner-${firstError}`)?.focus(); return }
+    
+    // Honeypot trap: if filled by a bot, silently complete without sending
+    if (formData.website) {
+      setSubmitted(true)
+      return
+    }
+
     setFailure('')
     setIsSubmitting(true)
     try {
@@ -64,6 +71,17 @@ export function ConsultationDialog({ selectedPartner, selectedDesignTitle, onClo
           {selectedDesignTitle && <p className="mb-4 rounded-lg border border-teal-200 bg-[#F0FDFA] p-3 text-sm leading-relaxed text-[#134E4A]">Selected design: <strong>{selectedDesignTitle}</strong></p>}
           <p className="mb-6 text-base leading-relaxed text-gray-700">Send your project details to the Legacy Hub team. We’ll follow up to discuss your requirements and coordinate the next steps with your chosen partner.</p>
           <form onSubmit={handleSubmit} noValidate className="space-y-5" aria-busy={isSubmitting}>
+            {/* Honeypot field for spam bots */}
+            <div className="hidden" aria-hidden="true">
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.website || ''}
+                onChange={event => setFormData(previous => ({ ...previous, website: event.target.value }))}
+              />
+            </div>
             {fields.map(field => <div key={field.name}>
               <label htmlFor={`partner-${field.name}`} className="mb-2 block text-sm font-semibold text-gray-900">{field.label} <span className="font-normal text-gray-600">(required)</span></label>
               <input id={`partner-${field.name}`} name={field.name} type={field.type} autoComplete={field.autoComplete} inputMode={field.name === 'phone' ? 'tel' : field.name === 'email' ? 'email' : 'text'} spellCheck={false} required maxLength={100} disabled={isSubmitting} value={formData[field.name]} onChange={event => { setFormData(previous => ({ ...previous, [field.name]: event.target.value })); setErrors(previous => ({ ...previous, [field.name]: undefined })) }} aria-invalid={Boolean(errors[field.name])} aria-describedby={errors[field.name] ? `partner-${field.name}-error` : undefined} placeholder={field.placeholder} className={`min-h-12 w-full rounded-lg border px-4 py-3 text-base text-gray-900 placeholder:text-gray-500 disabled:bg-gray-50 ${errors[field.name] ? 'border-red-700' : 'border-gray-400'}`} />

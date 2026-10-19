@@ -3,6 +3,7 @@ export interface ConsultationDetails {
   email: string
   phone: string
   notes: string
+  website?: string
 }
 
 export function validateConsultation(details: ConsultationDetails) {

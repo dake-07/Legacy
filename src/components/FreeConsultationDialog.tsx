@@ -29,6 +29,13 @@ export function FreeConsultationDialog({ open, onClose }: { open: boolean; onClo
     setErrors(nextErrors)
     const firstError = Object.keys(nextErrors)[0]
     if (firstError) { document.getElementById(`free-${firstError}`)?.focus(); return }
+
+    // Honeypot trap: if filled by a bot, silently complete without sending
+    if (details.website) {
+      setSubmitted(true)
+      return
+    }
+
     setSending(true)
     setFailure('')
     try { await sendFreeConsultation(details); setSubmitted(true) }
@@ -52,6 +59,17 @@ export function FreeConsultationDialog({ open, onClose }: { open: boolean; onClo
         </div> : <>
           <p className="mb-5 text-base leading-relaxed text-gray-700">Tell us what you need help with and how to reach you. Our team will contact you to arrange a time for your free consultation.</p>
           <form noValidate onSubmit={submit} className="space-y-4" aria-busy={sending}>
+            {/* Honeypot field for spam bots */}
+            <div className="hidden" aria-hidden="true">
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={details.website || ''}
+                onChange={event => update('website', event.target.value)}
+              />
+            </div>
             <div>
               <label htmlFor="free-name" className="mb-2 block text-sm font-semibold">Full name (required)</label>
               <input id="free-name" name="name" autoComplete="name" required maxLength={100} disabled={sending} value={details.name} onChange={event => update('name', event.target.value)} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'free-name-error' : undefined} placeholder="Kwame Mensah" className={inputClass} />

@@ -4,6 +4,7 @@ export interface FreeConsultationRequest {
   contact: string
   service: string
   notes: string
+  website?: string
 }
 
 export const consultationServices = ['Relocation', 'Land acquisition', 'Building / construction', 'Help choosing a service']
