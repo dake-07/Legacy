@@ -139,13 +139,17 @@ Your Submitted Details:
 - City / Country: ${formData.address}
 
 Next Steps:
-To secure your package reservation, please make the payment using CBG or MTN Mobile Money using your Full Name as reference.
+To secure your package reservation, please make the payment using CBG or Mobile Money using your Full Name as reference.
 
 Bank Transfer Details:
 - Bank: CBG
 - Account Name: Legacy Growth and Development Hub
 - Account Number: 2537968640001
 - Branch: Manet Tower
+
+Mobile Money Details:
+- Number: 050 232 3196
+- Wallet Name: Peter Asare / Legacy Growth and Development Hub
 
 Our dedicated coordination team will reach out to you via WhatsApp / Email shortly.
 
@@ -299,8 +303,8 @@ Legacy Growth & Development Hub`,
                           <div className="text-[10px] tracking-widest text-[#0F766E] uppercase mb-2 flex items-center gap-2">
                             <Smartphone className="h-3 w-3" aria-hidden="true" /> Mobile Money
                           </div>
-                          <div className="text-sm text-gray-600 mb-1">MTN MoMo: <span className="text-gray-900 font-bold tabular-nums">024&nbsp;123&nbsp;4567</span></div>
-                          <div className="text-sm text-gray-600">Name: <span className="text-gray-900 font-bold">Legacy Hub Consult</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Number: <span className="text-gray-900 font-bold tabular-nums">050&nbsp;232&nbsp;3196</span></div>
+                          <div className="text-sm text-gray-600">Wallet Name: <span className="text-gray-900 font-bold">Peter Asare / Legacy Growth and Development Hub</span></div>
                         </div>
                       </div>
                     </div>
