@@ -42,8 +42,8 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
         {/* Logo (Left) */}
-        <Link to="/" className="flex items-center space-x-3 group cursor-pointer w-48">
-          <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+        <Link to="/" className="flex items-center space-x-3 group cursor-pointer w-auto sm:w-48 shrink-0">
+          <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shrink-0">
             <svg viewBox="0 0 100 100" className={`w-full h-full drop-shadow-md ${isScrolled ? 'text-[#134E4A]' : 'text-[#0F766E]'}`} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="15" y="5" width="12" height="45" fill="currentColor" />
               <rect x="35" y="18" width="12" height="32" fill="currentColor" />
@@ -55,9 +55,9 @@ export function Navbar() {
               />
             </svg>
           </div>
-          <div className="flex flex-col justify-center min-w-0">
-            <div translate="no" className={`font-bold text-lg leading-[0.9] font-sans tracking-tight truncate ${isScrolled ? 'text-[#134E4A]' : 'text-white'}`}>
-              LegacyHub
+          <div className="flex flex-col justify-center">
+            <div translate="no" className={`font-bold text-xl leading-tight font-sans tracking-tight whitespace-nowrap ${isScrolled ? 'text-[#134E4A]' : 'text-white'}`}>
+              Legacy Hub
             </div>
           </div>
         </Link>

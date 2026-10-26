@@ -11,6 +11,8 @@ export interface DeveloperPartner {
   name: string
   tagline: string
   category: string
+  projectManager?: string
+  instagramUrl?: string
   experience: string
   completed: string
   location: string
@@ -123,12 +125,31 @@ export const richardOsabuteyDesigns: ProjectDesign[] = [
   }
 ]
 
+export const rakArchitectureDesigns: ProjectDesign[] = [
+  {
+    title: 'The Lumina Modern Villa & Pool',
+    category: 'Luxury Contemporary Residence (Dusk View)',
+    image: `${baseUrl}partners/rak-architecture/lumina-villa-dusk.jpg`
+  },
+  {
+    title: 'The Lumina Gated Residence',
+    category: 'Modern Gated Villa (Daylight Elevation)',
+    image: `${baseUrl}partners/rak-architecture/lumina-estate-daylight.jpg`
+  },
+  {
+    title: 'Panorama Heights Multi-Unit Residences',
+    category: 'Multi-Level Contemporary Apartments',
+    image: `${baseUrl}partners/rak-architecture/panorama-apartments.jpg`
+  }
+]
+
 export const developerPartners: DeveloperPartner[] = [
   {
     id: 'richard-osabutey',
     name: 'Richard Osabutey',
     tagline: 'Architectural Designer & Custom Home Builder',
     category: 'Architectural Design & Build',
+    projectManager: 'Richard Osabutey',
     experience: 'Over 10 Years',
     completed: '25+ Design Projects',
     location: 'Greater Accra & Nationwide',
@@ -143,55 +164,24 @@ export const developerPartners: DeveloperPartner[] = [
     designs: richardOsabuteyDesigns
   },
   {
-    id: 'goldcoast-estates',
-    name: 'GoldCoast Modular & Estates',
-    tagline: 'Modern Townhomes & Master-Planned Gated Communities',
-    category: 'Townhomes & Estates',
-    experience: '16 Years',
-    completed: '45+ Units',
-    location: 'Accra, Tema & Takoradi',
-    image: `${baseUrl}portfolio/project-10.webp`,
+    id: 'rak-architecture',
+    name: 'RAK Architecture',
+    tagline: 'Modern Architectural Design & Residential Development',
+    category: 'Contemporary Architecture & Build',
+    projectManager: 'Richard Adu Koranteng',
+    instagramUrl: 'https://www.instagram.com/rak_architecture_gh?utm_source=ig_web_button_share_sheet&psln=ZDNlZDc0MzIxNw==',
+    experience: 'Over 8 Years',
+    completed: '30+ Custom Projects',
+    location: 'Accra & Nationwide',
+    image: `${baseUrl}partners/rak-architecture/lumina-villa-dusk.jpg`,
     specialties: [
-      'Multi-Unit Duplexes',
-      'Master Planned Communities',
-      'Pre-Cast Slab Systems',
-      'Private Perimeter Security'
+      'Luxury Villa Architecture',
+      'Multi-Residential Apartments',
+      'Photorealistic 3D Renders',
+      'Turnkey Project Supervision'
     ],
-    description: 'The preferred partner for diaspora families and investment syndicates seeking multi-unit townhomes with strict milestone delivery schedules.'
-  },
-  {
-    id: 'terraform-civil',
-    name: 'TerraForm Civil & Land Works',
-    tagline: 'Site Topography Grading, Boundary Fortification & Drainage',
-    category: 'Civil & Earthwork',
-    experience: '12 Years',
-    completed: '60+ Sites',
-    location: 'Greater Accra, Central & Eastern Regions',
-    image: `${baseUrl}portfolio/project-02.webp`,
-    specialties: [
-      'Heavy Site Excavation',
-      'Anti-Encroachment Boundary Walls',
-      'Heavy Supply Access Roads',
-      'Stormwater Culverts'
-    ],
-    description: 'Secures and fortifies raw land with geodetic boundary markers, retaining walls, and engineered road access prior to construction.'
-  },
-  {
-    id: 'ecohaus-ghana',
-    name: 'EcoHaus Sustainable Builders',
-    tagline: 'Biophilic Architecture, Natural Cooling & Eco Villas',
-    category: 'Sustainable Living',
-    experience: '9 Years',
-    completed: '21+ Villas',
-    location: 'Greater Accra Coast & Aburi Ridge',
-    image: `${baseUrl}portfolio/project-15.webp`,
-    specialties: [
-      'Compressed Earth Block (CEB)',
-      'High-Thermal Mass Walls',
-      'Greywater Recycling',
-      'Passive Airflow Design'
-    ],
-    description: 'Designs energy-resilient diaspora residences that cut cooling costs by 60% through natural tropical airflow and indigenous materials.'
+    description: 'RAK Architecture is an innovative Ghanaian architectural design and development firm led by Project Manager Richard Adu Koranteng. Specializing in bespoke luxury villas, contemporary multi-family residences, and end-to-end site management, they craft world-class homes with uncompromising precision.',
+    designs: rakArchitectureDesigns
   }
 ]
 

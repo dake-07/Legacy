@@ -20,11 +20,11 @@ export function Footer() {
                 </svg>
               </div>
               <div className="flex flex-col justify-center">
-                <div translate="no" className="font-bold text-xl leading-[0.9] tracking-widest text-white uppercase font-sans">
+                <div translate="no" className="font-bold text-xl leading-tight tracking-widest text-white uppercase font-sans">
                   Legacy
                 </div>
                 <span className="text-[9px] tracking-[0.2em] font-bold mt-1 text-white/60 uppercase">
-                  Growth & Dev
+                  Growth & Dev Hub
                 </span>
               </div>
             </div>

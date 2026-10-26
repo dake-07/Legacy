@@ -64,6 +64,9 @@ export function ConsultationDialog({ selectedPartner, selectedDesignTitle, onClo
           <div>
             <p className="mb-2 text-sm font-semibold text-[#0F766E]">{submitted ? 'Request submitted' : 'Plan your project'}</p>
             <h2 id="consultation-title" className="font-serif text-2xl font-semibold leading-tight">{submitted ? 'Thank you for your enquiry' : `Consult with ${selectedPartner.name}`}</h2>
+            {selectedPartner.projectManager && !submitted && (
+              <p className="mt-1 text-xs font-medium text-gray-600">Project Manager: <span className="font-semibold text-gray-900">{selectedPartner.projectManager}</span></p>
+            )}
           </div>
           <button type="button" onClick={onClose} aria-label="Close consultation" className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200"><X aria-hidden="true" className="h-5 w-5" /></button>
         </header>

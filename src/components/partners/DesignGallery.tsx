@@ -37,7 +37,10 @@ export function DesignGallery({ galleryPartner, initialIndex, onClose, onConsult
         }}>
           <header className="mb-3 flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="mb-1 text-sm text-gray-300">{galleryPartner.name} · {activeIndex + 1} of {designs.length}</p>
+              <p className="mb-1 text-sm text-gray-300">
+                {galleryPartner.name}
+                {galleryPartner.projectManager ? ` · PM: ${galleryPartner.projectManager}` : ''} · {activeIndex + 1} of {designs.length}
+              </p>
               <h2 id="design-gallery-title" className="font-serif text-lg font-semibold leading-snug sm:text-2xl">{active.title}</h2>
               <p className="mt-1 text-sm text-gray-300">{active.category}</p>
             </div>
