@@ -78,8 +78,11 @@ export function ManagementTeam() {
       description: "Managing our digital infrastructure and ensuring seamless, secure communication channels for international investors."
     },
     {
-      name: "Valerie Brown",
+      name: "Driskell Brown",
       role: "Partner - USA",
+      image: `${baseUrl}team/driskell-brown.webp`,
+      imageFallback: `${baseUrl}team/driskell-brown.jpg`,
+      objectPosition: "50% 20%",
       icon: <Globe className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
       badgeIcon: <Globe className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />,
       description: "Our direct liaison in the United States, providing localized support and trust for North American diaspora clients."
