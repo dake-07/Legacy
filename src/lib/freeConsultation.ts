@@ -1,3 +1,5 @@
+import { submitToWeb3Forms } from './web3forms'
+
 export interface FreeConsultationRequest {
   name: string
   contactMethod: 'Email' | 'WhatsApp'
@@ -24,22 +26,18 @@ export function validateFreeConsultation(details: FreeConsultationRequest) {
 }
 
 export async function sendFreeConsultation(details: FreeConsultationRequest) {
-  const response = await fetch('https://formsubmit.co/ajax/asaapeesic@gmail.com', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    signal: AbortSignal.timeout(20000),
-    body: JSON.stringify({
-      _subject: `Free Consultation Request: ${details.service} - ${details.name.trim()}`,
-      ...(details.contactMethod === 'Email' ? { _replyto: details.contact.trim() } : {}),
-      'Client Name': details.name.trim(),
-      'Preferred Contact Method': details.contactMethod,
-      'Contact Details': details.contact.trim(),
-      'Service Interest': details.service,
-      'Additional Details': details.notes.trim() || 'No extra details provided',
-      Date: new Date().toLocaleString(),
-    }),
+  await submitToWeb3Forms({
+    subject: `Free Consultation Request: ${details.service} - ${details.name.trim()}`,
+    name: details.name.trim(),
+    ...(details.contactMethod === 'Email' ? { email: details.contact.trim() } : {}),
+    ...(details.contactMethod === 'WhatsApp' ? { phone: details.contact.trim() } : {}),
+    'Client Name': details.name.trim(),
+    'Preferred Contact Method': details.contactMethod,
+    'Contact Details': details.contact.trim(),
+    'Service Interest': details.service,
+    'Additional Details': details.notes.trim() || 'No extra details provided',
+    Date: new Date().toLocaleString(),
+    botcheck: details.website || ''
   })
-  if (!response.ok) throw new Error('Request failed')
-  const result = await response.json() as { success?: boolean | string }
-  if (result.success !== true && result.success !== 'true') throw new Error('Request was not confirmed')
 }
+

@@ -34,8 +34,10 @@ export function Hero() {
             alt={images[currentImage].alt}
             width={1024}
             height={1024}
-            fetchPriority="high"
-            initial={{ opacity: 0, scale: 1.05 }}
+            loading={currentImage === 0 ? 'eager' : 'lazy'}
+            fetchPriority={currentImage === 0 ? 'high' : 'low'}
+            decoding="async"
+            initial={false}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}

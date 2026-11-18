@@ -16,11 +16,17 @@ export function PartnerDialog({ open, labelledBy, onClose, children, className =
     if (!open || !dialog) return
     const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
     const overflow = document.body.style.overflow
-    dialog.showModal()
+    if (!dialog.open) {
+      dialog.showModal()
+    }
     document.body.style.overflow = 'hidden'
     return () => {
-      dialog.close()
-      document.body.style.overflow = overflow
+      if (dialog.open) {
+        dialog.close()
+      }
+      if (!document.querySelector('dialog[open]')) {
+        document.body.style.overflow = overflow || 'unset'
+      }
       if (!document.querySelector('dialog[open]') && opener?.isConnected) opener.focus()
     }
   }, [open])

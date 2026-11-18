@@ -5,6 +5,17 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
+    <script>
+      if ((location.pathname === '%BASE_URL%' || location.pathname === '%BASE_URL%index.html') && !new URLSearchParams(location.search).has('p')) {
+        var heroPreload = document.createElement('link');
+        heroPreload.rel = 'preload';
+        heroPreload.as = 'image';
+        heroPreload.href = '%BASE_URL%hero_ghana_home.webp';
+        heroPreload.type = 'image/webp';
+        heroPreload.fetchPriority = 'high';
+        document.head.appendChild(heroPreload);
+      }
+    </script>
     <link rel="canonical" href="https://dake-07.github.io/Legacy/" />
     <meta name="theme-color" content="#F0FDFA" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,9 +33,7 @@
     <meta name="twitter:title" content="Legacy Growth & Development Hub" />
     <meta name="twitter:description" content="Relocation, verified land acquisition, and construction monitoring in Ghana for diaspora clients." />
     <meta name="twitter:image" content="https://dake-07.github.io/Legacy/og-image.jpg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="preload" as="font" href="%BASE_URL%fonts/plus-jakarta-sans-latin.woff2" type="font/woff2" crossorigin />
     
     <!-- Privacy-Aware Analytics Loader (Google Analytics GA4 ready) -->
     <script type="text/javascript">

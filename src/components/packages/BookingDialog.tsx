@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { X, CreditCard, Smartphone, CheckCircle2, Loader2, MessageSquare, Mail } from 'lucide-react'
 import { Button } from '../ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
+import { submitToWeb3Forms } from '../../lib/web3forms'
 
 interface BookingDialogProps {
   isModalOpen: boolean
@@ -12,6 +13,7 @@ interface BookingDialogProps {
 
 export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onClose: handleCloseModal }: BookingDialogProps) {
   const [formStep, setFormStep] = useState(1) // 1: Form, 2: Loading, 3: Payment/Success
+  const [failure, setFailure] = useState('')
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,6 +22,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
     website: "" // Honeypot: hidden from people, bots tend to fill it in
   })
   const [errors, setErrors] = useState<Partial<Record<"name" | "email" | "phone" | "address", string>>>({})
+
 
   const dialogRef = useRef<HTMLDivElement>(null)
 
@@ -70,6 +73,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
     setErrors(prev => ({ ...prev, [name]: undefined }))
+    setFailure('')
   }
 
   const validate = () => {
@@ -111,69 +115,31 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
       return
     }
 
+    setFailure('')
     setFormStep(2) // Switch to Loading Step
 
     try {
-      await fetch("https://formsubmit.co/ajax/asaapeesic@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          _subject: `New Booking Request: ${selectedPackage} - ${formData.name}`,
-          _replyto: formData.email,
-          _template: "table",
-          _autoresponse: `Thank you for booking with Legacy Growth & Development Hub!
-
-Hello ${formData.name},
-
-We have received your booking request for:
-Package: ${selectedPackage}
-Pricing: ${selectedPrice}
-
-Your Submitted Details:
-- Name: ${formData.name}
-- Email: ${formData.email}
-- Phone: ${formData.phone}
-- City / Country: ${formData.address}
-
-Next Steps:
-To secure your package reservation, please make the payment using CBG or Mobile Money using your Full Name as reference.
-
-Bank Transfer Details:
-- Bank: CBG
-- Account Name: Legacy Growth and Development Hub
-- Account Number: 2537968640001
-- Branch: Manet Tower
-
-Mobile Money Details:
-- Number: 050 232 3196
-- Wallet Name: Peter Asare / Legacy Growth and Development Hub
-
-Our dedicated coordination team will reach out to you via WhatsApp / Email shortly.
-
-Direct Contact:
-Phone: +233 50 232 3196 / +233 54 680 8745
-Email: asaapeesic@gmail.com
-
-Warm regards,
-Legacy Growth & Development Hub`,
-          "Package Name": selectedPackage,
-          "Package Price": selectedPrice,
-          "Client Name": formData.name,
-          "Client Email": formData.email,
-          "Client Phone / WhatsApp": formData.phone,
-          "Client Location": formData.address
-        })
+      await submitToWeb3Forms({
+        subject: `New Booking Request: ${selectedPackage} - ${formData.name.trim()}`,
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        'Package Name': selectedPackage,
+        'Package Price': selectedPrice,
+        'Client Name': formData.name.trim(),
+        'Client Email': formData.email.trim(),
+        'Client Phone / WhatsApp': formData.phone.trim(),
+        'Client Location': formData.address.trim(),
+        botcheck: formData.website || ''
       })
       setFormStep(3)
     } catch (err) {
-      console.warn("FormSubmit transmission fallback triggered:", err)
-      // Even if network blips, transition to Step 3 so the client has payment and instant direct contact actions
-      setFormStep(3)
+      console.warn("Web3Forms transmission error:", err)
+      setFailure("We couldn’t confirm your booking request automatically. Your details are still here. Please try again or confirm directly via WhatsApp.")
+      setFormStep(1)
     }
   }
+
 
 
   return (
@@ -257,6 +223,21 @@ Legacy Growth & Development Hub`,
                       <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleInputChange} />
                     </div>
 
+                    {failure && (
+                      <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
+                        <p className="font-medium">{failure}</p>
+                        <a
+                          href={`https://wa.me/233502323196?text=${encodeURIComponent(`Hello LegacyHub, I would like to book "${selectedPackage}" (${selectedPrice}).\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nLocation: ${formData.address}`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-flex items-center gap-1.5 font-semibold text-[#134E4A] underline"
+                        >
+                          <MessageSquare className="w-4 h-4" aria-hidden="true" />
+                          Confirm via WhatsApp instead
+                        </a>
+                      </div>
+                    )}
+
                     <Button type="submit" className="w-full h-14 mt-8 text-sm uppercase tracking-widest font-bold bg-black text-white hover:bg-gray-800 cursor-pointer rounded-full transition-colors">
                       Submit Request
                     </Button>
@@ -278,7 +259,7 @@ Legacy Growth & Development Hub`,
                     </div>
                     <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">Booking Initiated</h3>
                     <p className="text-gray-600 mb-8 font-sans leading-relaxed break-words max-w-full">
-                      Thank you, {formData.name.split(' ')[0]}. A confirmation receipt has been sent to <span className="font-bold text-gray-900">{formData.email}</span>, and our team has been notified.
+                      Thank you, {formData.name.trim().split(' ')[0]}. A confirmation receipt has been sent to <span className="font-bold text-gray-900">{formData.email}</span>, and our team has been notified.
                     </p>
 
                     <div className="w-full bg-gray-50 rounded-2xl p-8 border border-gray-100 text-left">

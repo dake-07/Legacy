@@ -3,11 +3,27 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Cookie, X } from 'lucide-react'
 
+const safeGetStorage = (key: string): string | null => {
+  try {
+    return localStorage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
+const safeSetStorage = (key: string, value: string): void => {
+  try {
+    localStorage.setItem(key, value)
+  } catch {
+    // Gracefully ignore storage restriction in strict private/incognito modes
+  }
+}
+
 export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const consent = localStorage.getItem('legacy_cookie_consent')
+    const consent = safeGetStorage('legacy_cookie_consent')
     if (!consent) {
       // Short delay before showing so it does not distract from initial render
       const timer = setTimeout(() => setIsVisible(true), 1200)
@@ -16,7 +32,7 @@ export function CookieConsent() {
   }, [])
 
   const handleChoice = (preference: 'all' | 'essential') => {
-    localStorage.setItem('legacy_cookie_consent', preference)
+    safeSetStorage('legacy_cookie_consent', preference)
     setIsVisible(false)
     if (preference === 'all') {
       window.dispatchEvent(new CustomEvent('cookie_consent_granted'))

@@ -1,3 +1,5 @@
+import { submitToWeb3Forms } from '../../lib/web3forms'
+
 export interface ConsultationDetails {
   name: string
   email: string
@@ -17,23 +19,19 @@ export function validateConsultation(details: ConsultationDetails) {
 }
 
 export async function sendConsultation(partnerName: string, designTitle: string, details: ConsultationDetails) {
-  const response = await fetch('https://formsubmit.co/ajax/asaapeesic@gmail.com', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    signal: AbortSignal.timeout(20000),
-    body: JSON.stringify({
-      _subject: `Building Partner Consultation Request: ${partnerName} - ${details.name.trim()}`,
-      _replyto: details.email.trim(),
-      'Selected Builder / Designer': partnerName,
-      'Specific Design': designTitle || 'General Consultation',
-      'Client Name': details.name.trim(),
-      'Client Email': details.email.trim(),
-      'Client Phone / WhatsApp': details.phone.trim(),
-      'Project Notes': details.notes.trim() || 'No extra notes provided',
-      Date: new Date().toLocaleString(),
-    }),
+  await submitToWeb3Forms({
+    subject: `Building Partner Consultation Request: ${partnerName} - ${details.name.trim()}`,
+    name: details.name.trim(),
+    email: details.email.trim(),
+    phone: details.phone.trim(),
+    'Selected Builder / Designer': partnerName,
+    'Specific Design': designTitle || 'General Consultation',
+    'Client Name': details.name.trim(),
+    'Client Email': details.email.trim(),
+    'Client Phone / WhatsApp': details.phone.trim(),
+    'Project Notes': details.notes.trim() || 'No extra notes provided',
+    Date: new Date().toLocaleString(),
+    botcheck: details.website || ''
   })
-  if (!response.ok) throw new Error('Submission failed')
-  const result = await response.json() as { success?: boolean | string }
-  if (result.success !== true && result.success !== 'true') throw new Error('Submission was not confirmed')
 }
+

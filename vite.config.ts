@@ -5,7 +5,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/Legacy/',
+  base: process.env.VITE_BASE_PATH || '/Legacy/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

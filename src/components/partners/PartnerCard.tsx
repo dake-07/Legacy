@@ -2,17 +2,26 @@ import { useState } from 'react'
 import { MapPin, ArrowRight, Images, User, ExternalLink } from 'lucide-react'
 import type { DeveloperPartner } from './data'
 
+const optimizedPartnerImage = (src: string, width: number) => src.replace(/\.[^.]+$/, `-${width}.webp`)
+
 interface PartnerCardProps {
   partner: DeveloperPartner
+  priority?: boolean
   onOpenGallery: (partner: DeveloperPartner, initialIndex?: number) => void
   onConsult: (partner: DeveloperPartner, designTitle?: string) => void
 }
 
-export function PartnerCard({ partner, onOpenGallery, onConsult }: PartnerCardProps) {
+export function PartnerCard({ partner, priority = false, onOpenGallery, onConsult }: PartnerCardProps) {
   const [previewIndex, setPreviewIndex] = useState(0)
+  const [previewLoaded, setPreviewLoaded] = useState(false)
   const designs = partner.designs ?? []
   const image = designs[previewIndex]?.image ?? partner.image
-  const visual = <img src={image} alt={designs[previewIndex]?.title ?? `${partner.name} project`} width={900} height={560} loading="lazy" className="h-full w-full object-cover" />
+  const visual = (
+    <picture className="block h-full w-full">
+      <source type="image/webp" srcSet={`${optimizedPartnerImage(image, 640)} 640w, ${optimizedPartnerImage(image, 960)} 960w`} sizes="(max-width: 1024px) calc(100vw - 2rem), 50vw" />
+      <img src={image} alt={designs[previewIndex]?.title ?? `${partner.name} project`} width={900} height={560} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'low'} decoding="async" onLoad={() => setPreviewLoaded(true)} onError={() => setPreviewLoaded(true)} className="h-full w-full object-cover" />
+    </picture>
+  )
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
       <div className="relative aspect-[16/10] bg-gray-100">
@@ -37,8 +46,8 @@ export function PartnerCard({ partner, onOpenGallery, onConsult }: PartnerCardPr
       {designs.length > 0 && (
         <div className="flex gap-2 border-b border-gray-100 bg-gray-50 p-3">
           {designs.slice(0, 4).map((design, index) => (
-            <button key={design.image} type="button" aria-label={`Preview ${design.title}`} aria-pressed={previewIndex === index} onClick={() => setPreviewIndex(index)} className={`min-h-11 min-w-0 flex-1 cursor-pointer overflow-hidden rounded-md border-2 transition-colors ${previewIndex === index ? 'border-[#0F766E]' : 'border-transparent hover:border-gray-400'}`}>
-              <img src={design.image} alt="" width={128} height={96} loading="lazy" className="h-12 w-full object-cover sm:h-16" />
+            <button key={design.image} type="button" aria-label={`Preview ${design.title}`} aria-pressed={previewIndex === index} onClick={() => { setPreviewLoaded(false); setPreviewIndex(index) }} className={`min-h-11 min-w-0 flex-1 cursor-pointer overflow-hidden rounded-md border-2 transition-colors ${previewIndex === index ? 'border-[#0F766E]' : 'border-transparent hover:border-gray-400'}`}>
+              {previewLoaded ? <img src={optimizedPartnerImage(design.image, 320)} alt="" width={320} height={200} loading="lazy" fetchPriority="low" decoding="async" className="h-12 w-full object-cover sm:h-16" /> : <span aria-hidden="true" className="block h-12 w-full animate-pulse bg-gray-200 sm:h-16" />}
             </button>
           ))}
           {designs.length > 4 && <button type="button" onClick={() => onOpenGallery(partner, 4)} aria-label={`View all ${designs.length} designs by ${partner.name}`} className="min-h-11 min-w-11 shrink-0 cursor-pointer rounded-md bg-[#134E4A] px-3 text-sm font-semibold text-white transition-colors hover:bg-[#0F766E]">+{designs.length - 4}</button>}

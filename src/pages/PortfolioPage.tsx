@@ -5,8 +5,8 @@ export function PortfolioPage() {
   return (
     <>
       <Helmet>
-        <title>Portfolio | Legacy</title>
-        <meta name="description" content="View our portfolio of successful relocations, land acquisitions, and construction projects." />
+        <title>Gallery | Legacy</title>
+        <meta name="description" content="View our gallery of successful relocations, land acquisitions, and construction projects." />
       </Helmet>
       <div className="pt-24 bg-[#F0FDFA]">
         <Gallery />

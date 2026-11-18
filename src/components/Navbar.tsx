@@ -31,7 +31,7 @@ export function Navbar() {
     { label: 'Home', path: '/' },
     { label: 'Packages', path: '/packages' },
     { label: 'Partners', path: '/partners' },
-    { label: 'Portfolio', path: '/portfolio' },
+    { label: 'Gallery', path: '/portfolio' },
     { label: 'About', path: '/about' }
   ]
 
@@ -65,7 +65,7 @@ export function Navbar() {
         {/* Center Pill Navigation (Desktop) */}
         <div className={`hidden md:flex items-center justify-center backdrop-blur-xl rounded-full px-2 py-1.5 transition-colors duration-500 ${isScrolled ? 'bg-white border border-gray-100' : 'bg-white/20 border border-white/30'}`}>
           {navLinks.map((link) => {
-            const isActive = location.pathname === link.path
+            const isActive = location.pathname === link.path || (link.path === '/portfolio' && location.pathname === '/gallery')
             return (
               <Link
                 key={link.path}
@@ -130,7 +130,7 @@ export function Navbar() {
             className="absolute top-full left-4 right-4 mt-2 bg-white/95 backdrop-blur-xl border border-gray-100 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-6 flex flex-col space-y-5 md:hidden"
           >
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path
+              const isActive = location.pathname === link.path || (link.path === '/portfolio' && location.pathname === '/gallery')
               return (
                 <Link
                   key={link.path}

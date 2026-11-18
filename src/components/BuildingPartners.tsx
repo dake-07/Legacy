@@ -1,14 +1,16 @@
 import { useState } from 'react'
-import { Compass, ShieldCheck, Eye } from 'lucide-react'
+import { Compass, ShieldCheck, Eye, ArrowRight } from 'lucide-react'
 import { developerPartners } from './partners/data'
 import type { DeveloperPartner } from './partners/data'
 import { PartnerCard } from './partners/PartnerCard'
 import { DesignGallery } from './partners/DesignGallery'
 import { ConsultationDialog } from './partners/ConsultationDialog'
+import { FreeConsultationDialog } from './FreeConsultationDialog'
 
 export function BuildingPartners() {
   const [consultation, setConsultation] = useState<{ partner: DeveloperPartner | null; designTitle: string; requestId: number }>({ partner: null, designTitle: '', requestId: 0 })
   const [gallery, setGallery] = useState<{ partner: DeveloperPartner | null; initialIndex: number; requestId: number }>({ partner: null, initialIndex: 0, requestId: 0 })
+  const [generalConsultationOpen, setGeneralConsultationOpen] = useState(false)
   const handleOpenConsultation = (partner: DeveloperPartner, designTitle = '') => {
     setConsultation(previous => ({ partner, designTitle, requestId: previous.requestId + 1 }))
   }
@@ -63,10 +65,54 @@ export function BuildingPartners() {
 
         {/* Partners Showcase Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-          {developerPartners.map(partner => (
-            <PartnerCard key={partner.id} partner={partner} onOpenGallery={handleOpenGallery} onConsult={handleOpenConsultation} />
+          {developerPartners.map((partner, index) => (
+            <PartnerCard key={partner.id} partner={partner} priority={index === 0} onOpenGallery={handleOpenGallery} onConsult={handleOpenConsultation} />
           ))}
         </div>
+
+        {/* More Partners to Join Notice */}
+        <section
+          aria-labelledby="more-partners-heading"
+          className="mt-8 sm:mt-10 rounded-2xl border border-teal-200/80 bg-white/95 p-6 sm:p-8 md:p-10 shadow-xs relative overflow-hidden"
+        >
+          {/* Subtle ambient glow matching page aesthetic */}
+          <div className="absolute top-0 right-0 w-72 h-72 bg-[#0F766E]/5 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0F766E]/10 text-[#0F766E] text-xs font-semibold mb-3">
+                <span className="w-2 h-2 rounded-full bg-[#0F766E] animate-pulse" aria-hidden="true" />
+                Network Expansion
+              </div>
+              <h2 id="more-partners-heading" className="text-xl sm:text-2xl font-serif font-bold text-gray-900 tracking-tight mb-2">
+                More Partners Joining Soon
+              </h2>
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-sans">
+                We are actively screening and vetting licensed architects, civil engineers, and master builders across Ghana. More verified partner profiles and architectural collections will be joining our network soon.
+              </p>
+              <p className="text-xs sm:text-sm text-gray-500 font-sans mt-3">
+                Are you a certified builder or architectural studio in Ghana?{' '}
+                <a
+                  href="mailto:asaapeesic@gmail.com?subject=Partner%20Inquiry%20-%20Legacy%20Hub"
+                  className="font-medium text-[#0F766E] underline decoration-teal-300 underline-offset-2 transition-colors hover:text-[#134E4A]"
+                >
+                  Inquire about joining our vetted network
+                </a>
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => setGeneralConsultationOpen(true)}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#0F766E] px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-[#134E4A] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
+              >
+                Inquire with Our Team
+                <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </section>
 
         {/* Simple 3-Step Process (KISS Workflow) */}
         <div className="mt-12 sm:mt-16 bg-white border border-gray-200/90 rounded-2xl p-6 sm:p-10 md:p-12 shadow-sm">
@@ -126,6 +172,10 @@ export function BuildingPartners() {
         selectedPartner={consultation.partner}
         selectedDesignTitle={consultation.designTitle}
         onClose={() => setConsultation(previous => ({ ...previous, partner: null }))}
+      />
+      <FreeConsultationDialog
+        open={generalConsultationOpen}
+        onClose={() => setGeneralConsultationOpen(false)}
       />
     </section>
   )

@@ -51,7 +51,7 @@ function ScrollToTop() {
         if (target) {
           clearInterval(timer);
           target.scrollIntoView({ behavior: 'instant' });
-        } else if (++attempts > 30) {
+        } else if (++attempts > 100) {
           clearInterval(timer);
         }
       }, 30);
@@ -83,12 +83,13 @@ function App() {
       <div className="min-h-screen font-sans selection:bg-[#0F766E] selection:text-white flex flex-col">
         <Navbar />
         <main id="main" tabIndex={-1} className="flex-grow focus:outline-none">
-          <Suspense fallback={<div className="flex h-[50vh] items-center justify-center">Loading…</div>}>
+          <Suspense fallback={<div className="flex min-h-[100dvh] items-center justify-center" role="status">Loading…</div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/packages" element={<PackagesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/gallery" element={<PortfolioPage />} />
               <Route path="/partners" element={<PartnersPage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
               <Route path="/terms" element={<TermsPage />} />

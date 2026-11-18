@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { X, ChevronLeft, ChevronRight, Maximize2, ArrowUpRight, LayoutGrid, SlidersHorizontal } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize2, ArrowUpRight, LayoutGrid, SlidersHorizontal, Play } from 'lucide-react'
 
 type Category = 'All' | 'Construction' | 'Site Inspections' | 'Land & Development'
 
@@ -13,6 +13,11 @@ type PhotoItem = {
 }
 
 const baseUrl = import.meta.env.BASE_URL
+
+const portfolioSrcSet = (src: string) => {
+  const stem = src.replace(/\.webp$/, '')
+  return `${stem}-640.webp 640w, ${stem}-960.webp 960w, ${src} 1280w`
+}
 
 const galleryPhotos: PhotoItem[] = [
   {
@@ -125,11 +130,49 @@ const galleryPhotos: PhotoItem[] = [
   }
 ]
 
-const categories: Category[] = ['All', 'Construction', 'Site Inspections', 'Land & Development']
+type VideoItem = {
+  id: string
+  src: string
+  title: string
+  duration: string
+}
+
+const galleryVideos: VideoItem[] = [
+  {
+    id: 'video-02',
+    src: `${baseUrl}videos/video_2026-11-18_16-22-07.mp4`,
+    title: 'Ground Level Topography Inspection',
+    duration: '0:29'
+  },
+  {
+    id: 'video-03',
+    src: `${baseUrl}videos/video_2026-11-18_16-22-50.mp4`,
+    title: 'Access Road & Boundary Line Verification',
+    duration: '2:32'
+  },
+  {
+    id: 'video-04',
+    src: `${baseUrl}videos/video_2026-11-18_16-22-57.mp4`,
+    title: 'Site Inspection & Soil Survey Check',
+    duration: '0:20'
+  },
+  {
+    id: 'video-05',
+    src: `${baseUrl}videos/video_2026-11-18_16-23-22.mp4`,
+    title: 'On-Site Construction & Structural Progress',
+    duration: '1:29'
+  },
+  {
+    id: 'video-06',
+    src: `${baseUrl}videos/video_2026-11-18_16-23-41.mp4`,
+    title: 'Development Zone Overview & Infrastructure Check',
+    duration: '1:29'
+  }
+]
 
 export function Gallery() {
-  const [activeCategory, setActiveCategory] = useState<Category>('All')
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(null)
   const [layoutMode, setLayoutMode] = useState<'swipe' | 'grid'>('swipe')
   
   const carouselRef = useRef<HTMLDivElement>(null)
@@ -142,9 +185,7 @@ export function Gallery() {
   const scrollLeftStart = useRef(0)
   const hasDragged = useRef(false)
 
-  const filteredPhotos = activeCategory === 'All'
-    ? galleryPhotos
-    : galleryPhotos.filter(p => p.category === activeCategory)
+  const filteredPhotos = galleryPhotos
 
   const updateScrollButtons = useCallback(() => {
     if (!carouselRef.current) return
@@ -164,13 +205,6 @@ export function Gallery() {
       window.removeEventListener('resize', updateScrollButtons)
     }
   }, [updateScrollButtons, filteredPhotos])
-
-  // Reset scroll to beginning when category filter changes
-  useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' })
-    }
-  }, [activeCategory])
 
   const scroll = (direction: 'left' | 'right') => {
     if (!carouselRef.current) return
@@ -209,14 +243,8 @@ export function Gallery() {
   }
 
   const handleOpenGomoaLightbox = () => {
-    const idx = filteredPhotos.findIndex(p => p.id === 'project-09')
-    if (idx !== -1) {
-      setSelectedIndex(idx)
-    } else {
-      setActiveCategory('All')
-      const allIdx = galleryPhotos.findIndex(p => p.id === 'project-09')
-      setSelectedIndex(allIdx !== -1 ? allIdx : 0)
-    }
+    const idx = galleryPhotos.findIndex(p => p.id === 'project-09')
+    setSelectedIndex(idx !== -1 ? idx : 0)
   }
 
   const handleCloseLightbox = () => {
@@ -233,13 +261,32 @@ export function Gallery() {
     setSelectedIndex(prev => (prev === filteredPhotos.length - 1 ? 0 : (prev ?? 0) + 1))
   }, [selectedIndex, filteredPhotos.length])
 
-  // Keyboard navigation for lightbox
+  const handlePrevVideo = useCallback(() => {
+    if (selectedVideoIndex === null) return
+    setSelectedVideoIndex(prev => (prev === 0 ? galleryVideos.length - 1 : (prev ?? 0) - 1))
+  }, [selectedVideoIndex])
+
+  const handleNextVideo = useCallback(() => {
+    if (selectedVideoIndex === null) return
+    setSelectedVideoIndex(prev => (prev === galleryVideos.length - 1 ? 0 : (prev ?? 0) + 1))
+  }, [selectedVideoIndex])
+
+  // Keyboard navigation for photo & video lightboxes
   useEffect(() => {
-    if (selectedIndex === null) return
+    if (selectedIndex === null && selectedVideoIndex === null) return
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') handleCloseLightbox()
-      if (e.key === 'ArrowLeft') handlePrev()
-      if (e.key === 'ArrowRight') handleNext()
+      if (e.key === 'Escape') {
+        handleCloseLightbox()
+        setSelectedVideoIndex(null)
+      }
+      if (e.key === 'ArrowLeft') {
+        if (selectedIndex !== null) handlePrev()
+        if (selectedVideoIndex !== null) handlePrevVideo()
+      }
+      if (e.key === 'ArrowRight') {
+        if (selectedIndex !== null) handleNext()
+        if (selectedVideoIndex !== null) handleNextVideo()
+      }
     }
     window.addEventListener('keydown', handleKeyDown)
     document.body.style.overflow = 'hidden'
@@ -247,7 +294,7 @@ export function Gallery() {
       window.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = 'unset'
     }
-  }, [selectedIndex, handlePrev, handleNext])
+  }, [selectedIndex, selectedVideoIndex, handlePrev, handleNext, handlePrevVideo, handleNextVideo])
 
   return (
     <section id="gallery" className="py-20 md:py-32 bg-white relative overflow-hidden border-t border-gray-100 scroll-mt-24">
@@ -260,7 +307,7 @@ export function Gallery() {
         <div className="mb-10 max-w-3xl">
           <div className="flex items-center gap-4 mb-3">
             <span className="w-10 h-[1.5px] bg-[#0F766E]"></span>
-            <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">Visual Portfolio</span>
+            <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">Visual Gallery</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 tracking-tight mb-3">
             On-the-Ground Project Gallery
@@ -275,10 +322,13 @@ export function Gallery() {
           <div className="relative h-[320px] sm:h-[400px] md:h-[460px] lg:h-[500px] w-full overflow-hidden">
             <img
               src={`${baseUrl}portfolio/gomoa-fetteh-overview.webp`}
+              srcSet={portfolioSrcSet(`${baseUrl}portfolio/gomoa-fetteh-overview.webp`)}
+              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1280px) calc(100vw - 4rem), 1216px"
               alt="Overview of Gomoa Fetteh"
               width={1600}
               height={1067}
               fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105 select-none"
             />
 
@@ -287,18 +337,7 @@ export function Gallery() {
             <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-950/25 to-transparent pointer-events-none" />
 
             {/* Content Overlay */}
-            <div className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-between z-10">
-              {/* Top Tag Badges */}
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[11px] font-bold tracking-widest uppercase shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-[#2DD4BF] animate-pulse" />
-                  Featured Development
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full bg-stone-900/60 backdrop-blur-md text-white/90 text-[11px] font-semibold tracking-wider uppercase border border-white/15">
-                  Land & Development
-                </span>
-              </div>
-
+            <div className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-end z-10">
               {/* Bottom Details */}
               <div className="max-w-3xl">
                 <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight drop-shadow-lg mb-2 sm:mb-3">
@@ -403,30 +442,6 @@ export function Gallery() {
             )}
           </div>
         </div>
-
-        {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-8">
-          {categories.map(cat => {
-            const isActive = activeCategory === cat
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
-                  isActive
-                    ? 'bg-[#0F766E] text-white shadow-md'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {cat}
-                <span className="ml-2 text-[10px] opacity-75 tabular-nums">
-                  ({cat === 'All' ? galleryPhotos.length : galleryPhotos.filter(p => p.category === cat).length})
-                </span>
-              </button>
-            )
-          })}
-        </div>
       </div>
 
       {layoutMode === 'swipe' ? (
@@ -449,37 +464,36 @@ export function Gallery() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
+                role="button"
+                tabIndex={0}
+                aria-label={`View photo: ${photo.title}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleOpenLightbox(index)
+                  }
+                }}
                 onClick={() => {
                   if (!hasDragged.current) {
                     handleOpenLightbox(index)
                   }
                 }}
-                className="snap-start shrink-0 w-[74vw] sm:w-[340px] md:w-[480px] lg:w-[540px] aspect-[16/10] sm:aspect-[4/3] rounded-2xl md:rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1.5 bg-gray-100 border border-gray-200/80"
+                className="snap-start shrink-0 w-[74vw] sm:w-[340px] md:w-[480px] lg:w-[540px] aspect-[16/10] sm:aspect-[4/3] rounded-2xl md:rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1.5 bg-gray-100 border border-gray-200/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
               >
                 {/* Image */}
                 <img
                   src={photo.src}
+                  srcSet={portfolioSrcSet(photo.src)}
+                  sizes="(max-width: 640px) 74vw, (max-width: 1024px) 480px, 540px"
                   alt={photo.title}
                   width={1400}
                   height={1050}
                   loading="lazy"
+                  fetchPriority="low"
+                  decoding="async"
                   draggable={false}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none"
                 />
-
-                {/* Category Pill Tag */}
-                <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
-                  <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-[#0F766E] shadow-sm">
-                    {photo.category}
-                  </span>
-                </div>
-
-                {/* Bottom Title Bar */}
-                <div className="absolute inset-x-0 bottom-0 p-4 pt-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none">
-                  <p className="text-white font-sans text-xs sm:text-base font-semibold tracking-wide drop-shadow-sm truncate">
-                    {photo.title}
-                  </p>
-                </div>
 
                 {/* Hover Quick Zoom Overlay */}
                 <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
@@ -506,34 +520,33 @@ export function Gallery() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View photo: ${photo.title}`}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      handleOpenLightbox(index)
+                    }
+                  }}
                   onClick={() => handleOpenLightbox(index)}
                   className={`${
                     isWide ? 'col-span-2 aspect-[16/9] md:col-span-1 md:aspect-[4/3]' : 'col-span-1 aspect-[4/5] md:aspect-[4/3]'
-                  } rounded-2xl md:rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1 bg-gray-100 border border-gray-200/80`}
+                  } rounded-2xl md:rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1 bg-gray-100 border border-gray-200/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]`}
                 >
                   <img
                     src={photo.src}
+                    srcSet={portfolioSrcSet(photo.src)}
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     alt={photo.title}
                     width={1400}
                     height={1050}
                     loading="lazy"
+                    fetchPriority="low"
+                    decoding="async"
                     draggable={false}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none"
                   />
-
-                  {/* Category Pill Tag */}
-                  <div className="absolute top-3 left-3 z-10 pointer-events-none">
-                    <span className="inline-block px-2.5 py-1 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-bold tracking-widest uppercase text-[#0F766E] shadow-sm">
-                      {photo.category}
-                    </span>
-                  </div>
-
-                  {/* Bottom Title Bar */}
-                  <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none">
-                    <p className="text-white font-sans text-xs sm:text-sm font-semibold tracking-wide drop-shadow-sm truncate">
-                      {photo.title}
-                    </p>
-                  </div>
 
                   {/* Hover Quick Zoom Overlay */}
                   <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
@@ -549,6 +562,64 @@ export function Gallery() {
       )}
 
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        {/* On-Site Video Records Section */}
+        <div className="mt-16 sm:mt-24">
+          <div className="mb-8">
+            <div className="flex items-center gap-4 mb-3">
+              <span className="w-10 h-[1.5px] bg-[#0F766E]"></span>
+              <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">Video Records</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 tracking-tight">
+              On-Site Video Inspections &amp; Walkthroughs
+            </h3>
+            <p className="text-sm text-gray-500 font-sans mt-1">
+              Watch real ground recordings, boundary verifications, and progress checks from our Ghana sites.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {galleryVideos.map((video, index) => (
+              <motion.div
+                key={video.id}
+                layout
+                role="button"
+                tabIndex={0}
+                aria-label={`Play video: ${video.title}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setSelectedVideoIndex(index)
+                  }
+                }}
+                onClick={() => setSelectedVideoIndex(index)}
+                className="aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1 bg-black border border-gray-200/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
+              >
+                <video
+                  src={`${video.src}#t=0.001`}
+                  preload="metadata"
+                  playsInline
+                  muted
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none"
+                />
+
+                {/* Subtle dark gradient overlay & centered play icon */}
+                <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition-colors flex items-center justify-center pointer-events-none">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/95 text-[#0F766E] flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                    <Play className="w-5 h-5 md:w-6 md:h-6 fill-current ml-0.5" aria-hidden="true" />
+                  </div>
+                </div>
+
+                {/* Duration Badge */}
+                <div className="absolute bottom-3 right-3 pointer-events-none">
+                  <span className="inline-block px-2.5 py-1 bg-black/70 backdrop-blur-md rounded-md text-[11px] font-semibold text-white/90 tabular-nums">
+                    {video.duration}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom Booking CTA Banner */}
         <div className="mt-20 bg-[#F0FDFA] border border-[#99F6E4]/40 rounded-[2.5rem] p-10 md:p-14 text-center max-w-4xl mx-auto shadow-sm">
           <span className="text-xs font-bold tracking-[0.2em] text-[#0F766E] uppercase mb-4 inline-block">
@@ -626,6 +697,7 @@ export function Gallery() {
                   alt={filteredPhotos[selectedIndex].title}
                   width={1600}
                   height={1200}
+                  decoding="async"
                   className="max-h-[78vh] w-auto max-w-full object-contain select-none"
                 />
               </div>
@@ -643,6 +715,95 @@ export function Gallery() {
                 <Link
                   to="/packages"
                   onClick={handleCloseLightbox}
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#2DD4BF] hover:text-white transition-colors shrink-0"
+                >
+                  Book Inspection Package
+                  <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Lightbox Modal (Videos) */}
+      <AnimatePresence>
+        {selectedVideoIndex !== null && galleryVideos[selectedVideoIndex] && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label="On-Site Project Video"
+            onClick={() => setSelectedVideoIndex(null)}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setSelectedVideoIndex(null)}
+              aria-label="Close Video"
+              className="absolute top-6 right-6 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/20"
+            >
+              <X className="w-6 h-6" aria-hidden="true" />
+            </button>
+
+            {/* Prev Button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                handlePrevVideo()
+              }}
+              aria-label="Previous video"
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/20"
+            >
+              <ChevronLeft className="w-6 h-6" aria-hidden="true" />
+            </button>
+
+            {/* Next Button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleNextVideo()
+              }}
+              aria-label="Next video"
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/20"
+            >
+              <ChevronRight className="w-6 h-6" aria-hidden="true" />
+            </button>
+
+            {/* Modal Video View */}
+            <div
+              className="max-w-5xl w-full flex flex-col items-center max-h-[92vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative max-h-[78vh] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 mb-4 bg-black flex items-center justify-center aspect-video">
+                <video
+                  key={galleryVideos[selectedVideoIndex].src}
+                  src={galleryVideos[selectedVideoIndex].src}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="max-h-[78vh] w-full h-full object-contain"
+                />
+              </div>
+
+              {/* Clean Footer Bar */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full max-w-2xl px-2 gap-3">
+                <div>
+                  <h3 className="text-white font-sans font-semibold text-base sm:text-lg leading-snug">
+                    {galleryVideos[selectedVideoIndex].title}
+                  </h3>
+                  <span className="text-[11px] font-bold tracking-widest text-white/70 uppercase">
+                    Site Video &bull; {selectedVideoIndex + 1} of {galleryVideos.length}
+                  </span>
+                </div>
+                <Link
+                  to="/packages"
+                  onClick={() => setSelectedVideoIndex(null)}
                   className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#2DD4BF] hover:text-white transition-colors shrink-0"
                 >
                   Book Inspection Package
