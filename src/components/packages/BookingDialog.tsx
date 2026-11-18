@@ -34,7 +34,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
     document.body.style.overflow = 'hidden'
     dialogRef.current?.focus()
     return () => {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = ''
       opener?.focus()
     }
   }, [isModalOpen])
