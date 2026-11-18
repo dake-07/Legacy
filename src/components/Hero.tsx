@@ -8,7 +8,7 @@ export function Hero() {
   const [consultation, setConsultation] = useState({ open: false, requestId: 0 })
 
   return (
-    <section id="home" className="focus-light relative h-[100dvh] lg:h-[92dvh] min-h-[600px] lg:min-h-[640px] max-h-[880px] overflow-hidden bg-white w-full">
+    <section id="home" className="focus-light relative overflow-hidden bg-white w-full lg:h-[92dvh] lg:min-h-[640px] lg:max-h-[880px] flex flex-col justify-center">
       {/* Full-bleed Background Image with Responsive Formats */}
       <div className="absolute inset-x-2 top-2 bottom-2 rounded-3xl overflow-hidden z-0">
         <picture className="absolute inset-0 w-full h-full">
@@ -41,10 +41,10 @@ export function Hero() {
       </div>
 
       {/* Main Content Area */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-between pt-24 md:pt-28 lg:pt-32 pb-8 sm:pb-10 px-6 sm:px-10 lg:px-16 max-w-[1400px] mx-auto w-full">
+      <div className="relative z-20 flex flex-col justify-center pt-28 pb-12 sm:pt-32 sm:pb-16 lg:py-0 px-6 sm:px-10 lg:px-16 max-w-[1400px] mx-auto w-full">
         
         {/* Left-Aligned Headline & Supporting Copy */}
-        <div className="flex flex-col items-start text-left mt-4 md:mt-8 lg:mt-10 w-full max-w-3xl">
+        <div className="flex flex-col items-start text-left w-full max-w-3xl">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
