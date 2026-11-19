@@ -8,9 +8,9 @@ export function Hero() {
   const [consultation, setConsultation] = useState({ open: false, requestId: 0 })
 
   return (
-    <section id="home" className="focus-light relative h-[100svh] lg:h-[92dvh] min-h-[580px] lg:min-h-[640px] max-h-[880px] overflow-hidden bg-white w-full">
-      {/* Full-bleed Background Image with Responsive Formats */}
-      <div className="absolute inset-x-2 top-2 bottom-2 rounded-3xl overflow-hidden z-0">
+    <section id="home" className="focus-light relative h-[100svh] lg:h-[92dvh] min-h-[580px] lg:min-h-[640px] max-h-[880px] overflow-hidden bg-stone-950 w-full">
+      {/* Full-bleed Edge-to-Edge Background Image */}
+      <div className="absolute inset-0 overflow-hidden z-0">
         <picture className="absolute inset-0 w-full h-full">
           <source 
             type="image/webp" 
