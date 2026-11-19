@@ -11,7 +11,7 @@ export function PartnersPage() {
           content="Explore our vetted network of licensed building developers in Ghana. Compare their projects and select the right partner for your diaspora build." 
         />
       </Helmet>
-      <div className="pt-24 bg-[#F0FDFA]">
+      <div className="pt-20 bg-[#F7FAF8] sm:pt-24">
         <BuildingPartners />
       </div>
     </>

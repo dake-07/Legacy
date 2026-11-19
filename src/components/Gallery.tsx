@@ -297,28 +297,21 @@ export function Gallery() {
   }, [selectedIndex, selectedVideoIndex, handlePrev, handleNext, handlePrevVideo, handleNextVideo])
 
   return (
-    <section id="gallery" className="py-20 md:py-32 bg-white relative overflow-hidden border-t border-gray-100 scroll-mt-24">
-      {/* High-Performance Ambient Glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.08) 0%, transparent 70%)' }}></div>
-
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+    <section id="gallery" className="scroll-mt-24 bg-white py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         
         {/* Header Section */}
-        <div className="mb-10 max-w-3xl">
-          <div className="flex items-center gap-4 mb-3">
-            <span className="w-10 h-[1.5px] bg-[#0F766E]"></span>
-            <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">Visual Gallery</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 tracking-tight mb-3">
-            On-the-Ground Project Gallery
+        <div className="mb-12 grid gap-6 border-b border-[#BFCFC8] pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <h1 className="max-w-[12ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111815] sm:text-5xl">
+            Project evidence from the ground
           </h1>
-          <p className="text-gray-600 font-sans text-base md:text-lg leading-relaxed">
-            Real progress photos, verified demarcation, and active build monitoring across our developments in Ghana.
+          <p className="max-w-[60ch] text-base leading-8 text-[#4C5B55] md:text-lg lg:justify-self-end">
+            Progress photographs, land demarcation, architectural work, and site-monitoring records from projects in Ghana.
           </p>
         </div>
 
         {/* Featured Mini-Hero: Overview of Gomoa Fetteh */}
-        <div className="mb-14 rounded-3xl lg:rounded-[2.5rem] overflow-hidden shadow-xl border border-gray-200/90 bg-stone-950 relative group">
+        <div className="group relative mb-14 overflow-hidden border border-[#BFCFC8] bg-stone-950">
           <div className="relative h-[320px] sm:h-[400px] md:h-[460px] lg:h-[500px] w-full overflow-hidden">
             <img
               src={`${baseUrl}portfolio/gomoa-fetteh-overview.webp`}
@@ -351,17 +344,16 @@ export function Gallery() {
                   <button
                     type="button"
                     onClick={handleOpenGomoaLightbox}
-                    className="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-stone-100 px-6 py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-lg cursor-pointer"
+                    className="inline-flex min-h-12 cursor-pointer items-center gap-2 bg-white px-6 py-3 text-sm font-semibold text-[#073A36] transition-colors hover:bg-[#F7FAF8]"
                   >
                     <Maximize2 className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />
-                    View Full Image
+                    View full image
                   </button>
                   <Link
                     to="/packages"
-                    className="inline-flex items-center gap-2 bg-stone-900/60 hover:bg-stone-900/80 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-lg"
+                    className="inline-flex min-h-12 items-center border border-white/45 bg-black/35 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white"
                   >
-                    Book Site Inspection
-                    <ArrowUpRight className="w-4 h-4 text-[#2DD4BF]" aria-hidden="true" />
+                    Request a site inspection
                   </Link>
                 </div>
               </div>
@@ -560,19 +552,15 @@ export function Gallery() {
         </div>
       )}
 
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         {/* On-Site Video Records Section */}
         <div className="mt-16 sm:mt-24">
-          <div className="mb-8">
-            <div className="flex items-center gap-4 mb-3">
-              <span className="w-10 h-[1.5px] bg-[#0F766E]"></span>
-              <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">Video Records</span>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 tracking-tight">
-              On-Site Video Inspections &amp; Walkthroughs
+          <div className="mb-8 border-t border-[#BFCFC8] pt-10">
+            <h3 className="text-2xl font-semibold tracking-[-0.025em] text-[#111815] sm:text-3xl">
+              Site inspections and walkthroughs
             </h3>
-            <p className="text-sm text-gray-500 font-sans mt-1">
-              Watch real ground recordings, boundary verifications, and progress checks from our Ghana sites.
+            <p className="mt-2 text-sm leading-6 text-[#5B6B65]">
+              Ground recordings, boundary verification, and progress checks from Ghana sites.
             </p>
           </div>
 
@@ -619,27 +607,23 @@ export function Gallery() {
         </div>
 
         {/* Bottom Booking CTA Banner */}
-        <div className="mt-20 bg-[#F0FDFA] border border-[#99F6E4]/40 rounded-[2.5rem] p-10 md:p-14 text-center max-w-4xl mx-auto shadow-sm">
-          <span className="text-xs font-bold tracking-[0.2em] text-[#0F766E] uppercase mb-4 inline-block">
-            Protect Your Investment
-          </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-5">
-            Need Independent Site Inspections for Your Project?
+        <div className="mx-auto mt-20 max-w-4xl border border-[#BFCFC8] bg-[#F7FAF8] p-8 md:p-12">
+          <h2 className="max-w-[20ch] font-serif text-3xl font-semibold leading-tight text-[#111815] md:text-4xl">
+            Need independent evidence from your site?
           </h2>
-          <p className="text-gray-600 font-sans text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-            We provide verified land title vetting, surveyor coordination, and weekly construction photographic logs so you can build with confidence from abroad.
+          <p className="mt-5 max-w-2xl text-base leading-8 text-[#4C5B55] md:text-lg">
+            Coordinate title checks, surveying, and regular construction records while you remain abroad.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
               to="/packages"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#0F766E] text-white font-bold uppercase tracking-wider text-xs hover:bg-[#134E4A] shadow-md transition-colors"
+              className="inline-flex min-h-12 items-center justify-center bg-[#0B554E] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#073A36]"
             >
-              Explore Inspection Packages
-              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+              Compare inspection packages
             </Link>
             <a
               href="tel:+233502323196"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white border border-gray-200 text-gray-800 font-bold uppercase tracking-wider text-xs hover:bg-gray-50 shadow-sm transition-colors"
+              className="inline-flex min-h-12 items-center justify-center border border-[#BFCFC8] bg-white px-6 py-3 text-sm font-semibold text-[#073A36] transition-colors hover:border-[#0B554E]"
             >
               Call +233&nbsp;50&nbsp;232&nbsp;3196
             </a>

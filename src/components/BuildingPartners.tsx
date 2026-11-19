@@ -1,16 +1,28 @@
 import { useState } from 'react'
-import { Compass, ShieldCheck, Eye, ArrowRight } from 'lucide-react'
-import { developerPartners } from './partners/data'
-import type { DeveloperPartner } from './partners/data'
+import { Compass, Eye, ShieldCheck } from 'lucide-react'
+import { developerPartners, type DeveloperPartner } from './partners/data'
 import { PartnerCard } from './partners/PartnerCard'
 import { DesignGallery } from './partners/DesignGallery'
 import { ConsultationDialog } from './partners/ConsultationDialog'
 import { FreeConsultationDialog } from './FreeConsultationDialog'
 
+const safeguards = [
+  { icon: Compass, title: 'Design evidence', detail: 'Review architectural work before choosing a direction.' },
+  { icon: ShieldCheck, title: 'Milestone oversight', detail: 'Connect project decisions and payments to verified progress.' },
+  { icon: Eye, title: 'Independent site records', detail: 'Receive inspection evidence instead of relying on verbal updates.' },
+]
+
+const process = [
+  { title: 'Choose the design and scope', detail: 'Identify the architecture, builder, and project requirements that fit your land and budget.' },
+  { title: 'Agree the milestones', detail: 'Define what must be completed and verified before each project stage advances.' },
+  { title: 'Review independent records', detail: 'Receive site evidence and engineering observations from Ghana throughout the build.' },
+]
+
 export function BuildingPartners() {
   const [consultation, setConsultation] = useState<{ partner: DeveloperPartner | null; designTitle: string; requestId: number }>({ partner: null, designTitle: '', requestId: 0 })
   const [gallery, setGallery] = useState<{ partner: DeveloperPartner | null; initialIndex: number; requestId: number }>({ partner: null, initialIndex: 0, requestId: 0 })
   const [generalConsultationOpen, setGeneralConsultationOpen] = useState(false)
+
   const handleOpenConsultation = (partner: DeveloperPartner, designTitle = '') => {
     setConsultation(previous => ({ partner, designTitle, requestId: previous.requestId + 1 }))
   }
@@ -19,145 +31,86 @@ export function BuildingPartners() {
   }
 
   return (
-    <section className="partners-page py-10 md:py-16 bg-[#F0FDFA] relative overflow-hidden">
-      {/* High-Performance Radial Ambient Glows */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[8%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.12) 0%, transparent 70%)' }} />
-        <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.10) 0%, transparent 70%)' }} />
-      </div>
-
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
-        
-        {/* Header Section (Clean, Scannable & Trust-Centered) */}
-        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <div className="w-16 h-[1px] bg-[#0F766E]/40" />
-            <span className="text-xs font-bold tracking-[0.3em] text-[#0F766E] uppercase">
-              Vetted Contractor Network
-            </span>
-            <div className="w-16 h-[1px] bg-[#0F766E]/40" />
+    <section className="partners-page bg-[#F7FAF8] py-12 md:py-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        <header className="grid gap-8 border-b border-[#BFCFC8] pb-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <p className="text-base font-semibold text-[#0B554E]">Building partners in Ghana</p>
+            <h1 className="mt-4 max-w-[14ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111815] sm:text-5xl lg:text-6xl">
+              Compare the work before choosing the team.
+            </h1>
           </div>
-
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-gray-900 tracking-tight mb-5">
-            Find Your Building Partner in Ghana
-          </h1>
-
-          <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-            Explore architectural designers and builders for your project. Compare their experience, browse designs, and ask Legacy Hub to coordinate your next steps.
+          <p className="max-w-[62ch] text-lg leading-8 text-[#4C5B55] lg:justify-self-end">
+            Review architectural designers and builders, inspect their project work, and ask Legacy Hub to coordinate the practical next steps.
           </p>
+        </header>
 
-          {/* 3 Core Guarantees Pill Strip (No License Jargon) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-6">
-            <div className="flex items-center justify-center gap-2.5 bg-white/90 border border-gray-200/80 rounded-full py-2.5 px-4 shadow-xs">
-              <Compass aria-hidden="true" className="w-4 h-4 text-[#0F766E] shrink-0" />
-              <span className="text-sm font-semibold text-gray-800">Verified Architectural Designs</span>
-            </div>
-            <div className="flex items-center justify-center gap-2.5 bg-white/90 border border-gray-200/80 rounded-full py-2.5 px-4 shadow-xs">
-              <ShieldCheck aria-hidden="true" className="w-4 h-4 text-[#0F766E] shrink-0" />
-              <span className="text-sm font-semibold text-gray-800">Milestone Escrow Oversight</span>
-            </div>
-            <div className="flex items-center justify-center gap-2.5 bg-white/90 border border-gray-200/80 rounded-full py-2.5 px-4 shadow-xs">
-              <Eye aria-hidden="true" className="w-4 h-4 text-[#0F766E] shrink-0" />
-              <span className="text-sm font-semibold text-gray-800">Independent On-Site Audits</span>
-            </div>
-          </div>
+        <div className="grid border-b border-[#BFCFC8] md:grid-cols-3">
+          {safeguards.map((item, index) => {
+            const Icon = item.icon
+            return (
+              <div key={item.title} className={`py-7 md:px-7 ${index > 0 ? 'border-t border-[#BFCFC8] md:border-l md:border-t-0' : ''}`}>
+                <Icon aria-hidden="true" className="h-6 w-6 text-[#0B554E]" />
+                <h2 className="mt-4 font-semibold text-[#111815]">{item.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-[#5B6B65]">{item.detail}</p>
+              </div>
+            )
+          })}
         </div>
 
-        {/* Partners Showcase Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+        <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {developerPartners.map((partner, index) => (
             <PartnerCard key={partner.id} partner={partner} priority={index === 0} onOpenGallery={handleOpenGallery} onConsult={handleOpenConsultation} />
           ))}
         </div>
 
-        {/* More Partners to Join Notice */}
-        <section
-          aria-labelledby="more-partners-heading"
-          className="mt-8 sm:mt-10 rounded-2xl border border-teal-200/80 bg-white/95 p-6 sm:p-8 md:p-10 shadow-xs relative overflow-hidden"
-        >
-          {/* Subtle ambient glow matching page aesthetic */}
-          <div className="absolute top-0 right-0 w-72 h-72 bg-[#0F766E]/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0F766E]/10 text-[#0F766E] text-xs font-semibold mb-3">
-                <span className="w-2 h-2 rounded-full bg-[#0F766E] animate-pulse" aria-hidden="true" />
-                Network Expansion
-              </div>
-              <h2 id="more-partners-heading" className="text-xl sm:text-2xl font-serif font-bold text-gray-900 tracking-tight mb-2">
-                More Partners Joining Soon
+        <section aria-labelledby="more-partners-heading" className="mt-12 border border-[#BFCFC8] bg-white p-7 sm:p-10">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+            <div className="max-w-3xl">
+              <h2 id="more-partners-heading" className="text-2xl font-semibold tracking-[-0.02em] text-[#111815]">
+                The partner network is still growing.
               </h2>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-sans">
-                We are actively screening and vetting licensed architects, civil engineers, and master builders across Ghana. More verified partner profiles and architectural collections will be joining our network soon.
+              <p className="mt-4 leading-7 text-[#4C5B55]">
+                We are screening architects, civil engineers, and builders across Ghana. New profiles will appear after their credentials and project evidence have been reviewed.
               </p>
-              <p className="text-xs sm:text-sm text-gray-500 font-sans mt-3">
-                Are you a certified builder or architectural studio in Ghana?{' '}
-                <a
-                  href="mailto:asaapeesic@gmail.com?subject=Partner%20Inquiry%20-%20Legacy%20Hub"
-                  className="font-medium text-[#0F766E] underline decoration-teal-300 underline-offset-2 transition-colors hover:text-[#134E4A]"
-                >
-                  Inquire about joining our vetted network
+              <p className="mt-4 text-sm text-[#5B6B65]">
+                Are you a certified builder or architectural studio?{' '}
+                <a href="mailto:asaapeesic@gmail.com?subject=Partner%20Inquiry%20-%20Legacy%20Hub" className="font-semibold text-[#0B554E] underline underline-offset-4">
+                  Ask about joining the network
                 </a>
               </p>
             </div>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-              <button
-                type="button"
-                onClick={() => setGeneralConsultationOpen(true)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#0F766E] px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-[#134E4A] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
-              >
-                Inquire with Our Team
-                <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setGeneralConsultationOpen(true)}
+              className="min-h-12 cursor-pointer bg-[#0B554E] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#073A36]"
+            >
+              Ask the Legacy Hub team
+            </button>
           </div>
         </section>
 
-        {/* Simple 3-Step Process (KISS Workflow) */}
-        <div className="mt-12 sm:mt-16 bg-white border border-gray-200/90 rounded-2xl p-6 sm:p-10 md:p-12 shadow-sm">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-            <span className="text-xs font-bold tracking-[0.2em] text-[#0F766E] uppercase mb-2 block">
-              Clear &amp; Protected Process
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 tracking-tight">
-              How We Protect Your Build
-            </h2>
+        <section aria-labelledby="partner-process-title" className="mt-16 border-t border-[#BFCFC8] pt-12">
+          <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
+            <div>
+              <p className="text-base font-semibold text-[#0B554E]">A protected sequence</p>
+              <h2 id="partner-process-title" className="mt-3 font-serif text-3xl font-semibold tracking-[-0.03em] text-[#111815] sm:text-4xl">
+                How a partner engagement moves forward
+              </h2>
+            </div>
+            <ol className="border-t border-[#BFCFC8]">
+              {process.map((item, index) => (
+                <li key={item.title} className="grid grid-cols-[auto_1fr] gap-5 border-b border-[#BFCFC8] py-6">
+                  <span className="text-sm font-semibold tabular-nums text-[#0B554E]">{index + 1}</span>
+                  <div>
+                    <h3 className="font-semibold text-[#111815]">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#5B6B65]">{item.detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-[#0F766E] text-white flex items-center justify-center font-bold text-base mb-4 shadow-md">
-                1
-              </div>
-              <h3 className="font-serif font-bold text-lg text-gray-900 mb-2">Select Design &amp; Scope</h3>
-              <p className="text-sm text-gray-600 leading-relaxed font-sans">
-                Choose the architectural style or builder tailored to your villa, townhome, or land civil works.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-[#0F766E] text-white flex items-center justify-center font-bold text-base mb-4 shadow-md">
-                2
-              </div>
-              <h3 className="font-serif font-bold text-lg text-gray-900 mb-2">Milestone Escrow Contract</h3>
-              <p className="text-sm text-gray-600 leading-relaxed font-sans">
-                Payments are linked to specific construction milestones. No contractor receives funds in advance without verification.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-[#0F766E] text-white flex items-center justify-center font-bold text-base mb-4 shadow-md">
-                3
-              </div>
-              <h3 className="font-serif font-bold text-lg text-gray-900 mb-2">Independent Engineering Audits</h3>
-              <p className="text-sm text-gray-600 leading-relaxed font-sans">
-                Legacy Hub inspects steel reinforcement, concrete quality, and masonry, sending HD video audits directly to you abroad.
-              </p>
-            </div>
-          </div>
-        </div>
-
+        </section>
       </div>
 
       <DesignGallery
@@ -173,10 +126,7 @@ export function BuildingPartners() {
         selectedDesignTitle={consultation.designTitle}
         onClose={() => setConsultation(previous => ({ ...previous, partner: null }))}
       />
-      <FreeConsultationDialog
-        open={generalConsultationOpen}
-        onClose={() => setGeneralConsultationOpen(false)}
-      />
+      <FreeConsultationDialog open={generalConsultationOpen} onClose={() => setGeneralConsultationOpen(false)} />
     </section>
   )
 }

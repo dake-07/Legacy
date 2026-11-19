@@ -1,173 +1,105 @@
-import { useState } from 'react'
-import { motion, type Variants } from 'framer-motion'
-import { Briefcase, Monitor, Globe, Landmark } from 'lucide-react'
-import { Card, CardContent } from './ui/card'
+import { useState, type ReactNode } from 'react'
+import { Briefcase, Globe, Landmark, Monitor } from 'lucide-react'
 
 const baseUrl = import.meta.env.BASE_URL
 
-interface TeamMember {
+type TeamMember = {
   name: string
   role: string
+  description: string
   image?: string
   imageFallback?: string
   objectPosition?: string
-  icon: React.ReactNode
-  badgeIcon: React.ReactNode
-  description: string
+  fallback: ReactNode
 }
 
-function TeamAvatar({ member }: { member: TeamMember }) {
-  const [imgError, setImgError] = useState(false)
-  const hasImage = Boolean(member.image && !imgError)
+const team: TeamMember[] = [
+  {
+    name: 'Peter Asare',
+    role: 'CEO and business development',
+    image: `${baseUrl}team/peter-asare.webp`,
+    imageFallback: `${baseUrl}team/peter-asare.jpg`,
+    objectPosition: '50% 20%',
+    fallback: <Briefcase aria-hidden="true" className="h-10 w-10" />,
+    description: 'Leads strategy, client relationships, and service delivery for diaspora property and relocation projects.',
+  },
+  {
+    name: 'Kelvin',
+    role: 'IT officer',
+    fallback: <Monitor aria-hidden="true" className="h-10 w-10" />,
+    description: 'Maintains the digital systems used to communicate project information with clients across borders.',
+  },
+  {
+    name: 'Driskell Brown',
+    role: 'United States partner',
+    image: `${baseUrl}team/driskell-brown.webp`,
+    imageFallback: `${baseUrl}team/driskell-brown.jpg`,
+    objectPosition: '50% 20%',
+    fallback: <Globe aria-hidden="true" className="h-10 w-10" />,
+    description: 'Provides a direct point of contact and local context for clients based in North America.',
+  },
+  {
+    name: 'Nana Abore Attah II',
+    role: 'Chief of Gomoa Fetteh',
+    image: `${baseUrl}team/nana-abore-attah.webp`,
+    imageFallback: `${baseUrl}team/nana-abore-attah.jpg`,
+    objectPosition: '50% 15%',
+    fallback: <Landmark aria-hidden="true" className="h-10 w-10" />,
+    description: 'Brings local authority, land context, and traditional-governance insight to acquisition work.',
+  },
+]
+
+function TeamPortrait({ member }: { member: TeamMember }) {
+  const [imageError, setImageError] = useState(false)
+
+  if (!member.image || imageError) {
+    return (
+      <div className="flex aspect-[4/3] items-center justify-center bg-[#E7F1ED] text-[#0B554E]">
+        {member.fallback}
+      </div>
+    )
+  }
 
   return (
-    <div className="relative mb-8 group/avatar">
-      {/* Outer Ambient Ring */}
-      <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-[#0F766E]/20 via-[#14B8A6]/10 to-[#0F766E]/30 shadow-md group-hover:shadow-xl group-hover:from-[#0F766E] group-hover:to-[#14B8A6] transition-all duration-500">
-        <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-teal-50 to-white ring-2 ring-white flex items-center justify-center relative">
-          {hasImage ? (
-            <picture className="w-full h-full">
-              <source srcSet={member.image} type="image/webp" />
-              <img
-                src={member.imageFallback || member.image}
-                alt={`Portrait of ${member.name}`}
-                loading="lazy"
-                onError={() => setImgError(true)}
-                style={{ objectPosition: member.objectPosition || 'center top' }}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-            </picture>
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-teal-50/50 group-hover:bg-teal-50/80 transition-colors duration-500">
-              {member.icon}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Domain Badge (shown on image avatars) */}
-      {hasImage && (
-        <div 
-          className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-white border border-teal-100 shadow-md flex items-center justify-center text-[#0F766E] group-hover:bg-[#0F766E] group-hover:text-white transition-all duration-300 ring-2 ring-white z-10"
-          aria-hidden="true"
-        >
-          {member.badgeIcon}
-        </div>
-      )}
-    </div>
+    <picture className="block aspect-[4/3] overflow-hidden bg-[#E7F1ED]">
+      <source srcSet={member.image} type="image/webp" />
+      <img
+        src={member.imageFallback || member.image}
+        alt={`Portrait of ${member.name}`}
+        loading="lazy"
+        onError={() => setImageError(true)}
+        style={{ objectPosition: member.objectPosition || 'center top' }}
+        className="h-full w-full object-cover"
+      />
+    </picture>
   )
 }
 
 export function ManagementTeam() {
-  const team: TeamMember[] = [
-    {
-      name: "Peter Asare",
-      role: "CEO / Business Development",
-      image: `${baseUrl}team/peter-asare.webp`,
-      imageFallback: `${baseUrl}team/peter-asare.jpg`,
-      objectPosition: "50% 20%",
-      icon: <Briefcase className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
-      badgeIcon: <Briefcase className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />,
-      description: "Leading the strategic vision and growth of Legacy Hub, ensuring premium service delivery for all diaspora clients."
-    },
-    {
-      name: "Kelvin",
-      role: "IT Officer",
-      icon: <Monitor className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
-      badgeIcon: <Monitor className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />,
-      description: "Managing our digital infrastructure and ensuring seamless, secure communication channels for international investors."
-    },
-    {
-      name: "Driskell Brown",
-      role: "Partner - USA",
-      image: `${baseUrl}team/driskell-brown.webp`,
-      imageFallback: `${baseUrl}team/driskell-brown.jpg`,
-      objectPosition: "50% 20%",
-      icon: <Globe className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
-      badgeIcon: <Globe className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />,
-      description: "Our direct liaison in the United States, providing localized support and trust for North American diaspora clients."
-    },
-    {
-      name: "Nana Abore Attah II",
-      role: "Chief of Gomoa Fetteh",
-      image: `${baseUrl}team/nana-abore-attah.webp`,
-      imageFallback: `${baseUrl}team/nana-abore-attah.jpg`,
-      objectPosition: "50% 15%",
-      icon: <Landmark className="w-10 h-10 text-[#0F766E]" aria-hidden="true" />,
-      badgeIcon: <Landmark className="w-4 h-4 text-[#0F766E]" aria-hidden="true" />,
-      description: "Providing unparalleled local authority, land verification, and traditional governance support to ensure secure acquisitions."
-    }
-  ]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
-    }
-  }
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-  }
-
   return (
-    <section id="team" className="py-40 bg-transparent relative overflow-hidden border-t border-black/5 scroll-mt-24">
-      {/* Decorative Background Element */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-[#0F766E]/10 rounded-l-[150px] pointer-events-none -z-0 blur-[80px]"></div>
-
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1 }}
-          className="text-center mb-32"
-        >
-          <div className="flex items-center justify-center gap-6 mb-8">
-            <div className="w-16 h-[1px] bg-[#0F766E]/40"></div>
-            <span className="text-xs font-bold tracking-[0.3em] text-[#0F766E] uppercase">Leadership</span>
-            <div className="w-16 h-[1px] bg-[#0F766E]/40"></div>
-          </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-gray-900 mb-8 tracking-tight">Management Team</h2>
-          <p className="text-lg md:text-xl text-gray-600 font-sans max-w-2xl mx-auto leading-relaxed">
-            The trusted experts, international partners, and local authorities behind Legacy Growth & Development Hub.
+    <section id="team" className="scroll-mt-24 bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        <header className="grid gap-7 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+          <h2 className="font-serif text-4xl font-semibold tracking-[-0.035em] text-[#111815] sm:text-5xl">
+            The people responsible for the work
+          </h2>
+          <p className="max-w-[58ch] text-lg leading-8 text-[#4C5B55] lg:justify-self-end">
+            Leadership, technical support, international coordination, and local authority working across one client experience.
           </p>
-        </motion.div>
+        </header>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
-        >
-          {team.map((member, index) => (
-            <motion.div key={index} variants={itemVariants} className="h-full">
-              <Card className="h-full border border-gray-200 shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-500 bg-white group hover:-translate-y-3 rounded-[2.5rem] overflow-hidden">
-                <CardContent className="p-8 sm:p-10 text-center flex flex-col items-center h-full relative">
-                  
-                  {/* Subtle Background Glow on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#0F766E]/0 to-[#0F766E]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-                  {/* Team Avatar / Portrait */}
-                  <TeamAvatar member={member} />
-                  
-                  <h3 className="text-2xl font-serif font-bold text-gray-900 mb-3 relative z-10 group-hover:text-[#0F766E] transition-colors duration-500">{member.name}</h3>
-                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#0F766E] mb-8 relative z-10">{member.role}</p>
-                  
-                  {/* Decorative Line */}
-                  <div className="w-12 h-[1px] bg-gray-200 mb-8 group-hover:bg-[#0F766E]/50 transition-colors duration-500 relative z-10"></div>
-                  
-                  <p className="text-gray-600 font-sans leading-relaxed text-sm relative z-10 group-hover:text-gray-900 transition-colors duration-500">
-                    {member.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+        <div className="mt-12 grid border-l border-t border-[#BFCFC8] md:grid-cols-2">
+          {team.map(member => (
+            <article key={member.name} className="grid border-b border-r border-[#BFCFC8] sm:grid-cols-[0.8fr_1.2fr]">
+              <TeamPortrait member={member} />
+              <div className="flex flex-col p-6 sm:p-7">
+                <h3 className="text-xl font-semibold tracking-[-0.02em] text-[#111815]">{member.name}</h3>
+                <p className="mt-2 text-sm font-semibold text-[#0B554E]">{member.role}</p>
+                <p className="mt-5 text-sm leading-7 text-[#5B6B65]">{member.description}</p>
+              </div>
+            </article>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )

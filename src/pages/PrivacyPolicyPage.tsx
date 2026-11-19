@@ -30,7 +30,7 @@ export function PrivacyPolicyPage() {
                 <Shield className="w-6 h-6 text-[#0F766E]" aria-hidden="true" />
               </div>
               <div>
-                <span className="text-xs font-bold tracking-[0.2em] text-[#0F766E] uppercase">Legal</span>
+                <span className="text-sm font-semibold text-[#0B554E]">Legal information</span>
                 <h1 className="text-3xl md:text-4xl font-serif font-bold text-gray-900">Privacy Policy</h1>
               </div>
             </div>

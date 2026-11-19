@@ -25,9 +25,9 @@
 }
 
 @theme {
-  --color-legacy-primary: #000000;
-  --color-legacy-gold: #c5a86a;
-  --color-legacy-secondary: #111111;
+  --color-legacy-primary: #0b554e;
+  --color-legacy-gold: #c7a85a;
+  --color-legacy-secondary: #073a36;
 
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -59,35 +59,35 @@
 
 @layer base {
   :root {
-    /* Base theme: Liquid Glass - Trust Teal & Professional Blue */
-    --background: 166 67% 96%; /* #F0FDFA - Minty Off-White */
-    --foreground: 175 60% 19%; /* #134E4A - Dark Teal text */
+    /* Legacy Hub: proof-led, Ghana-based property support */
+    --background: 140 23% 97%; /* #F7FAF8 - Coastal white */
+    --foreground: 150 17% 8%; /* #111815 - Ink */
     
     --card: 0 0% 100%; /* Pure white */
-    --card-foreground: 175 60% 19%;
+    --card-foreground: 150 17% 8%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 175 60% 19%;
+    --popover-foreground: 150 17% 8%;
     
-    --primary: 175 77% 26%; /* #0F766E - Teal */
+    --primary: 173 77% 19%; /* #0B554E - Ghana forest */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 173 80% 40%; /* #14B8A6 */
-    --secondary-foreground: 175 60% 19%;
+    --secondary: 171 79% 13%; /* #073A36 - Deep canopy */
+    --secondary-foreground: 140 23% 97%;
     
-    --muted: 196 29% 93%; /* #E8F0F3 */
-    --muted-foreground: 175 60% 40%;
+    --muted: 153 14% 88%; /* #DDE5E1 - Concrete */
+    --muted-foreground: 150 9% 33%;
     
-    --accent: 201 96% 32%; /* #0369A1 */
-    --accent-foreground: 0 0% 100%;
+    --accent: 43 46% 57%; /* #C7A85A - Survey gold */
+    --accent-foreground: 171 79% 13%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     
-    --border: 168 83% 78%; /* #99F6E4 */
-    --input: 168 83% 78%;
-    --ring: 175 77% 26%;
-    --radius: 0.5rem;
+    --border: 154 15% 78%; /* #BFCFC8 */
+    --input: 154 15% 78%;
+    --ring: 173 77% 19%;
+    --radius: 0.375rem;
   }
 }
  
@@ -103,6 +103,7 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -118,7 +119,7 @@
     user-select: none;
   }
   :focus-visible {
-    outline: 3px solid #0F766E;
+    outline: 3px solid #0B554E;
     outline-offset: 2px;
   }
   /* Dark sections (hero photo, footer) need a light focus ring */

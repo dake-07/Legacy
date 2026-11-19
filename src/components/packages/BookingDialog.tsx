@@ -162,18 +162,18 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white border border-gray-100 rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F766E]"
+              className="bg-white border border-[#BFCFC8] shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B554E]"
             >
               {/* Header */}
-              <div className="border-b border-gray-100 p-8 flex items-center justify-between shrink-0 bg-gray-50">
+              <div className="border-b border-[#DDE5E1] p-6 sm:p-8 flex items-center justify-between shrink-0 bg-[#F7FAF8]">
                 <div>
-                  <h2 id="booking-title" className="text-gray-900 font-serif font-bold text-2xl leading-tight">Request Package</h2>
-                  <p className="text-[#0F766E] text-sm font-sans mt-2 font-bold">{selectedPackage}</p>
-                  <p className="text-gray-500 text-xs font-sans mt-1 uppercase tracking-wider tabular-nums">Pricing: {selectedPrice}</p>
+                  <h2 id="booking-title" className="text-[#111815] font-semibold text-2xl leading-tight">Request this package</h2>
+                  <p className="text-[#0B554E] text-sm mt-2 font-semibold">{selectedPackage}</p>
+                  <p className="text-[#5B6B65] text-xs mt-1 tabular-nums">Pricing: {selectedPrice}</p>
                 </div>
                 <button 
                   onClick={handleCloseModal}
-                  aria-label="Close" className="text-gray-500 hover:text-gray-900 transition-colors p-3 bg-white rounded-full cursor-pointer border border-gray-200 shadow-sm"
+                  aria-label="Close" className="text-[#5B6B65] hover:text-[#111815] transition-colors p-3 bg-white cursor-pointer border border-[#BFCFC8]"
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
@@ -194,7 +194,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                       { name: "address" as const, label: "City / Country", placeholder: "e.g. London, UK…", autoComplete: "address-level2", inputMode: "text" as const, type: "text" }
                     ]).map((field) => (
                       <div key={field.name} className="space-y-3">
-                        <label htmlFor={field.name} className="text-xs font-bold tracking-widest uppercase text-gray-500">{field.label}</label>
+                        <label htmlFor={field.name} className="text-sm font-semibold text-[#37453F]">{field.label}</label>
                         <input
                           required
                           type={field.type}
@@ -208,7 +208,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                           onChange={handleInputChange}
                           aria-invalid={!!errors[field.name]}
                           aria-describedby={errors[field.name] ? `${field.name}-error` : undefined}
-                          className={`w-full px-5 py-4 rounded-xl border bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F766E] focus-visible:border-transparent transition-colors font-sans ${errors[field.name] ? 'border-red-600' : 'border-gray-200'}`}
+                          className={`w-full px-5 py-4 rounded-md border bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B554E] focus-visible:border-transparent transition-colors font-sans ${errors[field.name] ? 'border-red-600' : 'border-[#BFCFC8]'}`}
                           placeholder={field.placeholder}
                         />
                         {errors[field.name] && (
@@ -238,8 +238,8 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                       </div>
                     )}
 
-                    <Button type="submit" className="w-full h-14 mt-8 text-sm uppercase tracking-widest font-bold bg-black text-white hover:bg-gray-800 cursor-pointer rounded-full transition-colors">
-                      Submit Request
+                    <Button type="submit" className="w-full h-14 mt-8 text-sm font-semibold bg-[#0B554E] text-white hover:bg-[#073A36] cursor-pointer rounded-md transition-colors">
+                      Send package request
                     </Button>
                   </form>
                 )}
@@ -257,7 +257,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                     <div className="w-16 h-16 bg-[#0F766E]/10 border border-[#0F766E]/30 rounded-full flex items-center justify-center mb-8">
                       <CheckCircle2 className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />
                     </div>
-                    <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">Booking Initiated</h3>
+                    <h3 className="text-3xl font-semibold text-gray-900 mb-4">Request received</h3>
                     <p className="text-gray-600 mb-8 font-sans leading-relaxed break-words max-w-full">
                       Thank you, {formData.name.trim().split(' ')[0]}. A confirmation receipt has been sent to <span className="font-bold text-gray-900">{formData.email}</span>, and our team has been notified.
                     </p>
@@ -273,7 +273,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                       
                       <div className="space-y-4 font-sans">
                         <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
-                          <div className="text-[10px] tracking-widest text-[#0F766E] uppercase mb-2">Bank Transfer</div>
+                          <div className="text-sm font-semibold text-[#0B554E] mb-2">Bank transfer</div>
                           <div className="text-sm text-gray-600 mb-1">Bank: <span className="text-gray-900 font-bold">CBG</span></div>
                           <div className="text-sm text-gray-600 mb-1">Account Name: <span className="text-gray-900 font-bold">Legacy Growth and Development Hub</span></div>
                           <div className="text-sm text-gray-600 mb-1">Account Number: <span className="text-gray-900 font-bold tabular-nums tracking-wide">2537968640001</span></div>
@@ -281,8 +281,8 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                         </div>
                         
                         <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
-                          <div className="text-[10px] tracking-widest text-[#0F766E] uppercase mb-2 flex items-center gap-2">
-                            <Smartphone className="h-3 w-3" aria-hidden="true" /> Mobile Money
+                          <div className="text-sm font-semibold text-[#0B554E] mb-2 flex items-center gap-2">
+                            <Smartphone className="h-4 w-4" aria-hidden="true" /> Mobile money
                           </div>
                           <div className="text-sm text-gray-600 mb-1">Number: <span className="text-gray-900 font-bold tabular-nums">050&nbsp;232&nbsp;3196</span></div>
                           <div className="text-sm text-gray-600">Wallet Name: <span className="text-gray-900 font-bold">Peter Asare / Legacy Growth and Development Hub</span></div>
@@ -295,21 +295,21 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                         href={`https://wa.me/233502323196?text=${encodeURIComponent(`Hello LegacyHub, I have submitted a booking request for "${selectedPackage}" (${selectedPrice}).\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nLocation: ${formData.address}`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 px-4 rounded-full font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 px-4 font-semibold text-sm transition-colors"
                       >
                         <MessageSquare className="w-4 h-4" aria-hidden="true" />
                         Confirm via WhatsApp
                       </a>
                       <a
                         href={`mailto:asaapeesic@gmail.com?subject=${encodeURIComponent(`New Booking: ${selectedPackage} - ${formData.name}`)}&body=${encodeURIComponent(`Hello LegacyHub Team,\n\nI have submitted a booking request for the following package:\nPackage: ${selectedPackage}\nPricing: ${selectedPrice}\n\nClient Details:\nFull Name: ${formData.name}\nEmail: ${formData.email}\nPhone / WhatsApp: ${formData.phone}\nCity / Country: ${formData.address}\n\nPlease confirm availability and next steps.\n\nBest regards,\n${formData.name}`)}`}
-                        className="flex-1 flex items-center justify-center gap-2 bg-[#0F766E] hover:bg-[#134E4A] text-white py-3.5 px-4 rounded-full font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#0B554E] hover:bg-[#073A36] text-white py-3.5 px-4 font-semibold text-sm transition-colors"
                       >
                         <Mail className="w-4 h-4" aria-hidden="true" />
                         Send via Email
                       </a>
                     </div>
 
-                    <Button onClick={handleCloseModal} className="w-full h-14 mt-4 text-sm uppercase tracking-widest font-bold cursor-pointer rounded-full bg-gray-100 text-gray-900 hover:bg-gray-200 border-none transition-colors">
+                    <Button onClick={handleCloseModal} className="w-full h-14 mt-4 text-sm font-semibold cursor-pointer rounded-md bg-gray-100 text-gray-900 hover:bg-gray-200 border-none transition-colors">
                       Done
                     </Button>
                   </div>

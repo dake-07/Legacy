@@ -8,7 +8,7 @@ export function PortfolioPage() {
         <title>Gallery | Legacy</title>
         <meta name="description" content="View our gallery of successful relocations, land acquisitions, and construction projects." />
       </Helmet>
-      <div className="pt-24 bg-[#F0FDFA]">
+      <div className="pt-20 bg-[#F7FAF8] sm:pt-24">
         <Gallery />
       </div>
     </>

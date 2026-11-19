@@ -1,104 +1,86 @@
-import { useState, useEffect } from 'react'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { Menu, X } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
+
+const navLinks = [
+  { label: 'Home', path: '/' },
+  { label: 'Packages', path: '/packages' },
+  { label: 'Partners', path: '/partners' },
+  { label: 'Gallery', path: '/portfolio' },
+  { label: 'About', path: '/about' },
+]
 
 export function Navbar() {
   const [hasScrolled, setHasScrolled] = useState(() => window.scrollY > 10)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
-
-  // Only the home page has the transparent navbar over the hero; other pages always use the solid style
-  const isScrolled = location.pathname !== '/' || hasScrolled
+  const solid = location.pathname !== '/' || hasScrolled
 
   useEffect(() => {
     let ticking = false
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrolled = window.scrollY > 10
-          setHasScrolled(prev => (prev !== scrolled ? scrolled : prev))
-          ticking = false
-        })
-        ticking = true
-      }
+      if (ticking) return
+      ticking = true
+      window.requestAnimationFrame(() => {
+        setHasScrolled(window.scrollY > 10)
+        ticking = false
+      })
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close mobile drawer on Escape key press
   useEffect(() => {
     if (!mobileMenuOpen) return
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileMenuOpen(false)
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false)
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [mobileMenuOpen])
 
-  const navLinks = [
-    { label: 'Home', path: '/' },
-    { label: 'Packages', path: '/packages' },
-    { label: 'Partners', path: '/partners' },
-    { label: 'Gallery', path: '/portfolio' },
-    { label: 'About', path: '/about' }
-  ]
-
   const prefetchRoute = (path: string) => {
     if (path === '/packages') import('../pages/PackagesPage')
     else if (path === '/partners') import('../pages/PartnersPage')
-    else if (path === '/portfolio' || path === '/gallery') import('../pages/PortfolioPage')
+    else if (path === '/portfolio') import('../pages/PortfolioPage')
     else if (path === '/about') import('../pages/AboutPage')
   }
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,border-color,box-shadow] duration-300 px-4 md:px-8 ${isScrolled ? 'pt-3.5 pb-3.5 bg-white/98 md:bg-white/90 md:backdrop-blur-xl shadow-xs border-b border-gray-200/80' : 'pt-6 focus-light'}`}
+      aria-label="Primary navigation"
+      className={`fixed inset-x-0 top-0 z-50 px-5 transition-[background-color,border-color,padding] duration-200 sm:px-8 lg:px-12 ${solid ? 'border-b border-[#DDE5E1] bg-[#F7FAF8]/95 py-3 backdrop-blur-lg' : 'py-5 focus-light'}`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        
-        {/* Logo (Left) */}
-        <Link to="/" className="flex items-center space-x-3 group cursor-pointer w-auto sm:w-48 shrink-0">
-          <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shrink-0">
-            <svg viewBox="0 0 100 100" className={`w-full h-full drop-shadow-md ${isScrolled ? 'text-[#134E4A]' : 'text-[#0F766E]'}`} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="15" y="5" width="12" height="45" fill="currentColor" />
-              <rect x="35" y="18" width="12" height="32" fill="currentColor" />
-              <path d="M 55 5 L 85 5 L 85 17 L 67 17 L 67 38 L 75 38 L 75 25 L 85 25 L 85 50 L 55 50 Z" fill="currentColor" />
-              <path 
-                d="M 50 56 L 10 72 L 22 72 L 22 95 L 78 95 L 78 72 L 90 72 Z M 32 78 L 42 78 L 42 88 L 32 88 Z M 58 78 L 68 78 L 68 88 L 58 88 Z" 
-                fillRule="evenodd" 
-                fill="currentColor" 
-              />
-            </svg>
-          </div>
-          <div className="flex flex-col justify-center">
-            <div translate="no" className={`font-bold text-xl leading-tight font-sans tracking-tight whitespace-nowrap ${isScrolled ? 'text-[#134E4A]' : 'text-white'}`}>
-              Legacy Hub
-            </div>
-          </div>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6">
+        <Link to="/" aria-label="Legacy Hub home" className="flex shrink-0 items-center gap-3">
+          <svg
+            viewBox="0 0 100 100"
+            className={`h-10 w-10 ${solid ? 'text-[#0B554E]' : 'text-white'}`}
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <rect x="15" y="5" width="12" height="45" fill="currentColor" />
+            <rect x="35" y="18" width="12" height="32" fill="currentColor" />
+            <path d="M 55 5 L 85 5 L 85 17 L 67 17 L 67 38 L 75 38 L 75 25 L 85 25 L 85 50 L 55 50 Z" fill="currentColor" />
+            <path d="M 50 56 L 10 72 L 22 72 L 22 95 L 78 95 L 78 72 L 90 72 Z M 32 78 L 42 78 L 42 88 L 32 88 Z M 58 78 L 68 78 L 68 88 L 58 88 Z" fillRule="evenodd" fill="currentColor" />
+          </svg>
+          <span translate="no" className={`text-lg font-bold tracking-[-0.02em] ${solid ? 'text-[#073A36]' : 'text-white'}`}>
+            Legacy Hub
+          </span>
         </Link>
 
-        {/* Center Pill Navigation (Desktop) */}
-        <div className={`hidden md:flex items-center justify-center backdrop-blur-xl rounded-full px-2 py-1.5 transition-colors duration-500 ${isScrolled ? 'bg-white border border-gray-100' : 'bg-white/20 border border-white/30'}`}>
-          {navLinks.map((link) => {
-            const isActive = location.pathname === link.path || (link.path === '/portfolio' && location.pathname === '/gallery')
+        <div className="hidden items-center gap-7 md:flex">
+          {navLinks.map(link => {
+            const active = location.pathname === link.path || (link.path === '/portfolio' && location.pathname === '/gallery')
             return (
               <Link
                 key={link.path}
                 to={link.path}
-                aria-current={isActive ? 'page' : undefined}
+                aria-current={active ? 'page' : undefined}
                 onMouseEnter={() => prefetchRoute(link.path)}
                 onTouchStart={() => prefetchRoute(link.path)}
-                className={`px-6 py-2 rounded-full text-sm select-none touch-manipulation active:scale-[0.97] transition-all duration-150 ${
-                  isActive
-                    ? isScrolled
-                      ? 'bg-[#0F766E] text-white shadow-sm font-semibold'
-                      : 'bg-white text-[#134E4A] shadow-sm font-semibold'
-                    : isScrolled
-                    ? 'text-gray-500 hover:text-[#134E4A] hover:bg-gray-100/50 font-medium'
-                    : 'text-white/80 hover:text-white hover:bg-white/10 font-medium'
-                }`}
+                className={`border-b py-2 text-sm font-medium transition-colors ${active ? (solid ? 'border-[#0B554E] text-[#073A36]' : 'border-white text-white') : (solid ? 'border-transparent text-[#52615B] hover:text-[#073A36]' : 'border-transparent text-white/75 hover:text-white')}`}
               >
                 {link.label}
               </Link>
@@ -106,68 +88,62 @@ export function Navbar() {
           })}
         </div>
 
-        {/* Right CTA (Desktop) */}
-        <div className="hidden md:flex justify-end w-48">
-          <Link
-            to="/packages"
-            onMouseEnter={() => prefetchRoute('/packages')}
-            onTouchStart={() => prefetchRoute('/packages')}
-            className={`flex items-center gap-3 backdrop-blur-md rounded-full text-sm font-medium group select-none touch-manipulation active:scale-[0.97] transition-all duration-150 pl-6 pr-2 py-2 ${
-              isScrolled 
-                ? 'bg-[#0F766E] text-white border border-[#0F766E] hover:bg-[#134E4A] shadow-sm' 
-                : 'bg-white/20 border border-white/30 text-white hover:bg-white hover:text-[#134E4A]'
-            }`}
-          >
-            Book Now
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-              isScrolled ? 'bg-white text-[#0F766E] group-hover:bg-[#E8F0F3]' : 'bg-white text-[#134E4A] group-hover:bg-gray-100'
-            }`}>
-              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-            </div>
-          </Link>
-        </div>
-
-        {/* Mobile Nav Toggle */}
-        <button 
-          className={`md:hidden w-10 h-10 flex items-center justify-center active:scale-95 rounded-full border transition-all duration-150 cursor-pointer ${
-            isScrolled ? 'text-[#134E4A] bg-white border-gray-100' : 'text-white bg-white/20 border-white/30'
-          }`}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
-          aria-expanded={mobileMenuOpen}
+        <Link
+          to="/packages"
+          onMouseEnter={() => prefetchRoute('/packages')}
+          onTouchStart={() => prefetchRoute('/packages')}
+          className={`hidden min-h-11 items-center justify-center border px-5 py-2.5 text-sm font-semibold transition-colors md:inline-flex ${solid ? 'border-[#0B554E] bg-[#0B554E] text-white hover:bg-[#073A36]' : 'border-white/55 bg-white text-[#073A36] hover:bg-[#F7FAF8]'}`}
         >
-          {mobileMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
+          View packages
+        </Link>
+
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(open => !open)}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
+          className={`flex h-11 w-11 cursor-pointer items-center justify-center border md:hidden ${solid ? 'border-[#BFCFC8] text-[#073A36]' : 'border-white/45 text-white'}`}
+        >
+          {mobileMenuOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.15 }}
-            className="absolute top-full left-4 right-4 mt-2 bg-white/98 border border-gray-100 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] p-6 flex flex-col space-y-4 md:hidden z-50"
+          <motion.div
+            id="mobile-navigation"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.16 }}
+            className="absolute left-4 right-4 top-full mt-2 border border-[#BFCFC8] bg-[#F7FAF8] p-5 shadow-lg md:hidden"
           >
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.path || (link.path === '/portfolio' && location.pathname === '/gallery')
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  aria-current={isActive ? 'page' : undefined}
-                  onTouchStart={() => prefetchRoute(link.path)}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`text-lg py-1 select-none touch-manipulation active:scale-[0.98] transition-all ${isActive ? 'font-bold text-[#0F766E]' : 'font-medium text-gray-700 hover:text-[#134E4A]'}`}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
-            <Link to="/packages" onTouchStart={() => prefetchRoute('/packages')} onClick={() => setMobileMenuOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#0F766E] text-white py-3.5 rounded-full mt-4 font-bold shadow-lg hover:bg-[#134E4A] active:scale-[0.98] transition-all select-none touch-manipulation">
-              Book Now <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
-            </Link>
+            <div className="flex flex-col">
+              {navLinks.map(link => {
+                const active = location.pathname === link.path || (link.path === '/portfolio' && location.pathname === '/gallery')
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    aria-current={active ? 'page' : undefined}
+                    onTouchStart={() => prefetchRoute(link.path)}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`border-b border-[#DDE5E1] py-3 text-base ${active ? 'font-semibold text-[#0B554E]' : 'text-[#37453F]'}`}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
+              <Link
+                to="/packages"
+                onTouchStart={() => prefetchRoute('/packages')}
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-5 min-h-12 bg-[#0B554E] px-5 py-3 text-center font-semibold text-white"
+              >
+                View packages
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,101 +1,81 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { FreeConsultationDialog } from './FreeConsultationDialog'
 
 export function Hero() {
   const [consultation, setConsultation] = useState({ open: false, requestId: 0 })
 
   return (
-    <section id="home" className="focus-light relative h-[100svh] lg:h-[92dvh] min-h-[580px] lg:min-h-[640px] max-h-[880px] overflow-hidden bg-stone-950 w-full">
-      {/* Full-bleed Edge-to-Edge Background Image */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        <picture className="absolute inset-0 w-full h-full">
-          <source 
-            type="image/webp" 
-            srcSet={`${import.meta.env.BASE_URL}hero_main-640.webp 640w, ${import.meta.env.BASE_URL}hero_main-1024.webp 1024w, ${import.meta.env.BASE_URL}hero_main.webp 1672w`}
-            sizes="100vw"
-          />
-          <img 
-            src={`${import.meta.env.BASE_URL}hero_main.webp`}
-            alt="Diaspora couple reviewing luxury villa blueprints and architectural models with a development consultant overlooking a Ghanaian coastal sunset"
-            width={1672}
-            height={941}
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover object-[65%_center] md:object-center"
-          />
-        </picture>
-        
-        {/* Directional Contrast Scrims for Left-Aligned Layout (WCAG AAA) */}
-        {/* 1. Left-to-right gradient: deep contrast for typography on the left, clear view of photography on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/60 md:via-stone-950/40 to-transparent z-10 pointer-events-none" />
+    <section
+      id="home"
+      className="focus-light relative min-h-[680px] h-[100svh] max-h-[920px] w-full overflow-hidden bg-[#073A36]"
+    >
+      <picture className="absolute inset-0 h-full w-full">
+        <source
+          type="image/webp"
+          srcSet={`${import.meta.env.BASE_URL}hero_main-640.webp 640w, ${import.meta.env.BASE_URL}hero_main-1024.webp 1024w, ${import.meta.env.BASE_URL}hero_main.webp 1672w`}
+          sizes="100vw"
+        />
+        <img
+          src={`${import.meta.env.BASE_URL}hero_main.webp`}
+          alt="A diaspora couple reviewing villa plans with a development consultant in Ghana"
+          width={1672}
+          height={941}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="h-full w-full object-cover object-[64%_center] md:object-center"
+        />
+      </picture>
 
-        {/* 2. Mobile-specific vertical gradient: guarantees contrast and depth when text is brought down into the mid-lower frame */}
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/30 to-stone-950/80 md:hidden z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,28,25,0.96)_0%,rgba(7,28,25,0.82)_42%,rgba(7,28,25,0.2)_76%,rgba(7,28,25,0.08)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,28,25,0.62)_0%,transparent_30%,rgba(7,28,25,0.5)_100%)] md:hidden" />
 
-        {/* 3. Top-down gradient: protects transparent navbar */}
-        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-stone-950/80 via-stone-950/30 to-transparent z-10 pointer-events-none" />
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl items-center px-5 pb-10 pt-28 sm:px-8 lg:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-[720px]"
+        >
+          <p className="mb-5 max-w-xl text-sm font-medium leading-relaxed text-white/78 sm:text-base">
+            Land verification, legal coordination, and site oversight in Ghana
+          </p>
+          <h1 className="max-w-[14ch] text-[2.65rem] font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
+            Build in Ghana without building on uncertainty.
+          </h1>
+          <p className="mt-6 max-w-[58ch] text-base leading-7 text-white/82 sm:text-lg sm:leading-8">
+            We verify land, coordinate legal review, and document construction progress for clients living abroad.
+          </p>
 
-        {/* 4. Bottom-up gradient: grounds the card frame */}
-        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-stone-950/60 via-transparent to-transparent z-10 pointer-events-none" />
-      </div>
-
-      {/* Main Content Area: Vertically centered in the full viewport, brought down on mobile for natural optical balance & thumb reach */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-center pt-20 md:pt-28 pb-8 sm:pb-12 px-6 sm:px-10 lg:px-16 max-w-[1400px] mx-auto w-full">
-        
-        {/* Left-Aligned Headline & Supporting Copy */}
-        <div className="flex flex-col items-start text-left w-full max-w-3xl mt-16 sm:mt-12 md:mt-0">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-semibold text-white tracking-tight leading-[1.12] drop-shadow-[0_4px_20px_rgba(0,0,0,0.65)] mb-4 md:mb-5 text-balance"
-          >
-            Build and Invest in Ghana with Complete Peace of Mind.
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-stone-100 text-base sm:text-lg md:text-xl font-sans font-normal leading-relaxed max-w-2xl mb-6 md:mb-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] text-pretty"
-          >
-            Verified land acquisition, legal oversight, and real-time site updates—managed on the ground while you’re abroad.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-3.5 sm:gap-4 justify-start items-stretch sm:items-center w-full sm:w-auto"
-          >
-            <button 
-              type="button" 
-              onClick={() => setConsultation(previous => ({ open: true, requestId: previous.requestId + 1 }))} 
-              aria-haspopup="dialog" 
-              className="flex items-center justify-between sm:justify-start gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] active:scale-[0.98] transition-all duration-200 pl-6 pr-2 py-2.5 rounded-full text-base font-medium group shadow-xl cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
+          <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
+            <button
+              type="button"
+              onClick={() => setConsultation(previous => ({ open: true, requestId: previous.requestId + 1 }))}
+              aria-haspopup="dialog"
+              className="min-h-12 cursor-pointer rounded-md bg-[#F7FAF8] px-6 py-3 text-base font-semibold text-[#073A36] transition-colors hover:bg-white"
             >
-              Request a free consultation
-              <div className="w-8 h-8 rounded-full bg-white text-[#0F766E] flex items-center justify-center group-hover:bg-[#E8F0F3] transition-colors shrink-0">
-                <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-              </div>
+              Request a consultation
             </button>
-            
-            <Link 
-              to="/packages" 
-              onMouseEnter={() => import('../pages/PackagesPage')}
-              onTouchStart={() => import('../pages/PackagesPage')}
-              className="flex items-center justify-center gap-3 bg-stone-900/40 hover:bg-stone-900/60 active:scale-[0.98] backdrop-blur-md border border-white/30 text-white transition-all duration-200 px-8 py-2.5 rounded-full text-base font-medium shadow-xl cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
+            <a
+              href="#proof"
+              className="min-h-12 border-b border-white/45 px-1 py-3 text-center text-base font-medium text-white transition-colors hover:border-white sm:text-left"
             >
-              View Packages
-            </Link>
-          </motion.div>
-        </div>
+              How we protect your project
+            </a>
+          </div>
+
+          <p className="mt-8 max-w-lg border-l-2 border-[#C7A85A] pl-4 text-sm leading-6 text-white/72">
+            Local verification and recorded project evidence, delivered to you wherever you live.
+          </p>
+        </motion.div>
       </div>
-      <FreeConsultationDialog key={consultation.requestId} open={consultation.open} onClose={() => setConsultation(previous => ({ ...previous, open: false }))} />
+
+      <FreeConsultationDialog
+        key={consultation.requestId}
+        open={consultation.open}
+        onClose={() => setConsultation(previous => ({ ...previous, open: false }))}
+      />
     </section>
   )
 }

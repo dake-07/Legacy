@@ -30,6 +30,11 @@ export function PartnerDialog({ open, labelledBy, onClose, children, className =
       if (!document.querySelector('dialog[open]') && opener?.isConnected) opener.focus()
     }
   }, [open])
+
+  // Do not mount dialog content while closed. This prevents media and other
+  // side effects inside a hidden dialog from starting before user interaction.
+  if (!open) return null
+
   return createPortal(
     <dialog ref={ref} aria-labelledby={labelledBy} aria-modal="true"
       onCancel={event => { event.preventDefault(); onClose() }}

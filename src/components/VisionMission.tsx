@@ -1,67 +1,37 @@
-import { motion } from 'framer-motion'
 import { Eye, Target } from 'lucide-react'
 
 export function VisionMission() {
   return (
-    <section className="py-20 md:py-32 bg-transparent relative overflow-hidden border-t border-black/5">
-      {/* High-Performance Radial Ambient Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full -translate-y-1/2 translate-x-1/3" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.15) 0%, transparent 70%)' }}></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full translate-y-1/3 -translate-x-1/4" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.12) 0%, transparent 70%)' }}></div>
-      </div>
+    <section className="border-b border-[#BFCFC8] bg-[#F7FAF8] py-16 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        <header className="grid gap-8 border-b border-[#BFCFC8] pb-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+          <div>
+            <p className="text-base font-semibold text-[#0B554E]">About Legacy Hub</p>
+            <h1 className="mt-4 max-w-[12ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111815] sm:text-5xl lg:text-6xl">
+              Local knowledge with accountable support.
+            </h1>
+          </div>
+          <p className="max-w-[62ch] text-lg leading-8 text-[#4C5B55] lg:justify-self-end">
+            We help people abroad make property, relocation, and development decisions in Ghana with clearer evidence and dependable local coordination.
+          </p>
+        </header>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
-          
-          {/* Vision Statement */}
-          <motion.div 
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col justify-center"
-          >
-            <div className="flex items-center gap-3.5 mb-8">
-              <div className="w-11 h-11 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center">
-                <Eye className="h-5 w-5 text-[#0F766E]" aria-hidden="true" />
-              </div>
-              <span className="text-sm font-semibold text-[#0F766E]">Our Vision</span>
-            </div>
-            
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans font-medium text-gray-900 leading-relaxed relative tracking-normal">
-              <span aria-hidden="true" className="absolute -top-10 -left-6 text-7xl text-gray-200/80 font-serif leading-none select-none">“</span>
-              To become the leading diaspora relocation and property development support company in Ghana and Africa.
-            </h2>
-          </motion.div>
+        <div className="grid lg:grid-cols-2">
+          <article className="py-10 lg:pr-12">
+            <Eye aria-hidden="true" className="h-7 w-7 text-[#0B554E]" />
+            <h2 className="mt-5 text-xl font-semibold text-[#111815]">Our vision</h2>
+            <p className="mt-5 max-w-[40ch] font-serif text-3xl leading-[1.35] text-[#27342F]">
+              To become a trusted standard for diaspora relocation and property-development support in Ghana and across Africa.
+            </p>
+          </article>
 
-          {/* Mission Statement */}
-          <motion.div 
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
-          >
-            <div className="bg-white/90 border border-gray-200/90 backdrop-blur-xl p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-xl relative overflow-hidden h-full flex flex-col justify-center group">
-              {/* Card Radial Glow */}
-              <div className="absolute top-0 right-0 w-64 h-64 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.15) 0%, transparent 70%)' }}></div>
-              
-              <div className="flex items-center gap-3.5 mb-6 relative z-10">
-                <div className="w-11 h-11 rounded-full bg-[#0F766E]/10 flex items-center justify-center border border-[#0F766E]/30 group-hover:bg-[#0F766E]/20 transition-colors duration-500">
-                  <Target className="h-5 w-5 text-[#0F766E]" aria-hidden="true" />
-                </div>
-                <span className="text-sm font-semibold text-[#0F766E]">Our Mission</span>
-              </div>
-              
-              <p className="text-xl sm:text-2xl md:text-3xl font-sans text-gray-700 leading-relaxed relative z-10 font-normal group-hover:text-gray-900 transition-colors duration-500">
-                To provide trusted, transparent, and professional solutions that help diaspora communities safely <span className="text-[#0F766E] font-semibold italic">reconnect, invest, and build</span> sustainable legacies in Ghana.
-              </p>
-            </div>
-            
-            {/* Decorative Dots */}
-            <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-[radial-gradient(#0F766E_2px,transparent_2px)] [background-size:16px_16px] opacity-30 z-0 pointer-events-none"></div>
-          </motion.div>
-
+          <article className="border-t border-[#BFCFC8] py-10 lg:border-l lg:border-t-0 lg:pl-12">
+            <Target aria-hidden="true" className="h-7 w-7 text-[#0B554E]" />
+            <h2 className="mt-5 text-xl font-semibold text-[#111815]">Our mission</h2>
+            <p className="mt-5 max-w-[42ch] text-xl leading-9 text-[#3D4B46]">
+              Provide transparent, professional coordination that helps diaspora communities reconnect, invest, relocate, and build in Ghana with greater confidence.
+            </p>
+          </article>
         </div>
       </div>
     </section>

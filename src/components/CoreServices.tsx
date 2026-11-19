@@ -1,102 +1,110 @@
-import { ShieldCheck, Search, TrendingUp, Clock } from 'lucide-react'
-import { Card, CardContent } from './ui/card'
-import { motion, type Variants } from 'framer-motion'
+import { useState } from 'react'
+import { FileCheck2, HardHat, Home, MapPinned, type LucideIcon } from 'lucide-react'
+
+type Service = {
+  title: string
+  summary: string
+  result: string
+  icon: LucideIcon
+  outputs: string[]
+}
+
+const services: Service[] = [
+  {
+    title: 'Land acquisition',
+    summary: 'Identify suitable land and coordinate checks before you commit.',
+    result: 'A clearer decision backed by local records and site context.',
+    icon: MapPinned,
+    outputs: ['Site visit coordination', 'Ownership-document collection', 'Boundary and location evidence'],
+  },
+  {
+    title: 'Legal coordination',
+    summary: 'Keep the document review moving with qualified local professionals.',
+    result: 'Key legal questions are surfaced before signing or payment.',
+    icon: FileCheck2,
+    outputs: ['Document handover', 'Review follow-up', 'Decision-ready summaries'],
+  },
+  {
+    title: 'Construction monitoring',
+    summary: 'Follow progress through independent visits and recorded milestones.',
+    result: 'You see what has been completed before the next stage advances.',
+    icon: HardHat,
+    outputs: ['Scheduled site checks', 'Photo and video records', 'Milestone progress reports'],
+  },
+  {
+    title: 'Relocation support',
+    summary: 'Plan the practical details of returning, visiting, or settling in Ghana.',
+    result: 'A coordinated arrival with fewer unknowns and missed steps.',
+    icon: Home,
+    outputs: ['Arrival planning', 'Local orientation', 'Property and service coordination'],
+  },
+]
 
 export function CoreServices() {
-  const services = [
-    {
-      num: "01",
-      icon: <Clock className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
-      title: "Convenience",
-      description: "We handle the legwork, saving you time and stress while you focus on your goals."
-    },
-    {
-      num: "02",
-      icon: <ShieldCheck className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
-      title: "Trust",
-      description: "Reliable and verified partners ensuring your investments are secure."
-    },
-    {
-      num: "03",
-      icon: <Search className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
-      title: "Transparency",
-      description: "Clear communication, honest pricing, and regular updates at every step."
-    },
-    {
-      num: "04",
-      icon: <TrendingUp className="h-8 w-8 text-[#0F766E]" aria-hidden="true" />,
-      title: "Scalable Support",
-      description: "From a single visit to complex development projects, our services scale with your needs."
-    }
-  ]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
-    }
-  }
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-  }
+  const [activeService, setActiveService] = useState(0)
+  const selected = services[activeService]
+  const SelectedIcon = selected.icon
 
   return (
-    <section id="services" className="py-20 lg:py-40 bg-white relative overflow-hidden border-t border-gray-100 scroll-mt-24">
-      {/* High-Performance Radial Ambient Glows */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[10%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.12) 0%, transparent 70%)' }}></div>
-        <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.10) 0%, transparent 70%)' }}></div>
-      </div>
-      
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1 }}
-          className="text-center mb-16 lg:mb-32"
-        >
-          <div className="flex items-center justify-center gap-6 mb-8">
-            <div className="w-16 h-[1px] bg-[#0F766E]/40"></div>
-            <span className="text-xs font-bold tracking-[0.3em] text-[#0F766E] uppercase">Our Foundation</span>
-            <div className="w-16 h-[1px] bg-[#0F766E]/40"></div>
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-gray-900 tracking-tight">Core Values</h2>
-        </motion.div>
-        
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
-        >
-          {services.map((service, index) => (
-            <motion.div key={index} variants={itemVariants} className="h-full">
-              <Card className="h-full bg-[#F0FDFA] border border-gray-100 rounded-[2.5rem] p-10 md:p-12 hover:-translate-y-2 transition-[transform,box-shadow] duration-500 hover:shadow-xl group relative overflow-hidden">
-                
-                {/* Hover Glow Effect */}
-                <div className="absolute inset-0 bg-white border border-gray-100 rounded-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 group-hover:border-[#0F766E]/30"></div>
-                
-                {/* Background Watermark Number */}
-                <div className="absolute -bottom-2 right-4 text-[140px] font-serif font-bold text-black/[0.03] select-none pointer-events-none group-hover:text-[#0F766E]/10 transition-colors duration-700">
-                  {service.num}
-                </div>
+    <section id="services" className="scroll-mt-24 bg-white py-20 lg:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        <div className="grid gap-8 border-b border-[#DDE5E1] pb-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+          <h2 className="max-w-[11ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111815] sm:text-5xl">
+            Support built around the decision in front of you.
+          </h2>
+          <p className="max-w-[62ch] text-lg leading-8 text-[#4C5B55] lg:justify-self-end">
+            Start with one service or connect several into a complete plan. The work stays understandable: what we are checking, what evidence you receive, and what happens next.
+          </p>
+        </div>
 
-                <CardContent className="p-0 relative z-10 flex flex-col h-full">
-                  <div className="w-14 h-14 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-10 group-hover:border-[#0F766E]/50 transition-colors duration-500">
-                    {service.icon}
-                  </div>
-                  <h3 className="text-2xl font-serif font-bold text-gray-900 mb-5 group-hover:text-[#0F766E] transition-colors duration-500">{service.title}</h3>
-                  <p className="text-gray-600 leading-relaxed font-sans text-lg group-hover:text-gray-900 transition-colors duration-500">{service.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="mt-12 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <div aria-label="Legacy Hub services" className="border-t border-[#BFCFC8]">
+            {services.map((service, index) => {
+              const Icon = service.icon
+              const active = activeService === index
+              return (
+                <button
+                  key={service.title}
+                  id={`service-tab-${index}`}
+                  type="button"
+                  aria-pressed={active}
+                  aria-controls="service-panel"
+                  onClick={() => setActiveService(index)}
+                  className={`grid w-full cursor-pointer grid-cols-[auto_1fr] gap-4 border-b border-[#BFCFC8] px-2 py-5 text-left transition-colors sm:px-4 ${active ? 'bg-[#E7F1ED] text-[#073A36]' : 'bg-white text-[#37453F] hover:bg-[#F7FAF8]'}`}
+                >
+                  <Icon aria-hidden="true" className="mt-0.5 h-5 w-5" />
+                  <span>
+                    <span className="block text-lg font-semibold">{service.title}</span>
+                    <span className={`mt-1 block text-sm leading-6 ${active ? 'text-[#315D55]' : 'text-[#6A7772]'}`}>
+                      {service.summary}
+                    </span>
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          <div
+            id="service-panel"
+            aria-live="polite"
+            aria-labelledby={`service-tab-${activeService}`}
+            tabIndex={0}
+            className="bg-[#073A36] p-7 text-white sm:p-10 lg:p-12"
+          >
+            <SelectedIcon aria-hidden="true" className="h-9 w-9 text-[#E3CC91]" />
+            <h3 className="mt-8 text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{selected.title}</h3>
+            <p className="mt-5 max-w-[55ch] text-lg leading-8 text-white/76">{selected.result}</p>
+            <h4 className="mt-10 text-sm font-semibold text-[#E3CC91]">What you receive</h4>
+            <ul className="mt-4 divide-y divide-white/15 border-y border-white/15">
+              {selected.outputs.map(output => (
+                <li key={output} className="flex items-center gap-3 py-4 text-base text-white/88">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 bg-[#C7A85A]" />
+                  {output}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   )
