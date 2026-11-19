@@ -98,17 +98,24 @@
   html {
     /* Keeps anchors and focused elements clear of the fixed navbar */
     scroll-padding-top: 6rem;
-    -webkit-tap-highlight-color: rgba(15, 118, 110, 0.15);
+    -webkit-tap-highlight-color: transparent;
   }
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3 {
     text-wrap: balance;
   }
-  a, button, input, label {
+  a, button, input, label, select, textarea {
     touch-action: manipulation;
+  }
+  button, a {
+    -webkit-user-select: none;
+    user-select: none;
   }
   :focus-visible {
     outline: 3px solid #0F766E;

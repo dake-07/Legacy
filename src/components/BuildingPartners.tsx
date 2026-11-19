@@ -20,10 +20,10 @@ export function BuildingPartners() {
 
   return (
     <section className="partners-page py-10 md:py-16 bg-[#F0FDFA] relative overflow-hidden">
-      {/* Liquid Glass Background Depth Glows */}
+      {/* High-Performance Radial Ambient Glows */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[8%] right-[-10%] w-[600px] h-[600px] bg-[#0F766E]/10 rounded-full blur-[140px]" />
-        <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-[#0F766E]/10 rounded-full blur-[140px]" />
+        <div className="absolute top-[8%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.12) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.10) 0%, transparent 70%)' }} />
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">

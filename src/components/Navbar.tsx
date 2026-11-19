@@ -45,9 +45,16 @@ export function Navbar() {
     { label: 'About', path: '/about' }
   ]
 
+  const prefetchRoute = (path: string) => {
+    if (path === '/packages') import('../pages/PackagesPage')
+    else if (path === '/partners') import('../pages/PartnersPage')
+    else if (path === '/portfolio' || path === '/gallery') import('../pages/PortfolioPage')
+    else if (path === '/about') import('../pages/AboutPage')
+  }
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,border-color,box-shadow] duration-500 px-4 md:px-8 ${isScrolled ? 'pt-4 pb-4 bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-200' : 'pt-6 focus-light'}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,border-color,box-shadow] duration-300 px-4 md:px-8 ${isScrolled ? 'pt-3.5 pb-3.5 bg-white/98 md:bg-white/90 md:backdrop-blur-xl shadow-xs border-b border-gray-200/80' : 'pt-6 focus-light'}`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
@@ -81,7 +88,9 @@ export function Navbar() {
                 key={link.path}
                 to={link.path}
                 aria-current={isActive ? 'page' : undefined}
-                className={`px-6 py-2 rounded-full text-sm transition-colors duration-200 ${
+                onMouseEnter={() => prefetchRoute(link.path)}
+                onTouchStart={() => prefetchRoute(link.path)}
+                className={`px-6 py-2 rounded-full text-sm select-none touch-manipulation active:scale-[0.97] transition-all duration-150 ${
                   isActive
                     ? isScrolled
                       ? 'bg-[#0F766E] text-white shadow-sm font-semibold'
@@ -101,7 +110,9 @@ export function Navbar() {
         <div className="hidden md:flex justify-end w-48">
           <Link
             to="/packages"
-            className={`flex items-center gap-3 backdrop-blur-md rounded-full text-sm font-medium group transition-colors duration-300 pl-6 pr-2 py-2 ${
+            onMouseEnter={() => prefetchRoute('/packages')}
+            onTouchStart={() => prefetchRoute('/packages')}
+            className={`flex items-center gap-3 backdrop-blur-md rounded-full text-sm font-medium group select-none touch-manipulation active:scale-[0.97] transition-all duration-150 pl-6 pr-2 py-2 ${
               isScrolled 
                 ? 'bg-[#0F766E] text-white border border-[#0F766E] hover:bg-[#134E4A] shadow-sm' 
                 : 'bg-white/20 border border-white/30 text-white hover:bg-white hover:text-[#134E4A]'
@@ -118,7 +129,7 @@ export function Navbar() {
 
         {/* Mobile Nav Toggle */}
         <button 
-          className={`md:hidden w-10 h-10 flex items-center justify-center backdrop-blur-md rounded-full border transition-colors ${
+          className={`md:hidden w-10 h-10 flex items-center justify-center active:scale-95 rounded-full border transition-all duration-150 cursor-pointer ${
             isScrolled ? 'text-[#134E4A] bg-white border-gray-100' : 'text-white bg-white/20 border-white/30'
           }`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -136,8 +147,8 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-4 right-4 mt-2 bg-white/95 backdrop-blur-xl border border-gray-100 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-6 flex flex-col space-y-5 md:hidden"
+            transition={{ duration: 0.15 }}
+            className="absolute top-full left-4 right-4 mt-2 bg-white/98 border border-gray-100 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] p-6 flex flex-col space-y-4 md:hidden z-50"
           >
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path || (link.path === '/portfolio' && location.pathname === '/gallery')
@@ -146,14 +157,15 @@ export function Navbar() {
                   key={link.path}
                   to={link.path}
                   aria-current={isActive ? 'page' : undefined}
+                  onTouchStart={() => prefetchRoute(link.path)}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-lg transition-colors ${isActive ? 'font-bold text-[#0F766E]' : 'font-medium text-gray-600 hover:text-[#134E4A]'}`}
+                  className={`text-lg py-1 select-none touch-manipulation active:scale-[0.98] transition-all ${isActive ? 'font-bold text-[#0F766E]' : 'font-medium text-gray-700 hover:text-[#134E4A]'}`}
                 >
                   {link.label}
                 </Link>
               )
             })}
-            <Link to="/packages" onClick={() => setMobileMenuOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#0F766E] text-white py-3.5 rounded-full mt-4 font-bold shadow-lg hover:bg-[#134E4A] transition-colors">
+            <Link to="/packages" onTouchStart={() => prefetchRoute('/packages')} onClick={() => setMobileMenuOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#0F766E] text-white py-3.5 rounded-full mt-4 font-bold shadow-lg hover:bg-[#134E4A] active:scale-[0.98] transition-all select-none touch-manipulation">
               Book Now <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
             </Link>
           </motion.div>

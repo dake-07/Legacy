@@ -8,7 +8,7 @@ export function Hero() {
   const [consultation, setConsultation] = useState({ open: false, requestId: 0 })
 
   return (
-    <section id="home" className="focus-light relative h-[100dvh] lg:h-[92dvh] min-h-[640px] max-h-[880px] overflow-hidden bg-white w-full">
+    <section id="home" className="focus-light relative h-[100svh] lg:h-[92dvh] min-h-[580px] lg:min-h-[640px] max-h-[880px] overflow-hidden bg-white w-full">
       {/* Full-bleed Background Image with Responsive Formats */}
       <div className="absolute inset-x-2 top-2 bottom-2 rounded-3xl overflow-hidden z-0">
         <picture className="absolute inset-0 w-full h-full">
@@ -76,7 +76,7 @@ export function Hero() {
               type="button" 
               onClick={() => setConsultation(previous => ({ open: true, requestId: previous.requestId + 1 }))} 
               aria-haspopup="dialog" 
-              className="flex items-center justify-between sm:justify-start gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] transition-colors duration-300 pl-6 pr-2 py-2.5 rounded-full text-base font-medium group shadow-xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
+              className="flex items-center justify-between sm:justify-start gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] active:scale-[0.98] transition-all duration-200 pl-6 pr-2 py-2.5 rounded-full text-base font-medium group shadow-xl cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
             >
               Request a free consultation
               <div className="w-8 h-8 rounded-full bg-white text-[#0F766E] flex items-center justify-center group-hover:bg-[#E8F0F3] transition-colors shrink-0">
@@ -86,7 +86,9 @@ export function Hero() {
             
             <Link 
               to="/packages" 
-              className="flex items-center justify-center gap-3 bg-stone-900/40 hover:bg-stone-900/60 backdrop-blur-md border border-white/30 text-white transition-colors duration-300 px-8 py-2.5 rounded-full text-base font-medium shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
+              onMouseEnter={() => import('../pages/PackagesPage')}
+              onTouchStart={() => import('../pages/PackagesPage')}
+              className="flex items-center justify-center gap-3 bg-stone-900/40 hover:bg-stone-900/60 active:scale-[0.98] backdrop-blur-md border border-white/30 text-white transition-all duration-200 px-8 py-2.5 rounded-full text-base font-medium shadow-xl cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
             >
               View Packages
             </Link>

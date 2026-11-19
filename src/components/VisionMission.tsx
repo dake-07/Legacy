@@ -4,10 +4,10 @@ import { Eye, Target } from 'lucide-react'
 export function VisionMission() {
   return (
     <section className="py-20 md:py-32 bg-transparent relative overflow-hidden border-t border-black/5">
-      {/* Abstract Background Design */}
+      {/* High-Performance Radial Ambient Background */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#0F766E]/15 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#0F766E]/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full -translate-y-1/2 translate-x-1/3" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.15) 0%, transparent 70%)' }}></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full translate-y-1/3 -translate-x-1/4" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.12) 0%, transparent 70%)' }}></div>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl">
@@ -43,8 +43,8 @@ export function VisionMission() {
             className="relative"
           >
             <div className="bg-white/90 border border-gray-200/90 backdrop-blur-xl p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-xl relative overflow-hidden h-full flex flex-col justify-center group">
-              {/* Card Background Pattern */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#0F766E]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-[#0F766E]/20 transition-colors duration-700"></div>
+              {/* Card Radial Glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.15) 0%, transparent 70%)' }}></div>
               
               <div className="flex items-center gap-3.5 mb-6 relative z-10">
                 <div className="w-11 h-11 rounded-full bg-[#0F766E]/10 flex items-center justify-center border border-[#0F766E]/30 group-hover:bg-[#0F766E]/20 transition-colors duration-500">

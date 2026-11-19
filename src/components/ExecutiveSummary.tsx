@@ -41,8 +41,8 @@ export function ExecutiveSummary() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none opacity-60"></div>
             </div>
             
-            {/* Background Blob for Depth */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#0F766E]/10 rounded-full blur-[150px] -z-10 pointer-events-none"></div>
+            {/* High-Performance Radial Ambient Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full -z-10 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.12) 0%, transparent 65%)' }}></div>
           </motion.div>
 
           {/* Right Side: Copy */}

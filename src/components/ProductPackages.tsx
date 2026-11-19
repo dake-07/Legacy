@@ -27,10 +27,10 @@ export function ProductPackages() {
 
   return (
     <section id="packages" className="py-20 lg:py-40 bg-transparent relative overflow-hidden scroll-mt-24">
-      {/* Abstract Ambient Glows */}
+      {/* High-Performance Radial Ambient Glows */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-[#0F766E]/15 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-[20%] left-[-10%] w-[600px] h-[600px] bg-[#0F766E]/10 rounded-full blur-[120px]"></div>
+        <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.14) 0%, transparent 70%)' }}></div>
+        <div className="absolute bottom-[20%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.10) 0%, transparent 70%)' }}></div>
       </div>
       <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-7xl">
         <motion.div 

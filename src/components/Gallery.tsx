@@ -298,8 +298,8 @@ export function Gallery() {
 
   return (
     <section id="gallery" className="py-20 md:py-32 bg-white relative overflow-hidden border-t border-gray-100 scroll-mt-24">
-      {/* Background Ambience */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0F766E]/5 rounded-full blur-[140px] pointer-events-none"></div>
+      {/* High-Performance Ambient Glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,118,110,0.08) 0%, transparent 70%)' }}></div>
 
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         
@@ -515,7 +515,6 @@ export function Gallery() {
               return (
                 <motion.div
                   key={photo.id}
-                  layout
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
@@ -581,7 +580,6 @@ export function Gallery() {
             {galleryVideos.map((video, index) => (
               <motion.div
                 key={video.id}
-                layout
                 role="button"
                 tabIndex={0}
                 aria-label={`Play video: ${video.title}`}

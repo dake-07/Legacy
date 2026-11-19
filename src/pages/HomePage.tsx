@@ -55,7 +55,7 @@ export function HomePage() {
                 }
               }}
               onClick={() => setVideoOpen(true)}
-              className="aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden relative group cursor-pointer shadow-xl hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-1 bg-black border border-gray-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
+              className="aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden relative group cursor-pointer shadow-xl hover:shadow-2xl active:scale-[0.99] transition-[box-shadow,transform] duration-300 hover:-translate-y-1 bg-black border border-gray-200 select-none touch-manipulation focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
             >
               <video
                 src={`${baseUrl}videos/Advertisement.mp4#t=0.001`}
@@ -96,7 +96,9 @@ export function HomePage() {
               <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
                 <Link 
                   to="/packages"
-                  className="inline-flex items-center gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] transition-[background-color,transform,box-shadow] duration-300 pl-8 pr-3 py-3 rounded-full text-sm font-bold uppercase tracking-widest group shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                  onMouseEnter={() => import('./PackagesPage')}
+                  onTouchStart={() => import('./PackagesPage')}
+                  className="inline-flex items-center gap-3 bg-[#0F766E] text-white hover:bg-[#134E4A] active:scale-[0.98] transition-all duration-200 pl-8 pr-3 py-3 rounded-full text-sm font-bold uppercase tracking-widest group shadow-xl hover:shadow-2xl select-none touch-manipulation cursor-pointer"
                 >
                   View Our Packages
                   <div className="w-10 h-10 rounded-full bg-white text-[#0F766E] flex items-center justify-center group-hover:bg-[#E8F0F3] transition-colors shrink-0">
@@ -105,7 +107,9 @@ export function HomePage() {
                 </Link>
                 <Link
                   to="/partners"
-                  className="inline-flex items-center gap-3 bg-white text-[#134E4A] border border-[#99F6E4] hover:bg-[#F0FDFA] transition-[background-color,transform,box-shadow] duration-300 pl-8 pr-3 py-3 rounded-full text-sm font-bold uppercase tracking-widest group shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                  onMouseEnter={() => import('./PartnersPage')}
+                  onTouchStart={() => import('./PartnersPage')}
+                  className="inline-flex items-center gap-3 bg-white text-[#134E4A] border border-[#99F6E4] hover:bg-[#F0FDFA] active:scale-[0.98] transition-all duration-200 pl-8 pr-3 py-3 rounded-full text-sm font-bold uppercase tracking-widest group shadow-xl hover:shadow-2xl select-none touch-manipulation cursor-pointer"
                 >
                   Building Partners
                   <div className="w-10 h-10 rounded-full bg-[#0F766E]/10 text-[#0F766E] flex items-center justify-center group-hover:bg-[#0F766E] group-hover:text-white transition-colors shrink-0">
