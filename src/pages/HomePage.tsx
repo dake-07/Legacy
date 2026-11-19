@@ -37,17 +37,43 @@ export function HomePage() {
         <ExecutiveSummary />
         <CoreServices />
 
-        {/* Cinematic Video Showcase (Option A: Pure Cinematic, No Headline) */}
-        <section className="py-12 md:py-20 bg-white relative overflow-hidden">
+        {/* Cinematic Video Showcase with Contextual Editorial Header */}
+        <section className="py-16 md:py-24 bg-white relative overflow-hidden border-t border-gray-100">
           <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
+            {/* Editorial Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center max-w-3xl mx-auto mb-10 md:mb-14"
+            >
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <span className="w-10 h-[1.5px] bg-[#0F766E]/40" />
+                <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">
+                  On-the-Ground Oversight
+                </span>
+                <span className="w-10 h-[1.5px] bg-[#0F766E]/40" />
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 tracking-tight mb-4 text-balance">
+                See How We Protect Diaspora Projects in Real Time
+              </h2>
+
+              <p className="text-base sm:text-lg text-gray-600 font-sans leading-relaxed text-pretty">
+                Watch a 1-minute walkthrough of our team inspecting boundaries, vetting contractors, and reporting live from Ghana while you’re abroad.
+              </p>
+            </motion.div>
+
+            {/* Video Player Card */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
               role="button"
               tabIndex={0}
-              aria-label="Play video: Experience Legacy Hub"
+              aria-label="Play video: See how we protect diaspora projects in real time"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
