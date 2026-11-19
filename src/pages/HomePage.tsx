@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Play, X } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { Hero } from '../components/Hero'
+import { WhoWeAre } from '../components/WhoWeAre'
 import { ExecutiveSummary } from '../components/ExecutiveSummary'
 import { CoreServices } from '../components/CoreServices'
 import { PartnerDialog } from '../components/partners/PartnerDialog'
@@ -15,29 +16,36 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Legacy Hub | Build and Invest in Ghana</title>
+        <title>Legacy Hub | Visit, Relocate, Buy Land and Build in Ghana</title>
         <meta
           name="description"
-          content="Land verification, legal coordination, construction monitoring, and relocation support for people building and investing in Ghana."
+          content="Practical support for visiting Ghana, relocating, buying land or property, and monitoring construction while living abroad."
         />
       </Helmet>
 
       <div>
         <Hero />
+        <WhoWeAre />
         <ExecutiveSummary />
         <CoreServices />
 
         <section className="border-y border-[#DDE5E1] bg-[#F7FAF8] py-20 lg:py-28">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16 lg:px-12">
             <div>
-              <p className="text-base font-semibold text-[#0B554E]">See the work, not a sales pitch</p>
+              <p className="text-base font-semibold text-[#0B554E]">See how we work in Ghana</p>
               <h2 className="mt-4 max-w-[12ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111815] sm:text-5xl">
-                See how projects are managed.
+                See how projects are handled.
               </h2>
               <p className="mt-6 max-w-[48ch] text-lg leading-8 text-[#4C5B55]">
-                This one-minute introduction shows how Legacy Hub supports land, property, relocation, and building decisions from Ghana.
+                Watch a one-minute overview of how we help with visits, relocation, land, and building projects.
               </p>
               <p className="mt-8 text-sm text-[#6A7772]">Video duration: 1 minute 2 seconds</p>
+              <details className="mt-6 max-w-[48ch] border-t border-[#BFCFC8] pt-4 text-[#3D4B46]">
+                <summary className="cursor-pointer font-semibold text-[#0B554E]">Read video summary</summary>
+                <p className="mt-3 text-sm leading-6">
+                  The video introduces Legacy Hub’s support for people visiting, moving to, buying property, or building in Ghana. It explains how the team arranges local work and keeps clients abroad informed before important decisions are made.
+                </p>
+              </details>
             </div>
 
             <button
@@ -70,10 +78,10 @@ export function HomePage() {
           <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-end lg:px-12">
             <div>
               <h2 className="max-w-[14ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] sm:text-5xl">
-                Choose the support your next decision needs.
+                Start with the help you need.
               </h2>
               <p className="mt-6 max-w-[58ch] text-lg leading-8 text-white/72">
-                Compare focused packages for visits, land acquisition, relocation planning, and ongoing construction oversight.
+                Compare packages for arrival support, guided visits, relocation, land purchase, and construction monitoring.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">

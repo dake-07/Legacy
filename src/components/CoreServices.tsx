@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileCheck2, HardHat, Home, MapPinned, type LucideIcon } from 'lucide-react'
+import { BriefcaseBusiness, HardHat, Home, MapPinned, PlaneLanding, type LucideIcon } from 'lucide-react'
 
 type Service = {
   title: string
@@ -7,36 +7,55 @@ type Service = {
   result: string
   icon: LucideIcon
   outputs: string[]
+  image: string
+  imageAlt: string
 }
 
 const services: Service[] = [
   {
-    title: 'Land acquisition',
-    summary: 'Identify suitable land and coordinate checks before you commit.',
-    result: 'A clearer decision backed by local records and site context.',
-    icon: MapPinned,
-    outputs: ['Site visit coordination', 'Ownership-document collection', 'Boundary and location evidence'],
+    title: 'Arrival and visit support',
+    summary: 'Airport pickup, check-in help, local transport, and area orientation.',
+    result: 'You arrive knowing who will meet you and what has already been arranged.',
+    icon: PlaneLanding,
+    outputs: ['Airport pickup', 'Accommodation check-in help', 'Local SIM card and area orientation'],
+    image: 'images/illustrations/illustrative-relocation-support.webp',
+    imageAlt: 'A local adviser welcoming a couple into a home in Ghana',
   },
   {
-    title: 'Legal coordination',
-    summary: 'Keep the document review moving with qualified local professionals.',
-    result: 'Key legal questions are surfaced before signing or payment.',
-    icon: FileCheck2,
-    outputs: ['Document handover', 'Review follow-up', 'Decision-ready summaries'],
+    title: 'Property and investment visits',
+    summary: 'Planned site visits, local transport, and meetings for your questions.',
+    result: 'You use your time in Ghana to see suitable places and speak with the right people.',
+    icon: BriefcaseBusiness,
+    outputs: ['Property and land visits', 'Dedicated local transport', 'Lawyer or investment meeting coordination'],
+    image: 'images/illustrations/illustrative-land-inspection.webp',
+    imageAlt: 'A Ghana property team checking plans at a land site',
+  },
+  {
+    title: 'Relocation and local setup',
+    summary: 'Help with the practical steps of moving to or settling in Ghana.',
+    result: 'You know what to arrange before you travel and after you arrive.',
+    icon: Home,
+    outputs: ['Arrival and housing plan', 'Bank-account setup guidance', 'Residence-permit and local-service guidance'],
+    image: 'images/illustrations/illustrative-relocation-support.webp',
+    imageAlt: 'A relocation adviser showing a couple around a home in Ghana',
+  },
+  {
+    title: 'Land purchase support',
+    summary: 'We help find land and arrange checks before you pay.',
+    result: 'You receive site details, ownership documents, and boundary information before you decide.',
+    icon: MapPinned,
+    outputs: ['Land sourcing and site visits', 'Survey and boundary coordination', 'Document and lawyer coordination'],
+    image: 'images/illustrations/illustrative-legal-review.webp',
+    imageAlt: 'Property plans and documents being reviewed in an Accra office',
   },
   {
     title: 'Construction monitoring',
-    summary: 'Follow progress through independent visits and recorded milestones.',
-    result: 'You see what has been completed before the next stage advances.',
+    summary: 'We visit the site and record progress at agreed stages.',
+    result: 'You see what was completed before approving the next stage.',
     icon: HardHat,
-    outputs: ['Scheduled site checks', 'Photo and video records', 'Milestone progress reports'],
-  },
-  {
-    title: 'Relocation support',
-    summary: 'Plan the practical details of returning, visiting, or settling in Ghana.',
-    result: 'A coordinated arrival with fewer unknowns and missed steps.',
-    icon: Home,
-    outputs: ['Arrival planning', 'Local orientation', 'Property and service coordination'],
+    outputs: ['Scheduled site visits', 'Photos and video from the site', 'Progress report for each milestone'],
+    image: 'images/illustrations/illustrative-construction-monitoring.webp',
+    imageAlt: 'An engineer checking foundation work on a Ghana construction site',
   },
 ]
 
@@ -50,10 +69,10 @@ export function CoreServices() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="grid gap-8 border-b border-[#DDE5E1] pb-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
           <h2 className="max-w-[11ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111815] sm:text-5xl">
-            Support built around the decision in front of you.
+            Choose the help you need in Ghana.
           </h2>
           <p className="max-w-[62ch] text-lg leading-8 text-[#4C5B55] lg:justify-self-end">
-            Start with one service or connect several into a complete plan. The work stays understandable: what we are checking, what evidence you receive, and what happens next.
+            You can book help for a short visit, a move, a land purchase, or a building project. Start with one package or combine services.
           </p>
         </div>
 
@@ -91,8 +110,20 @@ export function CoreServices() {
             tabIndex={0}
             className="bg-[#073A36] p-7 text-white sm:p-10 lg:p-12"
           >
-            <SelectedIcon aria-hidden="true" className="h-9 w-9 text-[#E3CC91]" />
-            <h3 className="mt-8 text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{selected.title}</h3>
+            <figure>
+              <div className="aspect-[16/9] overflow-hidden border border-white/15 bg-[#052E2B]">
+                <img
+                  src={`${import.meta.env.BASE_URL}${selected.image}`}
+                  alt={selected.imageAlt}
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </figure>
+            <SelectedIcon aria-hidden="true" className="mt-8 h-9 w-9 text-[#E3CC91]" />
+            <h3 className="mt-6 text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{selected.title}</h3>
             <p className="mt-5 max-w-[55ch] text-lg leading-8 text-white/76">{selected.result}</p>
             <h4 className="mt-10 text-sm font-semibold text-[#E3CC91]">What you receive</h4>
             <ul className="mt-4 divide-y divide-white/15 border-y border-white/15">

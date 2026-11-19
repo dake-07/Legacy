@@ -9,7 +9,14 @@ export interface FreeConsultationRequest {
   website?: string
 }
 
-export const consultationServices = ['Relocation', 'Land acquisition', 'Building / construction', 'Help choosing a service']
+export const consultationServices = [
+  'Visiting Ghana',
+  'Property or investment visit',
+  'Relocation and local setup',
+  'Land or property support',
+  'Building or construction',
+  'Help choosing a service',
+]
 
 export function validateFreeConsultation(details: FreeConsultationRequest) {
   const errors: Partial<Record<keyof FreeConsultationRequest, string>> = {}

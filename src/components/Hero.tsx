@@ -39,13 +39,13 @@ export function Hero() {
           className="max-w-[720px]"
         >
           <p className="mb-5 max-w-xl text-sm font-medium leading-relaxed text-white/78 sm:text-base">
-            Land verification, legal coordination, and site oversight in Ghana
+            Visits, relocation, property, and construction support in Ghana
           </p>
           <h1 className="max-w-[14ch] text-[2.65rem] font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
-            Build in Ghana without building on uncertainty.
+            Handle your plans in Ghana with help on the ground.
           </h1>
           <p className="mt-6 max-w-[58ch] text-base leading-7 text-white/82 sm:text-lg sm:leading-8">
-            We verify land, coordinate legal review, and document construction progress for clients living abroad.
+            We help people living abroad visit Ghana, move here, find property, buy land, and follow construction work.
           </p>
 
           <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
@@ -58,15 +58,15 @@ export function Hero() {
               Request a consultation
             </button>
             <a
-              href="#proof"
+              href="#services"
               className="min-h-12 border-b border-white/45 px-1 py-3 text-center text-base font-medium text-white transition-colors hover:border-white sm:text-left"
             >
-              How we protect your project
+              See all services
             </a>
           </div>
 
           <p className="mt-8 max-w-lg border-l-2 border-[#C7A85A] pl-4 text-sm leading-6 text-white/72">
-            Local verification and recorded project evidence, delivered to you wherever you live.
+            From airport pickup and local setup to land checks and building reports.
           </p>
         </motion.div>
       </div>
