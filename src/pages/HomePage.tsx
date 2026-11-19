@@ -51,17 +51,17 @@ export function HomePage() {
               <div className="flex items-center justify-center gap-4 mb-4">
                 <span className="w-10 h-[1.5px] bg-[#0F766E]/40" />
                 <span className="text-xs font-bold tracking-[0.25em] text-[#0F766E] uppercase">
-                  On-the-Ground Oversight
+                  Experience Legacy Hub
                 </span>
                 <span className="w-10 h-[1.5px] bg-[#0F766E]/40" />
               </div>
 
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 tracking-tight mb-4 text-balance">
-                See How We Protect Diaspora Projects in Real Time
+                See What Legacy Hub Is About
               </h2>
 
               <p className="text-base sm:text-lg text-gray-600 font-sans leading-relaxed text-pretty">
-                Watch a 1-minute walkthrough of our team inspecting boundaries, vetting contractors, and reporting live from Ghana while you’re abroad.
+                Watch a 1-minute video walkthrough of what we do.
               </p>
             </motion.div>
 
@@ -73,7 +73,7 @@ export function HomePage() {
               transition={{ duration: 0.8, delay: 0.15 }}
               role="button"
               tabIndex={0}
-              aria-label="Play video: See how we protect diaspora projects in real time"
+              aria-label="Play video: See what Legacy Hub is about"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
