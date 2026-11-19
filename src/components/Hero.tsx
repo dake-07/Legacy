@@ -8,7 +8,7 @@ export function Hero() {
   const [consultation, setConsultation] = useState({ open: false, requestId: 0 })
 
   return (
-    <section id="home" className="focus-light relative overflow-hidden bg-white w-full lg:h-[92dvh] lg:min-h-[640px] lg:max-h-[880px] flex flex-col justify-center">
+    <section id="home" className="focus-light relative h-[100dvh] lg:h-[92dvh] min-h-[640px] max-h-[880px] overflow-hidden bg-white w-full">
       {/* Full-bleed Background Image with Responsive Formats */}
       <div className="absolute inset-x-2 top-2 bottom-2 rounded-3xl overflow-hidden z-0">
         <picture className="absolute inset-0 w-full h-full">
@@ -25,7 +25,7 @@ export function Hero() {
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-[65%_center] md:object-center"
           />
         </picture>
         
@@ -33,23 +33,26 @@ export function Hero() {
         {/* 1. Left-to-right gradient: deep contrast for typography on the left, clear view of photography on the right */}
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/60 md:via-stone-950/40 to-transparent z-10 pointer-events-none" />
 
-        {/* 2. Top-down gradient: protects transparent navbar */}
-        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-stone-950/70 via-stone-950/20 to-transparent z-10 pointer-events-none" />
+        {/* 2. Mobile-specific vertical gradient: guarantees contrast and depth when text is brought down into the mid-lower frame */}
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/30 to-stone-950/80 md:hidden z-10 pointer-events-none" />
 
-        {/* 3. Bottom-up gradient: grounds the card frame */}
-        <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-stone-950/50 via-transparent to-transparent z-10 pointer-events-none" />
+        {/* 3. Top-down gradient: protects transparent navbar */}
+        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-stone-950/80 via-stone-950/30 to-transparent z-10 pointer-events-none" />
+
+        {/* 4. Bottom-up gradient: grounds the card frame */}
+        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-stone-950/60 via-transparent to-transparent z-10 pointer-events-none" />
       </div>
 
-      {/* Main Content Area */}
-      <div className="relative z-20 flex flex-col justify-center pt-28 pb-12 sm:pt-32 sm:pb-16 lg:py-0 px-6 sm:px-10 lg:px-16 max-w-[1400px] mx-auto w-full">
+      {/* Main Content Area: Vertically centered in the full viewport, brought down on mobile for natural optical balance & thumb reach */}
+      <div className="absolute inset-0 z-20 flex flex-col justify-center pt-20 md:pt-28 pb-8 sm:pb-12 px-6 sm:px-10 lg:px-16 max-w-[1400px] mx-auto w-full">
         
         {/* Left-Aligned Headline & Supporting Copy */}
-        <div className="flex flex-col items-start text-left w-full max-w-3xl">
+        <div className="flex flex-col items-start text-left w-full max-w-3xl mt-16 sm:mt-12 md:mt-0">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-semibold text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_20px_rgba(0,0,0,0.65)] mb-4 md:mb-5 text-balance"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-semibold text-white tracking-tight leading-[1.12] drop-shadow-[0_4px_20px_rgba(0,0,0,0.65)] mb-4 md:mb-5 text-balance"
           >
             Build and Invest in Ghana with Complete Peace of Mind.
           </motion.h1>
@@ -67,7 +70,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-start items-stretch sm:items-center w-full sm:w-auto"
+            className="flex flex-col sm:flex-row gap-3.5 sm:gap-4 justify-start items-stretch sm:items-center w-full sm:w-auto"
           >
             <button 
               type="button" 
