@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BriefcaseBusiness, HardHat, Home, MapPinned, PlaneLanding, type LucideIcon } from 'lucide-react'
+import { BriefcaseBusiness, ChevronDown, HardHat, Home, MapPinned, PlaneLanding, type LucideIcon } from 'lucide-react'
 
 type Service = {
   title: string
@@ -59,10 +59,51 @@ const services: Service[] = [
   },
 ]
 
+function ServicePanelContent({ service, showHeading = false }: { service: Service; showHeading?: boolean }) {
+  const ServiceIcon = service.icon
+
+  return (
+    <>
+      <figure>
+        <div className="aspect-[16/9] overflow-hidden border border-white/15 bg-[#052E2B]">
+          <img
+            src={`${import.meta.env.BASE_URL}${service.image}`}
+            alt={service.imageAlt}
+            width="1600"
+            height="900"
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      </figure>
+
+      {showHeading && (
+        <>
+          <ServiceIcon aria-hidden="true" className="mt-8 h-9 w-9 text-[#E3CC91]" />
+          <h3 className="mt-6 text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{service.title}</h3>
+        </>
+      )}
+
+      <p className={`${showHeading ? 'mt-5 text-lg leading-8' : 'mt-6 text-base leading-7'} max-w-[55ch] text-white/76`}>
+        {service.result}
+      </p>
+      <h4 className="mt-8 text-sm font-semibold text-[#E3CC91] sm:mt-10">What you receive</h4>
+      <ul className="mt-4 divide-y divide-white/15 border-y border-white/15">
+        {service.outputs.map(output => (
+          <li key={output} className="flex items-center gap-3 py-4 text-base text-white/88">
+            <span aria-hidden="true" className="h-1.5 w-1.5 bg-[#C7A85A]" />
+            {output}
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
 export function CoreServices() {
-  const [activeService, setActiveService] = useState(0)
-  const selected = services[activeService]
-  const SelectedIcon = selected.icon
+  const [activeService, setActiveService] = useState<number | null>(0)
+  const selectedIndex = activeService ?? 0
+  const selected = services[selectedIndex]
 
   return (
     <section id="services" className="scroll-mt-24 bg-white py-20 lg:py-32">
@@ -76,18 +117,65 @@ export function CoreServices() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div aria-label="Legacy Hub services" className="mt-10 border-t border-[#BFCFC8] lg:hidden">
+          {services.map((service, index) => {
+            const Icon = service.icon
+            const active = activeService === index
+            const triggerId = `service-mobile-trigger-${index}`
+            const panelId = `service-mobile-panel-${index}`
+
+            return (
+              <div key={service.title} className="border-b border-[#BFCFC8]">
+                <h3>
+                  <button
+                    id={triggerId}
+                    type="button"
+                    aria-expanded={active}
+                    aria-controls={panelId}
+                    onClick={() => setActiveService(current => current === index ? null : index)}
+                    className={`grid min-h-16 w-full cursor-pointer grid-cols-[auto_1fr_auto] items-start gap-4 px-2 py-5 text-left transition-colors sm:px-4 ${active ? 'bg-[#E7F1ED] text-[#073A36]' : 'bg-white text-[#37453F] hover:bg-[#F7FAF8]'}`}
+                  >
+                    <Icon aria-hidden="true" className="mt-0.5 h-5 w-5" />
+                    <span className="min-w-0">
+                      <span className="block text-lg font-semibold">{service.title}</span>
+                      <span className={`mt-1 block text-sm leading-6 ${active ? 'text-[#315D55]' : 'text-[#6A7772]'}`}>
+                        {service.summary}
+                      </span>
+                    </span>
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={`mt-0.5 h-5 w-5 transition-transform duration-200 ${active ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                </h3>
+
+                {active && (
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={triggerId}
+                    className="bg-[#073A36] p-6 text-white sm:p-8"
+                  >
+                    <ServicePanelContent service={service} />
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="mt-12 hidden gap-10 lg:grid lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div aria-label="Legacy Hub services" className="border-t border-[#BFCFC8]">
             {services.map((service, index) => {
               const Icon = service.icon
-              const active = activeService === index
+              const active = selectedIndex === index
               return (
                 <button
                   key={service.title}
-                  id={`service-tab-${index}`}
+                  id={`service-desktop-trigger-${index}`}
                   type="button"
                   aria-pressed={active}
-                  aria-controls="service-panel"
+                  aria-controls="service-desktop-panel"
                   onClick={() => setActiveService(index)}
                   className={`grid w-full cursor-pointer grid-cols-[auto_1fr] gap-4 border-b border-[#BFCFC8] px-2 py-5 text-left transition-colors sm:px-4 ${active ? 'bg-[#E7F1ED] text-[#073A36]' : 'bg-white text-[#37453F] hover:bg-[#F7FAF8]'}`}
                 >
@@ -104,36 +192,13 @@ export function CoreServices() {
           </div>
 
           <div
-            id="service-panel"
+            id="service-desktop-panel"
             aria-live="polite"
-            aria-labelledby={`service-tab-${activeService}`}
+            aria-labelledby={`service-desktop-trigger-${selectedIndex}`}
             tabIndex={0}
             className="bg-[#073A36] p-7 text-white sm:p-10 lg:p-12"
           >
-            <figure>
-              <div className="aspect-[16/9] overflow-hidden border border-white/15 bg-[#052E2B]">
-                <img
-                  src={`${import.meta.env.BASE_URL}${selected.image}`}
-                  alt={selected.imageAlt}
-                  width="1600"
-                  height="900"
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </figure>
-            <SelectedIcon aria-hidden="true" className="mt-8 h-9 w-9 text-[#E3CC91]" />
-            <h3 className="mt-6 text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{selected.title}</h3>
-            <p className="mt-5 max-w-[55ch] text-lg leading-8 text-white/76">{selected.result}</p>
-            <h4 className="mt-10 text-sm font-semibold text-[#E3CC91]">What you receive</h4>
-            <ul className="mt-4 divide-y divide-white/15 border-y border-white/15">
-              {selected.outputs.map(output => (
-                <li key={output} className="flex items-center gap-3 py-4 text-base text-white/88">
-                  <span aria-hidden="true" className="h-1.5 w-1.5 bg-[#C7A85A]" />
-                  {output}
-                </li>
-              ))}
-            </ul>
+            <ServicePanelContent service={selected} showHeading />
           </div>
         </div>
       </div>
