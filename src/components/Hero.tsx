@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { FreeConsultationDialog } from './FreeConsultationDialog'
 
 export function Hero() {
@@ -39,13 +40,13 @@ export function Hero() {
           className="max-w-[720px]"
         >
           <p className="mb-5 max-w-xl text-sm font-medium leading-relaxed text-white/78 sm:text-base">
-            Visits, relocation, property, and construction support in Ghana
+            Relocation, property, construction, and business support in Ghana
           </p>
-          <h1 className="max-w-[14ch] text-[2.65rem] font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
-            Handle your plans in Ghana with help on the ground.
+          <h1 className="max-w-[17ch] text-[2.65rem] font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
+            Build and Invest in Ghana with Complete Peace of Mind.
           </h1>
           <p className="mt-6 max-w-[58ch] text-base leading-7 text-white/82 sm:text-lg sm:leading-8">
-            We help people living abroad visit Ghana, move here, find property, buy land, and follow construction work.
+            Legacy Hub helps people living abroad visit or move to Ghana, buy land, build and manage property, and set up a business.
           </p>
 
           <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
@@ -55,18 +56,20 @@ export function Hero() {
               aria-haspopup="dialog"
               className="min-h-12 cursor-pointer rounded-md bg-[#F7FAF8] px-6 py-3 text-base font-semibold text-[#073A36] transition-colors hover:bg-white"
             >
-              Request a consultation
+              Request a Consultation
             </button>
-            <a
-              href="#services"
+            <Link
+              to="/packages"
+              onMouseEnter={() => import('../pages/PackagesPage')}
+              onTouchStart={() => import('../pages/PackagesPage')}
               className="min-h-12 border-b border-white/45 px-1 py-3 text-center text-base font-medium text-white transition-colors hover:border-white sm:text-left"
             >
-              See all services
-            </a>
+              View Packages
+            </Link>
           </div>
 
           <p className="mt-8 max-w-lg border-l-2 border-[#C7A85A] pl-4 text-sm leading-6 text-white/72">
-            From airport pickup and local setup to land checks and building reports.
+            From airport pickup and local setup to land checks, building reports, property care, and business support.
           </p>
         </motion.div>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { ArrowLeft, Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -54,6 +54,9 @@ export function Navbar() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6">
         <Link to="/" aria-label="Legacy Hub home" className="flex shrink-0 items-center gap-3">
+          {location.pathname !== '/' && (
+            <ArrowLeft aria-hidden="true" className={`h-5 w-5 md:hidden ${solid ? 'text-[#0B554E]' : 'text-white'}`} />
+          )}
           <svg
             viewBox="0 0 100 100"
             className={`h-10 w-10 ${solid ? 'text-[#0B554E]' : 'text-white'}`}
@@ -89,12 +92,10 @@ export function Navbar() {
         </div>
 
         <Link
-          to="/packages"
-          onMouseEnter={() => prefetchRoute('/packages')}
-          onTouchStart={() => prefetchRoute('/packages')}
+          to="/#services"
           className={`hidden min-h-11 items-center justify-center border px-5 py-2.5 text-sm font-semibold transition-colors md:inline-flex ${solid ? 'border-[#0B554E] bg-[#0B554E] text-white hover:bg-[#073A36]' : 'border-white/55 bg-white text-[#073A36] hover:bg-[#F7FAF8]'}`}
         >
-          View packages
+          Explore Services
         </Link>
 
         <button
@@ -136,12 +137,11 @@ export function Navbar() {
                 )
               })}
               <Link
-                to="/packages"
-                onTouchStart={() => prefetchRoute('/packages')}
+                to="/#services"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mt-5 min-h-12 bg-[#0B554E] px-5 py-3 text-center font-semibold text-white"
               >
-                View packages
+                Explore Services
               </Link>
             </div>
           </motion.div>

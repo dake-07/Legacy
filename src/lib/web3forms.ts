@@ -16,7 +16,7 @@ const nodeEnv = (globalThis as unknown as { process?: { env?: Record<string, str
 export const WEB3FORMS_ACCESS_KEY =
   nodeEnv?.VITE_WEB3FORMS_ACCESS_KEY ||
   import.meta.env?.VITE_WEB3FORMS_ACCESS_KEY ||
-  'cfc2b503-ada8-4835-8736-a0fe122eedcf'
+  '479d1615-59d6-4c3b-a75a-73a201f5e05d'
 
 
 

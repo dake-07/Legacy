@@ -2,20 +2,24 @@ import { Link } from 'react-router-dom'
 
 const supportAreas = [
   {
-    title: 'Visits to Ghana',
-    detail: 'Airport pickup, accommodation check-in, local transport, area orientation, and planned property visits.',
-  },
-  {
-    title: 'Moving to Ghana',
-    detail: 'Practical help with local setup, including SIM cards, banking guidance, residence-permit consultation, and settling-in plans.',
+    title: 'Visits and relocation',
+    detail: 'Airport pickup, accommodation, local transport, orientation, and practical help with settling in Ghana.',
   },
   {
     title: 'Land and property',
-    detail: 'Help finding suitable options, arranging site visits, and coordinating survey, document, and lawyer checks before you commit.',
+    detail: 'Property sourcing, site visits, survey coordination, and document and lawyer checks before you commit.',
   },
   {
-    title: 'Construction',
-    detail: 'Regular site visits, progress photos and videos, material checks, and updates while you are away.',
+    title: 'Construction and furnishing',
+    detail: 'Contractor coordination, regular site checks, progress reports, procurement, and help preparing a property for use.',
+  },
+  {
+    title: 'Property management',
+    detail: 'Property inspections, cleaning, utility and maintenance coordination, tenant support, and regular reports.',
+  },
+  {
+    title: 'Business setup',
+    detail: 'Company registration coordination, banking introductions, office search, recruitment, and local setup support.',
   },
 ]
 
@@ -26,13 +30,13 @@ export function WhoWeAre() {
         <div>
           <p className="text-base font-semibold text-[#0B554E]">Who we are</p>
           <h2 className="mt-4 max-w-[14ch] font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111815] sm:text-5xl">
-            A Ghana-based team for your visit, move, property, or building project.
+            Local support for the plans you are making in Ghana.
           </h2>
           <p className="mt-7 max-w-[55ch] text-lg leading-8 text-[#3D4B46]">
-            Legacy Hub helps people living abroad handle practical work in Ghana. We arrange local support, keep you informed, and connect you with qualified professionals when specialist help is needed.
+            Legacy Hub is a Ghana-based relocation, property, construction, and business support company for people living abroad. We coordinate practical work, keep you informed, and connect you with local professionals when specialist help is needed.
           </p>
           <p className="mt-5 max-w-[55ch] text-base leading-7 text-[#5B6B65]">
-            You can ask for help with one task or choose a package that brings several services together.
+            Choose support for one task, or combine services for a visit, move, property project, or business setup.
           </p>
           <Link
             to="/about"

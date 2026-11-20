@@ -16,10 +16,10 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Legacy Hub | Visit, Relocate, Buy Land and Build in Ghana</title>
+        <title>Legacy Hub | Relocation, Property and Business Support in Ghana</title>
         <meta
           name="description"
-          content="Practical support for visiting Ghana, relocating, buying land or property, and monitoring construction while living abroad."
+          content="Ghana-based support for visiting or relocating, buying land, building and managing property, and setting up a business while living abroad."
         />
       </Helmet>
 

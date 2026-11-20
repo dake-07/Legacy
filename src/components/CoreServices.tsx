@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BriefcaseBusiness, ChevronDown, HardHat, Home, MapPinned, PlaneLanding, type LucideIcon } from 'lucide-react'
+import { BriefcaseBusiness, Building2, ChevronDown, HardHat, MapPinned, PlaneLanding, type LucideIcon } from 'lucide-react'
 
 type Service = {
   title: string
@@ -13,49 +13,49 @@ type Service = {
 
 const services: Service[] = [
   {
-    title: 'Arrival and visit support',
-    summary: 'Airport pickup, check-in help, local transport, and area orientation.',
-    result: 'You arrive knowing who will meet you and what has already been arranged.',
+    title: 'Arrival and relocation support',
+    summary: 'Help with your arrival, temporary stay, local transport, and practical setup.',
+    result: 'You arrive knowing what has been arranged and which local steps still need your attention.',
     icon: PlaneLanding,
-    outputs: ['Airport pickup', 'Accommodation check-in help', 'Local SIM card and area orientation'],
+    outputs: ['Airport pickup and accommodation support', 'Local SIM card and area orientation', 'Banking and residence-permit guidance'],
     image: 'images/illustrations/illustrative-relocation-support.webp',
     imageAlt: 'A local adviser welcoming a couple into a home in Ghana',
   },
   {
-    title: 'Property and investment visits',
-    summary: 'Planned site visits, local transport, and meetings for your questions.',
-    result: 'You use your time in Ghana to see suitable places and speak with the right people.',
-    icon: BriefcaseBusiness,
-    outputs: ['Property and land visits', 'Dedicated local transport', 'Lawyer or investment meeting coordination'],
+    title: 'Land and property support',
+    summary: 'Help finding suitable options and arranging checks before you commit.',
+    result: 'You receive information about the site, ownership documents, and boundaries before making a decision.',
+    icon: MapPinned,
+    outputs: ['Land and property sourcing', 'Survey and boundary coordination', 'Document and lawyer coordination'],
     image: 'images/illustrations/illustrative-land-inspection.webp',
     imageAlt: 'A Ghana property team checking plans at a land site',
   },
   {
-    title: 'Relocation and local setup',
-    summary: 'Help with the practical steps of moving to or settling in Ghana.',
-    result: 'You know what to arrange before you travel and after you arrive.',
-    icon: Home,
-    outputs: ['Arrival and housing plan', 'Bank-account setup guidance', 'Residence-permit and local-service guidance'],
-    image: 'images/illustrations/illustrative-relocation-support.webp',
-    imageAlt: 'A relocation adviser showing a couple around a home in Ghana',
-  },
-  {
-    title: 'Land purchase support',
-    summary: 'We help find land and arrange checks before you pay.',
-    result: 'You receive site details, ownership documents, and boundary information before you decide.',
-    icon: MapPinned,
-    outputs: ['Land sourcing and site visits', 'Survey and boundary coordination', 'Document and lawyer coordination'],
-    image: 'images/illustrations/illustrative-legal-review.webp',
-    imageAlt: 'Property plans and documents being reviewed in an Accra office',
-  },
-  {
-    title: 'Construction monitoring',
-    summary: 'We visit the site and record progress at agreed stages.',
-    result: 'You see what was completed before approving the next stage.',
+    title: 'Construction and furnishing',
+    summary: 'Local coordination from early planning through building and property setup.',
+    result: 'You can follow the work, review progress, and prepare the property for use while you are away.',
     icon: HardHat,
-    outputs: ['Scheduled site visits', 'Photos and video from the site', 'Progress report for each milestone'],
+    outputs: ['Contractor and site coordination', 'Photos, video, and progress reports', 'Procurement and furnishing support'],
     image: 'images/illustrations/illustrative-construction-monitoring.webp',
     imageAlt: 'An engineer checking foundation work on a Ghana construction site',
+  },
+  {
+    title: 'Property management',
+    summary: 'Ongoing help caring for a home or rental property in Ghana.',
+    result: 'You receive regular updates about the condition, maintenance, and use of your property.',
+    icon: Building2,
+    outputs: ['Scheduled property inspections', 'Cleaning, utility, and maintenance coordination', 'Tenant and rental reporting support'],
+    image: 'images/illustrations/illustrative-relocation-support.webp',
+    imageAlt: 'A local property adviser showing a couple around a home in Ghana',
+  },
+  {
+    title: 'Business setup support',
+    summary: 'Practical coordination for establishing and operating a business in Ghana.',
+    result: 'You understand the local setup steps and have help coordinating the people and services involved.',
+    icon: BriefcaseBusiness,
+    outputs: ['Company registration coordination', 'Banking and office-search support', 'Recruitment and local setup guidance'],
+    image: 'images/illustrations/illustrative-legal-review.webp',
+    imageAlt: 'Business documents being reviewed during a meeting in Ghana',
   },
 ]
 
@@ -113,7 +113,7 @@ export function CoreServices() {
             Choose the help you need in Ghana.
           </h2>
           <p className="max-w-[62ch] text-lg leading-8 text-[#4C5B55] lg:justify-self-end">
-            You can book help for a short visit, a move, a land purchase, or a building project. Start with one package or combine services.
+            Get help with a visit or move, land and property, construction, property management, or setting up a business. Start with one service or combine the support you need.
           </p>
         </div>
 
