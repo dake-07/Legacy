@@ -4,6 +4,7 @@ import { MotionConfig } from 'framer-motion'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { CookieConsent } from './components/CookieConsent'
+import { PageMetadata } from './components/PageMetadata'
 
 const HomePage = lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })))
 const PackagesPage = lazy(() => import('./pages/PackagesPage').then(module => ({ default: module.PackagesPage })))
@@ -72,6 +73,7 @@ function ScrollToTop() {
 function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <PageMetadata />
       <ScrollToTop />
       <MotionConfig reducedMotion="user">
       <a

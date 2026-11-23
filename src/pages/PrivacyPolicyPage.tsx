@@ -1,18 +1,9 @@
-import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Shield } from 'lucide-react'
 
 export function PrivacyPolicyPage() {
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy | Legacy Growth & Development Hub</title>
-        <meta 
-          name="description" 
-          content="Privacy Policy for Legacy Growth & Development Hub. How we collect, safeguard, and process client information for relocation and property services." 
-        />
-      </Helmet>
-
       <div className="pt-28 pb-20 bg-[#F0FDFA] min-h-screen">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
           

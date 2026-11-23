@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Play, X } from 'lucide-react'
-import { Helmet } from 'react-helmet-async'
 import { Hero } from '../components/Hero'
 import { WhoWeAre } from '../components/WhoWeAre'
 import { ExecutiveSummary } from '../components/ExecutiveSummary'
@@ -15,14 +14,6 @@ export function HomePage() {
 
   return (
     <>
-      <Helmet>
-        <title>Legacy Hub | Relocation, Property and Business Support in Ghana</title>
-        <meta
-          name="description"
-          content="Ghana-based support for visiting or relocating, buying land, building and managing property, and setting up a business while living abroad."
-        />
-      </Helmet>
-
       <div>
         <Hero />
         <WhoWeAre />

@@ -31,7 +31,7 @@ export function Footer() {
               <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Legacy Hub on Instagram" className="flex h-11 w-11 items-center justify-center border border-white/25 text-white/75 transition-colors hover:border-white hover:text-white">
                 <Camera aria-hidden="true" className="h-5 w-5" />
               </a>
-              <a href="https://legacyhub.com" target="_blank" rel="noreferrer" aria-label="Legacy Hub website" className="flex h-11 w-11 items-center justify-center border border-white/25 text-white/75 transition-colors hover:border-white hover:text-white">
+              <a href="https://legacyhubgh.com" target="_blank" rel="noreferrer" aria-label="Legacy Hub website" className="flex h-11 w-11 items-center justify-center border border-white/25 text-white/75 transition-colors hover:border-white hover:text-white">
                 <Globe aria-hidden="true" className="h-5 w-5" />
               </a>
               <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="Legacy Hub on LinkedIn" className="flex h-11 w-11 items-center justify-center border border-white/25 text-white/75 transition-colors hover:border-white hover:text-white">

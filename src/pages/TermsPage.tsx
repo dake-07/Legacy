@@ -1,18 +1,9 @@
-import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, FileText } from 'lucide-react'
 
 export function TermsPage() {
   return (
     <>
-      <Helmet>
-        <title>Terms & Conditions | Legacy Growth & Development Hub</title>
-        <meta 
-          name="description" 
-          content="Terms and Conditions for Legacy Growth & Development Hub. Service terms, payment policies, and engagement standards for diaspora relocation and land acquisition." 
-        />
-      </Helmet>
-
       <div className="pt-28 pb-20 bg-[#F0FDFA] min-h-screen">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
           

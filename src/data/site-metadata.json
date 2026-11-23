@@ -1,0 +1,70 @@
+{
+  "origin": "https://legacyhubgh.com",
+  "name": "Legacy Hub",
+  "image": "/og-image.jpg",
+  "imageAlt": "Modern villa with a pool and tropical garden at sunset in Ghana",
+  "pages": {
+    "/": {
+      "title": "Legacy Hub | Relocation, Property & Business Support in Ghana",
+      "description": "Legacy Hub helps people living abroad visit or move to Ghana, buy land, build and manage property, and set up a business with local support."
+    },
+    "/packages": {
+      "title": "Packages & Prices | Legacy Hub Ghana",
+      "description": "Compare Legacy Hub packages for arrival in Ghana, property visits, relocation, land acquisition, and monthly construction monitoring."
+    },
+    "/about": {
+      "title": "About Legacy Hub | Our Team in Ghana",
+      "description": "Meet the Legacy Hub team and learn about our approach to relocation, property, and development support for people living abroad."
+    },
+    "/portfolio": {
+      "title": "Project Gallery | Legacy Hub Ghana",
+      "description": "Browse the Legacy Hub gallery of land, property, construction, and local support in Ghana."
+    },
+    "/partners": {
+      "title": "Building & Development Partners | Legacy Hub Ghana",
+      "description": "Explore Legacy Hub building partners in Ghana, compare project designs, and request a consultation for your building plans."
+    },
+    "/privacy": {
+      "title": "Privacy Policy | Legacy Hub",
+      "description": "Read how Legacy Growth and Development Hub collects, uses, and protects information provided through its website and service requests."
+    },
+    "/terms": {
+      "title": "Terms & Conditions | Legacy Hub",
+      "description": "Read the service terms, payment policies, and engagement conditions for Legacy Growth and Development Hub in Ghana."
+    }
+  },
+  "notFound": {
+    "title": "Page Not Found | Legacy Hub",
+    "description": "The page you are looking for does not exist. Return to Legacy Hub to explore our services in Ghana."
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://legacyhubgh.com/#website",
+        "url": "https://legacyhubgh.com/",
+        "name": "Legacy Hub",
+        "alternateName": ["LegacyHub", "Legacy Hub Ghana", "Legacy Growth and Development Hub"],
+        "inLanguage": "en",
+        "publisher": { "@id": "https://legacyhubgh.com/#organization" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://legacyhubgh.com/#organization",
+        "name": "Legacy Hub",
+        "legalName": "Legacy Growth and Development Hub",
+        "url": "https://legacyhubgh.com/",
+        "logo": "https://legacyhubgh.com/apple-touch-icon.png",
+        "email": "asaapeesic@gmail.com",
+        "telephone": "+233502323196",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "McCarthy Hill",
+          "addressLocality": "Accra",
+          "addressCountry": "GH"
+        }
+      }
+    ]
+  }
+}
