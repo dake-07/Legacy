@@ -7,6 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "check:worker": "tsc -p tsconfig.worker.json",
+    "test:bookings": "node --test scripts/test-booking-email.cjs",
+    "dev:worker": "wrangler dev",
+    "deploy:cloudflare": "npm run build && npm run check:worker && wrangler deploy",
     "optimize:images": "node scripts/generate-responsive-images.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -40,6 +44,7 @@
     "tailwindcss": "^4.3.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "wrangler": "^4.166.0"
   }
 }

@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { X, CreditCard, Smartphone, CheckCircle2, Loader2, MessageSquare, Mail } from 'lucide-react'
 import { Button } from '../ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
-import { submitToWeb3Forms } from '../../lib/web3forms'
+import { requestPackage, type PackageBookingResult } from '../../lib/packageBooking'
+import { bookingContact, paymentInstructions } from '../../lib/bookingDetails'
 
 interface BookingDialogProps {
   isModalOpen: boolean
@@ -14,6 +15,9 @@ interface BookingDialogProps {
 export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onClose: handleCloseModal }: BookingDialogProps) {
   const [formStep, setFormStep] = useState(1) // 1: Form, 2: Loading, 3: Payment/Success
   const [failure, setFailure] = useState('')
+  const [confirmation, setConfirmation] = useState<PackageBookingResult | null>(null)
+  const requestId = useRef('')
+  const submitting = useRef(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -74,6 +78,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
     setFormData(prev => ({ ...prev, [name]: value }))
     setErrors(prev => ({ ...prev, [name]: undefined }))
     setFailure('')
+    requestId.current = ''
   }
 
   const validate = () => {
@@ -86,7 +91,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
     if (name.length < 2) newErrors.name = "Please enter your full name."
 
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
-    if (!email) newErrors.email = "Please enter your email address to receive your confirmation receipt."
+    if (!email) newErrors.email = "Enter your email address for your package confirmation."
     else if (!isEmail) newErrors.email = "Enter a valid email address (name@example.com)."
 
     const phoneDigits = phone.replace(/\D/g, "")
@@ -102,6 +107,7 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (submitting.current) return
     const validationErrors = validate()
     const firstError = Object.keys(validationErrors)[0]
     if (firstError) {
@@ -116,27 +122,27 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
     }
 
     setFailure('')
+    submitting.current = true
     setFormStep(2) // Switch to Loading Step
 
     try {
-      await submitToWeb3Forms({
-        subject: `New Booking Request: ${selectedPackage} - ${formData.name.trim()}`,
+      requestId.current ||= `${Date.now()}_${crypto.randomUUID()}`
+      const result = await requestPackage({
+        requestId: requestId.current,
+        packageName: selectedPackage,
         name: formData.name.trim(),
         email: formData.email.trim(),
         phone: formData.phone.trim(),
-        'Package Name': selectedPackage,
-        'Package Price': selectedPrice,
-        'Client Name': formData.name.trim(),
-        'Client Email': formData.email.trim(),
-        'Client Phone / WhatsApp': formData.phone.trim(),
-        'Client Location': formData.address.trim(),
-        botcheck: formData.website || ''
-      })
+        address: formData.address.trim(),
+        website: formData.website,
+      }, selectedPrice)
+      setConfirmation(result)
       setFormStep(3)
     } catch (err) {
-      console.warn("Web3Forms transmission error:", err)
-      setFailure("We couldn’t confirm your booking request automatically. Your details are still here. Please try again or confirm directly via WhatsApp.")
+      setFailure(err instanceof Error ? err.message : 'We could not confirm your request. Try again or contact the team via WhatsApp.')
       setFormStep(1)
+    } finally {
+      submitting.current = false
     }
   }
 
@@ -184,12 +190,12 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                 {formStep === 1 && (
                   <form onSubmit={handleSubmit} noValidate className="space-y-6 relative">
                     <p className="text-gray-600 text-sm mb-8 font-sans leading-relaxed">
-                      Please provide your details below to initiate your booking. Once submitted, you will receive our payment details to secure your package.
+                      Enter your details to request this package. You will see payment instructions after submitting. Your booking is confirmed after the team verifies payment and availability.
                     </p>
 
                     {([
                       { name: "name" as const, label: "Full Name", placeholder: "e.g. Kwame Mensah…", autoComplete: "name", inputMode: "text" as const, type: "text" },
-                      { name: "email" as const, label: "Email Address (for your receipt)", placeholder: "you@example.com…", autoComplete: "email", inputMode: "email" as const, type: "email" },
+                      { name: "email" as const, label: "Email Address (for your confirmation)", placeholder: "you@example.com…", autoComplete: "email", inputMode: "email" as const, type: "email" },
                       { name: "phone" as const, label: "Phone / WhatsApp Number", placeholder: "+233 50 123 4567 or international…", autoComplete: "tel", inputMode: "tel" as const, type: "tel" },
                       { name: "address" as const, label: "City / Country", placeholder: "e.g. London, UK…", autoComplete: "address-level2", inputMode: "text" as const, type: "text" }
                     ]).map((field) => (
@@ -259,8 +265,16 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                     </div>
                     <h3 className="text-3xl font-semibold text-gray-900 mb-4">Request received</h3>
                     <p className="text-gray-600 mb-8 font-sans leading-relaxed break-words max-w-full">
-                      Thank you, {formData.name.trim().split(' ')[0]}. A confirmation receipt has been sent to <span className="font-bold text-gray-900">{formData.email}</span>, and our team has been notified.
+                      Thank you, {formData.name.trim().split(' ')[0]}. {confirmation?.emailQueued
+                        ? <>Your package confirmation and pro forma invoice are on their way to <span className="font-bold text-gray-900">{formData.email}</span>. Check your inbox and spam folder.</>
+                        : 'Your request has been sent to our team. Keep the payment details below and contact us to confirm the next steps.'}
                     </p>
+                    {confirmation?.reference && (
+                      <p className="mb-6 w-full break-all border border-[#BFCFC8] bg-[#F7FAF8] p-4 text-sm text-[#073A36]">
+                        Request reference: <strong>{confirmation.reference}</strong><br />
+                        Listed fee (USD): {confirmation.price}. Payment status: Unpaid.
+                      </p>
+                    )}
 
                     <div className="w-full bg-gray-50 rounded-2xl p-8 border border-gray-100 text-left">
                       <h4 className="font-serif text-lg font-bold text-gray-900 mb-4 flex items-center gap-3">
@@ -268,31 +282,32 @@ export function BookingDialog({ isModalOpen, selectedPackage, selectedPrice, onC
                         Payment Details
                       </h4>
                       <p className="text-sm text-gray-500 mb-8 font-sans leading-relaxed">
-                        To secure your package, please deposit the required fee using the details below. Use your Full Name as reference.
+                        {paymentInstructions(selectedPackage)} Use {confirmation?.reference || 'your full name'} as your payment reference. This request is not a payment receipt.
                       </p>
                       
                       <div className="space-y-4 font-sans">
                         <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
                           <div className="text-sm font-semibold text-[#0B554E] mb-2">Bank transfer</div>
-                          <div className="text-sm text-gray-600 mb-1">Bank: <span className="text-gray-900 font-bold">CBG</span></div>
-                          <div className="text-sm text-gray-600 mb-1">Account Name: <span className="text-gray-900 font-bold">Legacy Growth and Development Hub</span></div>
-                          <div className="text-sm text-gray-600 mb-1">Account Number: <span className="text-gray-900 font-bold tabular-nums tracking-wide">2537968640001</span></div>
-                          <div className="text-sm text-gray-600">Branch: <span className="text-gray-900 font-bold">Manet Tower</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Bank: <span className="text-gray-900 font-bold">{bookingContact.bank}</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Account Name: <span className="text-gray-900 font-bold">{bookingContact.accountName}</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Account Number: <span className="text-gray-900 font-bold tabular-nums tracking-wide">{bookingContact.accountNumber}</span></div>
+                          <div className="text-sm text-gray-600">Branch: <span className="text-gray-900 font-bold">{bookingContact.branch}</span></div>
                         </div>
                         
                         <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
                           <div className="text-sm font-semibold text-[#0B554E] mb-2 flex items-center gap-2">
                             <Smartphone className="h-4 w-4" aria-hidden="true" /> Mobile money
                           </div>
-                          <div className="text-sm text-gray-600 mb-1">Number: <span className="text-gray-900 font-bold tabular-nums">050&nbsp;232&nbsp;3196</span></div>
-                          <div className="text-sm text-gray-600">Wallet Name: <span className="text-gray-900 font-bold">Peter Asare / Legacy Growth and Development Hub</span></div>
+                          <div className="text-sm text-gray-600 mb-1">Number: <span className="text-gray-900 font-bold tabular-nums">{bookingContact.mobileNumber}</span></div>
+                          <div className="text-sm text-gray-600">Wallet Name: <span className="text-gray-900 font-bold">{bookingContact.mobileName}</span></div>
+                          <p className="mt-3 text-sm leading-6 text-gray-600">Contact the team before using mobile money to confirm how to settle the USD fee.</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="w-full flex flex-col sm:flex-row gap-3 mt-6">
                       <a
-                        href={`https://wa.me/233502323196?text=${encodeURIComponent(`Hello LegacyHub, I have submitted a booking request for "${selectedPackage}" (${selectedPrice}).\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nLocation: ${formData.address}`)}`}
+                        href={`https://wa.me/233502323196?text=${encodeURIComponent(`Hello LegacyHub, I have submitted a booking request for "${selectedPackage}" (${confirmation?.price || selectedPrice}).\nReference: ${confirmation?.reference || 'No reference assigned'}\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nLocation: ${formData.address}`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 px-4 font-semibold text-sm transition-colors"
