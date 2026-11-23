@@ -24,7 +24,7 @@ export const packages: ServicePackage[] = [
     },
     {
       name: "Silver Visit Package",
-      price: usd.format(400),
+      price: usd.format(300),
       type: "visit",
       features: [
         "Airport pickup",
@@ -40,7 +40,7 @@ export const packages: ServicePackage[] = [
     },
     {
       name: "Gold Relocation Visit Package",
-      price: usd.format(600),
+      price: usd.format(400),
       type: "relocation",
       isPopular: true,
       features: [
@@ -56,7 +56,7 @@ export const packages: ServicePackage[] = [
     },
     {
       name: "Land Acquisition Support Package",
-      price: `Min Fee: ${usd.format(1500)}`,
+      price: `Min Fee: ${usd.format(1000)}`,
       type: "land",
       features: [
         "Land sourcing",
@@ -72,7 +72,7 @@ export const packages: ServicePackage[] = [
 
 export const constructionPackage = {
     name: "Construction Monitoring Package",
-    price: `${usd.format(350)} / month`,
+    price: `${usd.format(100)} / month`,
     features: [
       "Weekly site inspections",
       "Progress photo / video updates",

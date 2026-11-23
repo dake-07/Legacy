@@ -46,7 +46,7 @@ export function ProductPackages() {
                 onClick={() => handleOpenModal(constructionPackage.name, constructionPackage.price)}
                 className="mt-8 min-h-12 cursor-pointer bg-[#0B554E] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#073A36]"
               >
-                Request a project quote
+                Request Monthly Monitoring
               </button>
             </div>
 
